@@ -1,12 +1,24 @@
 extends CharacterBody2D
 
+
 const SPEED = 300.0
 const JUMP_VELOCITY = -500.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var health = 3
 
 
+	
+func player_death():
+	if health == 0:
+		queue_free()
+		get_tree().reload_current_scene()
+		
+func kill_player():
+	if Input.is_action_just_pressed("kill_player"):
+		health = 0
+		
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -24,3 +36,8 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	player_death()
+	kill_player()
+	
+
+	

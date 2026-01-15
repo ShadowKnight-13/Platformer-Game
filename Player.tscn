@@ -1,12 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgrq8cggm37yk"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_8y7yc"]
+[ext_resource type="Script" uid="uid://dl3hynw85ktt4" path="res://Player.gd" id="1_8y7yc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p7n"]
 size = Vector2(40, 60)
 
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 1
 collision_mask = 3
 script = ExtResource("1_8y7yc")
 

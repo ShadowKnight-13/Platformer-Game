@@ -9,17 +9,17 @@ position = Vector2(640, 600)
 scale = Vector2(10, 1)
 
 [node name="Platform1" parent="." instance=ExtResource("1_qw8cm")]
-position = Vector2(300, 478)
+position = Vector2(630, 483)
 scale = Vector2(2, 1)
 
 [node name="Platform2" parent="." instance=ExtResource("1_qw8cm")]
-position = Vector2(699, 422)
+position = Vector2(1097, 362)
 scale = Vector2(2, 1)
 
 [node name="Platform3" parent="." instance=ExtResource("1_qw8cm")]
-position = Vector2(500, 300)
+position = Vector2(2018, 154)
 scale = Vector2(1.5, 1)
 
 [node name="Platform4" parent="." instance=ExtResource("1_qw8cm")]
-position = Vector2(900, 350)
+position = Vector2(1582, 255)
 scale = Vector2(1.5, 1)
