@@ -30,6 +30,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Input.get_axis("move_left", "move_right")
+	$AnimationPlayer.play("Run")
 	if direction:
 		velocity.x = direction * SPEED
 	else:
