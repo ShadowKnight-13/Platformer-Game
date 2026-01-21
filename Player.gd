@@ -8,7 +8,6 @@ const JUMP_VELOCITY = -500.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var health = 3
 
-signal health_changed(health)
 
 	
 func player_death():
@@ -19,11 +18,6 @@ func player_death():
 func kill_player():
 	if Input.is_action_just_pressed("kill_player"):
 		health = 0
-		
-func damage_player():
-	if Input.is_action_just_pressed("damage_player"):
-		health = health - 1
-		emit_signal("health_changed", health)
 		
 func _physics_process(delta):
 	# Add the gravity.
@@ -49,6 +43,8 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-	damage_player()
 	player_death()
 	kill_player()
+	
+
+	
