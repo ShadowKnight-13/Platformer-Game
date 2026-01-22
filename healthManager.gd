@@ -17,6 +17,5 @@ func update_health_ui(health: int):
 			heart.visible = false
 
 # Recieves signal emited from player node.
-func _on_player_health_changed(health: Variant) -> void:
+func _on_player_health_changed(health) -> void:
 	update_health_ui(health)
-	

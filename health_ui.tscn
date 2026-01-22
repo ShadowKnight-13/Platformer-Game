@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgq0n06by8rk1"]
+
+<<<<<<< Updated upstream
+[ext_resource type="Script" uid="uid://bscivubcrm4kt" path="res://healthManager.gd" id="1_iy3an"]
+[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="2_t8hjw"]
+
+[node name="healthUI" type="CanvasLayer"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 19.0
+offset_top = 9.0
+offset_right = 59.0
+offset_bottom = 49.0
+=======
+[ext_resource type="Script" uid="uid://cb0kf05tx7fv" path="res://healthManager.gd" id="1_iy3an"]
+[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="2_t8hjw"]
+
+[node name="health_ui" type="CanvasLayer"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+>>>>>>> Stashed changes
+script = ExtResource("1_iy3an")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_t8hjw")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_t8hjw")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_t8hjw")
+stretch_mode = 2
