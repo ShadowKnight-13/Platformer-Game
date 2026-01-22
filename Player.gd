@@ -2,11 +2,31 @@ extends CharacterBody2D
 
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -500.0
+const JUMP_HEIGHT: float = -500.0
+const FRICTION: float = 22.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+#var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+const GRAVITY_NORMAL: float = 14.5
+const GRAVITY_WALL: float = 8.5
+const WALL_JUMP_PUSH_FORCE: float = 100.0
+
+var wall_contact_coyote: float = 0.0
+const WALL_CONTACT_COYOTE_TIME: float = 0.2
+
+var wall_jump_lock: float = 0.0
+const WALL_JUMP_LOCK_TIME: float = 0.05
+
+var wall_stick_time := 0.0
+const WALL_STICK_DURATION := 0.5
+
+var look_dir_x: int = 1
+
 var health = 3
+var x_input: float = 0.0
+var velocity_weight_x := 0.15
+
+
 
 
 	
@@ -20,13 +40,44 @@ func kill_player():
 		health = 0
 		
 func _physics_process(delta):
+	
+	x_input = Input.get_axis("move_left", "move_right")
 	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	#if not is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x !=0:
+	if is_on_wall() and not is_on_floor():
+		if wall_stick_time < WALL_STICK_DURATION:
+			wall_stick_time += delta
+			velocity.y = 0  # stick to wall
+		else:
+			velocity.y = GRAVITY_WALL  # start sliding
+			look_dir_x = sign(velocity.x)
+			wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
+	else:
+		wall_stick_time = 0.0
+		wall_contact_coyote -= delta
+		velocity.y += GRAVITY_NORMAL
+		#look_dir_x = sign(velocity.x)
+		#wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
+		#velocity.y = GRAVITY_WALL
+	#else:
+		#wall_contact_coyote -= delta
+		#velocity.y += GRAVITY_NORMAL
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if is_on_floor() or wall_contact_coyote> 0.0:
+		if Input.is_action_just_pressed("jump"):
+			velocity.y = JUMP_HEIGHT
+			if wall_contact_coyote >0.0:
+				velocity.x = -look_dir_x * WALL_JUMP_PUSH_FORCE
+				wall_jump_lock = WALL_JUMP_LOCK_TIME
+	
+	if wall_jump_lock > 0.0:
+		wall_jump_lock -= delta
+		velocity.x = lerp(velocity.x, x_input * SPEED,velocity_weight_x *0.5)
+	else:
+		velocity.x = lerp(velocity.x,x_input * SPEED, velocity_weight_x)
+
+	print("on_wall: ", is_on_wall(), "   vel.x: ", velocity.x)
+
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Input.get_axis("move_left", "move_right")
