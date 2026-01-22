@@ -7,6 +7,13 @@ const JUMP_VELOCITY = -500.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var health = 3
+<<<<<<< Updated upstream
+=======
+var x_input: float = 0.0
+var velocity_weight_x := 0.15
+
+signal health_changed(health)
+>>>>>>> Stashed changes
 
 signal health_changed(health)
 
@@ -22,7 +29,11 @@ func kill_player():
 		
 func damage_player():
 	if Input.is_action_just_pressed("damage_player"):
+<<<<<<< Updated upstream
 		health = health - 1
+=======
+		health = health-1
+>>>>>>> Stashed changes
 		emit_signal("health_changed", health)
 		
 func _physics_process(delta):
@@ -46,3 +57,10 @@ func _physics_process(delta):
 	damage_player()
 	player_death()
 	kill_player()
+<<<<<<< Updated upstream
+=======
+	damage_player()
+	
+
+	
+>>>>>>> Stashed changes

@@ -2,7 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Level.tscn" id="1_4h0sv"]
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player.tscn" id="2_mqxgj"]
+<<<<<<< Updated upstream
 [ext_resource type="Script" uid="uid://bscivubcrm4kt" path="res://healthManager.gd" id="3_cm0pq"]
+=======
+[ext_resource type="Script" uid="uid://cb0kf05tx7fv" path="res://healthManager.gd" id="3_cm0pq"]
+>>>>>>> Stashed changes
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="4_fos0i"]
 
 [node name="Main" type="Node2D"]
@@ -15,6 +19,7 @@ position = Vector2(200, 200)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
 
+<<<<<<< Updated upstream
 [node name="healthUI" type="CanvasLayer" parent="."]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="healthUI"]
@@ -25,18 +30,40 @@ offset_bottom = 49.0
 script = ExtResource("3_cm0pq")
 
 [node name="TextureRect" type="TextureRect" parent="healthUI/HBoxContainer"]
+=======
+[node name="health_ui" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="health_ui"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_cm0pq")
+
+[node name="TextureRect" type="TextureRect" parent="health_ui/HBoxContainer"]
+>>>>>>> Stashed changes
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
+<<<<<<< Updated upstream
 [node name="TextureRect2" type="TextureRect" parent="healthUI/HBoxContainer"]
+=======
+[node name="TextureRect2" type="TextureRect" parent="health_ui/HBoxContainer"]
+>>>>>>> Stashed changes
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
+<<<<<<< Updated upstream
 [node name="TextureRect3" type="TextureRect" parent="healthUI/HBoxContainer"]
+=======
+[node name="TextureRect3" type="TextureRect" parent="health_ui/HBoxContainer"]
+>>>>>>> Stashed changes
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
+<<<<<<< Updated upstream
 [connection signal="health_changed" from="Player" to="healthUI/HBoxContainer" method="_on_player_health_changed"]
+=======
+[connection signal="health_changed" from="Player" to="health_ui/HBoxContainer" method="_on_player_health_changed"]
+>>>>>>> Stashed changes
