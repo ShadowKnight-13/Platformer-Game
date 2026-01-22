@@ -20,6 +20,9 @@ const WALL_JUMP_LOCK_TIME: float = 0.05
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
 
+var wall_jump_override := 0.0
+const WALL_JUMP_OVERRIDE_TIME := 0.15
+
 var look_dir_x: int = 1
 
 var health = 3
@@ -44,7 +47,7 @@ func _physics_process(delta):
 	x_input = Input.get_axis("move_left", "move_right")
 	# Add the gravity.
 	#if not is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x !=0:
-	if is_on_wall() and not is_on_floor():
+	if is_on_wall() and not is_on_floor() and  velocity.y > 0 and velocity.x ==0 :
 		if wall_stick_time < WALL_STICK_DURATION:
 			wall_stick_time += delta
 			velocity.y = 0  # stick to wall
@@ -53,9 +56,12 @@ func _physics_process(delta):
 			look_dir_x = sign(velocity.x)
 			wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
 	else:
-		wall_stick_time = 0.0
+		wall_jump_override -= delta
+		wall_stick_time = 0.5
 		wall_contact_coyote -= delta
 		velocity.y += GRAVITY_NORMAL
+		
+		
 		#look_dir_x = sign(velocity.x)
 		#wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
 		#velocity.y = GRAVITY_WALL
@@ -64,11 +70,16 @@ func _physics_process(delta):
 		#velocity.y += GRAVITY_NORMAL
 
 	if is_on_floor() or wall_contact_coyote> 0.0:
-		if Input.is_action_just_pressed("jump"):
+		if Input.is_action_just_pressed("jump") and wall_contact_coyote > 0.0:
+			velocity.y = JUMP_HEIGHT
+			velocity.x = -look_dir_x * WALL_JUMP_PUSH_FORCE
+			wall_jump_override = WALL_JUMP_OVERRIDE_TIME
+		elif Input.is_action_just_pressed("jump"):
 			velocity.y = JUMP_HEIGHT
 			if wall_contact_coyote >0.0:
 				velocity.x = -look_dir_x * WALL_JUMP_PUSH_FORCE
 				wall_jump_lock = WALL_JUMP_LOCK_TIME
+	
 	
 	if wall_jump_lock > 0.0:
 		wall_jump_lock -= delta
