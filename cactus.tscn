@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://fauhrumalkbo"]
+
+[ext_resource type="Script" uid="uid://4yoy1xmsuncv" path="res://cactus.gd" id="1_arctj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3bmc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2xdd"]
+
+[node name="Cactus" type="StaticBody2D"]
+modulate = Color(0.0960258, 0.8740968, 0.6415438, 1)
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_v3bmc")
+script = ExtResource("1_arctj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 2)
+shape = SubResource("RectangleShape2D_l2xdd")
+debug_color = Color(0.22583255, 0.62284905, 0.41006103, 0.41960785)
