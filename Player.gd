@@ -89,12 +89,15 @@ func _physics_process(delta):
 			$AnimationPlayer.play("Jump")
 		else:
 			$AnimationPlayer.play("Fall")
+		
+		print(velocity.y)
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Input.get_axis("move_left", "move_right")
-	$AnimationPlayer.play("Run")
+	
 	if direction:
 		velocity.x = direction * SPEED
+		$AnimationPlayer.play("Run")
 		if velocity.x < 0:
 			$Sprite2D.flip_h = true
 		elif velocity.x > 0:
