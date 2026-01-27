@@ -36,3 +36,5 @@ stretch_mode = 2
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
+
+[connection signal="health_changed" from="Player" to="health_ui/HBoxContainer" method="_on_player_health_changed"]

@@ -26,7 +26,7 @@ var health = 3
 var x_input: float = 0.0
 var velocity_weight_x := 0.15
 
-
+signal health_changed
 
 
 	
@@ -38,6 +38,11 @@ func player_death():
 func kill_player():
 	if Input.is_action_just_pressed("kill_player"):
 		health = 0
+		
+func damage_player():
+	if Input.is_action_just_pressed("damage_player"):
+		health = health - 1
+		emit_signal("health_changed", health)
 		
 func _physics_process(delta):
 	
@@ -90,6 +95,7 @@ func _physics_process(delta):
 	move_and_slide()
 	player_death()
 	kill_player()
+	damage_player()
 	
 
 	
