@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dgrq8cggm37yk"]
+[gd_scene load_steps=10 format=3 uid="uid://dgrq8cggm37yk"]
 
 [ext_resource type="Script" uid="uid://dl3hynw85ktt4" path="res://Player.gd" id="1_8y7yc"]
 [ext_resource type="Texture2D" uid="uid://fe21evhj0ubl" path="res://Assets/6. Character Animations 32p/Player/player-spritesheet.png" id="2_kpjcp"]
@@ -38,10 +38,61 @@ tracks/0/keys = {
 "values": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
 
+[sub_resource type="Animation" id="Animation_kpjcp"]
+resource_name = "Jump"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="Animation" id="Animation_cxr5p"]
+resource_name = "Fall"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [13]
+}
+
+[sub_resource type="Animation" id="Animation_tdg3f"]
+resource_name = "Wall_slide"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [15]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cxr5p"]
 _data = {
+&"Fall": SubResource("Animation_cxr5p"),
+&"Jump": SubResource("Animation_kpjcp"),
 &"RESET": SubResource("Animation_e80uo"),
-&"Run": SubResource("Animation_kne1u")
+&"Run": SubResource("Animation_kne1u"),
+&"Wall_slide": SubResource("Animation_tdg3f")
 }
 
 [node name="Player" type="CharacterBody2D"]

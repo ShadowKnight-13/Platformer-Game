@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4gxvtbqe0x2p"]
+[gd_scene load_steps=3 format=3 uid="uid://c4gxvtbqe0x2p"]
 
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platform.tscn" id="1_qw8cm"]
+[ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://cactus.tscn" id="2_t7iv1"]
 
 [node name="Level" type="Node2D"]
 
@@ -27,3 +28,6 @@ scale = Vector2(1.5, 1)
 [node name="Platform" parent="." instance=ExtResource("1_qw8cm")]
 position = Vector2(-340, 483)
 rotation = 1.5707964
+
+[node name="Cactus" parent="." instance=ExtResource("2_t7iv1")]
+position = Vector2(1500, 195)
