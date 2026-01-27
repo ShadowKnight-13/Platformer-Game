@@ -43,7 +43,8 @@ func damage_player():
 	if Input.is_action_just_pressed("damage_player"):
 		health = health - 1
 		emit_signal("health_changed", health)
-		
+	
+
 func _physics_process(delta):
 	
 	x_input = Input.get_axis("move_left", "move_right")
