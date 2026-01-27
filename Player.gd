@@ -82,13 +82,23 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x,x_input * SPEED, velocity_weight_x)
 
 	print("on_wall: ", is_on_wall(), "   vel.x: ", velocity.x)
-
+	
+	#Jump/fall animation check
+	if not is_on_floor():
+		if velocity.y < 0:
+			$AnimationPlayer.play("Jump")
+		else:
+			$AnimationPlayer.play("Fall")
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction = Input.get_axis("move_left", "move_right")
 	$AnimationPlayer.play("Run")
 	if direction:
 		velocity.x = direction * SPEED
+		if velocity.x < 0:
+			$Sprite2D.flip_h = true
+		elif velocity.x > 0:
+			$Sprite2D.flip_h = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
