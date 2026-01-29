@@ -10,7 +10,7 @@
 size = Vector2(20, 20.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arctj"]
-size = Vector2(38, 81)
+size = Vector2(38, 80)
 
 [node name="HurtObject" type="StaticBody2D"]
 modulate = Color(0.0960258, 0.8740968, 0.6415438, 1)
@@ -35,7 +35,7 @@ shape = SubResource("RectangleShape2D_l2xdd")
 debug_color = Color(0.22583255, 0.62284905, 0.41006103, 0.41960785)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_arctj")
 
 [connection signal="body_shape_entered" from="HurtBox" to="." method="_on_hurt_box_body_shape_entered"]

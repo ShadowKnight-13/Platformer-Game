@@ -9,7 +9,7 @@ const FRICTION: float = 22.5
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const GRAVITY_NORMAL: float = 14.5
 const GRAVITY_WALL: float = 100.5
-const WALL_JUMP_PUSH_FORCE: float = 1000.0
+const WALL_JUMP_PUSH_FORCE: float = 100.0
 
 var wall_contact_coyote: float = 0.0
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
