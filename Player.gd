@@ -1,113 +1,112 @@
 extends CharacterBody2D
 
-
 const SPEED = 300.0
 const JUMP_HEIGHT: float = -500.0
 const FRICTION: float = 22.5
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-#var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const GRAVITY_NORMAL: float = 14.5
-const GRAVITY_WALL: float = 100.5
-const WALL_JUMP_PUSH_FORCE: float = 100.0
-
-var wall_contact_coyote: float = 0.0
-const WALL_CONTACT_COYOTE_TIME: float = 0.2
-
-var wall_jump_lock: float = 0.0
-const WALL_JUMP_LOCK_TIME: float = 0.05
+const GRAVITY_WALL_SLIDE: float = 100.5
+const WALL_JUMP_PUSH_FORCE: float = 600.0  # Increased for more noticeable push
 
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
 
-var look_dir_x: int = 1
+var wall_jump_lock: float = 0.0
+const WALL_JUMP_LOCK_TIME: float = 0.15  # Slightly longer for better control
 
 var health = 3
-var x_input: float = 0.0
-var velocity_weight_x := 0.15
+var is_wall_jumping := false
 
 signal health_changed
 
-
-	
 func player_death():
 	if health == 0:
 		queue_free()
 		get_tree().reload_current_scene()
-		
+
 func kill_player():
 	health = 0
-	
+
 func damage_player():
 	health = health - 1
 	emit_signal("health_changed", health)
-	
 
 func _physics_process(delta):
+	var x_input = Input.get_axis("move_left", "move_right")
 	
-	x_input = Input.get_axis("move_left", "move_right")
-	# Add the gravity.
-	#if not is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x !=0:
-	if is_on_wall() and not is_on_floor():
+	# Determine which wall we're on (-1 for left wall, 1 for right wall, 0 for no wall)
+	var wall_normal = get_wall_normal()
+	var on_left_wall = wall_normal.x > 0  # Left wall has positive normal (points right)
+	var on_right_wall = wall_normal.x < 0  # Right wall has negative normal (points left)
+	
+	# Check if player is pressing INTO the wall
+	var pressing_into_wall = false
+	if on_left_wall and x_input < 0:  # Pressing left into left wall
+		pressing_into_wall = true
+	elif on_right_wall and x_input > 0:  # Pressing right into right wall
+		pressing_into_wall = true
+	
+	# Wall Stick & Wall Jump Logic
+	if is_on_wall() and not is_on_floor() and pressing_into_wall:
+		# Player is on wall and pressing into it
+		
 		if wall_stick_time < WALL_STICK_DURATION:
+			# Stick to wall (no sliding)
 			wall_stick_time += delta
-			velocity.y = 0  # stick to wall
+			velocity.y = 0
 		else:
-			velocity.y = GRAVITY_WALL  # start sliding
-			look_dir_x = sign(velocity.x)
-			wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
-	else:
-		wall_stick_time = 0.0
-		wall_contact_coyote -= delta
-		velocity.y += GRAVITY_NORMAL
-		#look_dir_x = sign(velocity.x)
-		#wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
-		#velocity.y = GRAVITY_WALL
-	#else:
-		#wall_contact_coyote -= delta
-		#velocity.y += GRAVITY_NORMAL
-
-	if is_on_floor() or wall_contact_coyote> 0.0:
+			# After stick duration, slide down slowly
+			velocity.y = GRAVITY_WALL_SLIDE
+		
+		# Handle wall jump
 		if Input.is_action_just_pressed("jump"):
+			# Jump up and away from wall
 			velocity.y = JUMP_HEIGHT
-			if wall_contact_coyote >0.0:
-				velocity.x = -look_dir_x * WALL_JUMP_PUSH_FORCE
-				wall_jump_lock = WALL_JUMP_LOCK_TIME
-	
-	if wall_jump_lock > 0.0:
-		wall_jump_lock -= delta
-		velocity.x = lerp(velocity.x, x_input * SPEED,velocity_weight_x *0.5)
+			velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE  # Push away from wall
+			wall_jump_lock = WALL_JUMP_LOCK_TIME
+			is_wall_jumping = true
+			wall_stick_time = 0.0  # Reset stick time
 	else:
-		velocity.x = lerp(velocity.x,x_input * SPEED, velocity_weight_x)
-
-	print("on_wall: ", is_on_wall(), "   vel.x: ", velocity.x)
+		# Not on wall or not pressing into it
+		wall_stick_time = 0.0
+		
+		# Apply normal gravity
+		if not is_on_floor():
+			velocity.y += GRAVITY_NORMAL
 	
-	#Jump/fall animation check
+	# Ground jump
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		velocity.y = JUMP_HEIGHT
+	
+	# Horizontal movement
+	if wall_jump_lock > 0.0:
+		# During wall jump lock, reduce player control
+		wall_jump_lock -= delta
+		velocity.x = lerp(velocity.x, x_input * SPEED, 0.075)  # Less control during wall jump
+	else:
+		is_wall_jumping = false
+		# Normal movement control
+		if x_input != 0:
+			velocity.x = lerp(velocity.x, x_input * SPEED, 0.15)
+		else:
+			velocity.x = move_toward(velocity.x, 0, FRICTION)
+	
+	# Animation handling
 	if not is_on_floor():
 		if velocity.y < 0:
 			$AnimationPlayer.play("Jump")
 		else:
 			$AnimationPlayer.play("Fall")
-		
-		print(velocity.y)
-
-	# Get the input direction and handle the movement/deceleration.
-	var direction = Input.get_axis("move_left", "move_right")
-	
-	if direction:
-		velocity.x = direction * SPEED
+	elif x_input != 0:
 		$AnimationPlayer.play("Run")
-		if velocity.x < 0:
-			$Sprite2D.flip_h = true
-		elif velocity.x > 0:
-			$Sprite2D.flip_h = false
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+		$AnimationPlayer.play("Idle")  # Assuming you have an idle animation
+	
+	# Sprite flipping
+	if x_input < 0:
+		$Sprite2D.flip_h = true
+	elif x_input > 0:
+		$Sprite2D.flip_h = false
+	
 	move_and_slide()
 	player_death()
-	
-	
-	
-
-	
