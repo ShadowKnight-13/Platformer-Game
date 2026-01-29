@@ -47,8 +47,11 @@ func _physics_process(delta):
 		pressing_into_wall = true
 	
 	# Wall Stick & Wall Jump Logic
+	var is_wall_sliding = false  # Track if we're wall sliding for animation
+	
 	if is_on_wall() and not is_on_floor() and pressing_into_wall:
 		# Player is on wall and pressing into it
+		is_wall_sliding = true  # Set flag for animation system
 		
 		if wall_stick_time < WALL_STICK_DURATION:
 			# Stick to wall (no sliding)
@@ -91,22 +94,43 @@ func _physics_process(delta):
 		else:
 			velocity.x = move_toward(velocity.x, 0, FRICTION)
 	
-	# Animation handling
-	if not is_on_floor():
+	# === ANIMATION HANDLING ===
+	if is_wall_sliding:
+	# Player is on wall - play wall slide animation
+		$AnimationPlayer.play("Wall_slide")
+		print("Slide")
+	
+	# Flip sprite based on which wall we're on
+		if on_left_wall:
+			$Sprite2D.flip_h = true  # Face right when on left wall
+		elif on_right_wall:
+			$Sprite2D.flip_h = false  # Face left when on right wall
+		
+	elif not is_on_floor():  # ← Changed to elif
+	# In air but not wall sliding
 		if velocity.y < 0:
 			$AnimationPlayer.play("Jump")
 		else:
 			$AnimationPlayer.play("Fall")
-	elif x_input != 0:
-		$AnimationPlayer.play("Run")
-	else:
-		$AnimationPlayer.play("Idle")  # Assuming you have an idle animation
 	
-	# Sprite flipping
-	if x_input < 0:
-		$Sprite2D.flip_h = true
-	elif x_input > 0:
-		$Sprite2D.flip_h = false
+		# Sprite flipping for air movement
+		if x_input < 0:
+			$Sprite2D.flip_h = true
+		elif x_input > 0:
+			$Sprite2D.flip_h = false
+		
+	else:
+	# On ground
+		if x_input != 0:
+			$AnimationPlayer.play("Run")
+		else:
+			$AnimationPlayer.play("Idle")
+	
+	# Sprite flipping for ground movement
+		if x_input < 0:
+			$Sprite2D.flip_h = true
+		elif x_input > 0:
+			$Sprite2D.flip_h = false
 	
 	move_and_slide()
 	player_death()
