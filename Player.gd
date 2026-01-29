@@ -36,13 +36,11 @@ func player_death():
 		get_tree().reload_current_scene()
 		
 func kill_player():
-	if Input.is_action_just_pressed("kill_player"):
-		health = 0
-		
+	health = 0
+	
 func damage_player():
-	if Input.is_action_just_pressed("damage_player"):
-		health = health - 1
-		emit_signal("health_changed", health)
+	health = health - 1
+	emit_signal("health_changed", health)
 	
 
 func _physics_process(delta):
@@ -108,8 +106,8 @@ func _physics_process(delta):
 
 	move_and_slide()
 	player_death()
-	kill_player()
-	damage_player()
+	
+	
 	
 
 	

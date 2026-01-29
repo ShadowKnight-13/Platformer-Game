@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c0raoq7kqfh2h"]
 
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platform.tscn" id="1_3hls8"]
-[ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://cactus.tscn" id="2_hbghi"]
+[ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://HurtObject.tscn" id="2_hbghi"]
 
 [node name="Level 1" type="Node2D"]
 

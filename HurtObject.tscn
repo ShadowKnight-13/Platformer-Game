@@ -7,12 +7,12 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3bmc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2xdd"]
-size = Vector2(25, 21.25)
+size = Vector2(20, 20.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arctj"]
 size = Vector2(38, 81)
 
-[node name="Cactus" type="StaticBody2D"]
+[node name="HurtObject" type="StaticBody2D"]
 modulate = Color(0.0960258, 0.8740968, 0.6415438, 1)
 material = SubResource("CanvasItemMaterial_arctj")
 collision_mask = 3
@@ -29,7 +29,7 @@ offset_bottom = 40.0
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, -2.5)
+position = Vector2(0, -1)
 scale = Vector2(2, 4)
 shape = SubResource("RectangleShape2D_l2xdd")
 debug_color = Color(0.22583255, 0.62284905, 0.41006103, 0.41960785)
