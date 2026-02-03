@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platform.tscn" id="1_qw8cm"]
 [ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://HurtObject.tscn" id="2_t7iv1"]
 [ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://kill_object.tscn" id="3_2nifc"]
+[ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://checkpointnode.tscn" id="4_wkftn"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -70,3 +71,5 @@ position = Vector2(-505, -263)
 [node name="KillObject" parent="." unique_id=474399233 instance=ExtResource("3_2nifc")]
 position = Vector2(-1, 625)
 scale = Vector2(1000, 1)
+
+[node name="Node" parent="." unique_id=776996443 instance=ExtResource("4_wkftn")]
