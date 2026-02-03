@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://du6qi10yob8v4"]
+
+[ext_resource type="Texture2D" uid="uid://d1ukcet8d5m8a" path="res://Assets/desert/pg-cactusBot.png" id="1_5m8x6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_50gw8"]
+height = 32.0
+
+[node name="Node2D" type="Node2D" unique_id=1867671195]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433602609]
+texture_filter = 1
+texture = ExtResource("1_5m8x6")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2105335936]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=60018469]
+shape = SubResource("CapsuleShape2D_50gw8")
