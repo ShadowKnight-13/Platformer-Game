@@ -16,7 +16,7 @@ const DASH_COOLDOWN: float = 0.8
 const DIVE_VERTICAL_BOOST: float = 200.0
 const AIR_DASH_HORIZONTAL_TIME: float = 0.15
 const DASH_JUMP_SPEED_MULTIPLIER: float = 1.2
-const DASH_JUMP_HEIGHT_MULTIPLIER: float = 5
+const DASH_JUMP_HEIGHT_MULTIPLIER: float = 1.3
 const DASH_JUMP_AIR_CONTROL: float = 0.3
 
 var wall_stick_time := 0.0
@@ -67,9 +67,19 @@ func _physics_process(delta):
 	if dash_cooldown_remaining > 0:
 		dash_cooldown_remaining -= delta
 	
+	# === RESET JUMP FLAGS ON LANDING ===
+	# Check if we just landed this frame - MOVED TO TOP
+	if is_on_floor() and not was_on_floor_last_frame:
+		is_jumping = false
+		is_dash_jumping = false
+		# Clamp horizontal velocity to normal speed on landing
+		if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
+			velocity.x = sign(velocity.x) * SPEED
+		print("Player landed! Reset jump flags.")
+	
 	# Ground jump
 	if is_on_floor():
-		if Input.is_action_just_pressed("jump") and not is_dash_jumping:  # ← ADD THIS CHECK
+		if Input.is_action_just_pressed("jump") and not is_dashing:
 			velocity.y = JUMP_HEIGHT
 			is_jumping = true
 			is_dash_jumping = false  # Normal jumps are NOT dash jumps
@@ -255,24 +265,6 @@ func _physics_process(delta):
 				print("!!! Applying normal gravity: ", velocity.y, " + ", GRAVITY_NORMAL, " (skip_gravity: ", skip_gravity_this_frame, ")")
 				velocity.y += GRAVITY_NORMAL
 				print("!!! After normal gravity: ", velocity.y)
-		
-		# === RESET JUMP FLAGS ON LANDING ===
-		# Check if we just landed this frame
-		if is_on_floor() and not was_on_floor_last_frame:
-			is_jumping = false
-			is_dash_jumping = false
-			# Clamp horizontal velocity to normal speed on landing
-			if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
-				velocity.x = sign(velocity.x) * SPEED
-		
-		# Ground jump
-		if is_on_floor():
-			if Input.is_action_just_pressed("jump"):
-				velocity.y = JUMP_HEIGHT
-				is_jumping = true
-				is_dash_jumping = false  # Normal jumps are NOT dash jumps
-				skip_gravity_this_frame = true  # Don't apply gravity on jump frame
-				print("Normal jump: velocity.y = ", velocity.y)
 		
 		# === VARIABLE JUMP HEIGHT ===
 		# Only cut normal jumps, not dash jumps
