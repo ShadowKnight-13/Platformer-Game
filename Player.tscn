@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgrq8cggm37yk"]
+[gd_scene format=3 uid="uid://dgrq8cggm37yk"]
 
 [ext_resource type="Script" uid="uid://dl3hynw85ktt4" path="res://Player.gd" id="1_8y7yc"]
 [ext_resource type="Texture2D" uid="uid://fe21evhj0ubl" path="res://Assets/6. Character Animations 32p/Player/player-spritesheet.png" id="2_kpjcp"]
+[ext_resource type="PackedScene" uid="uid://dcsmaqp4q5cw5" path="res://interacting_componet.tscn" id="3_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p7n"]
 size = Vector2(40, 60)
@@ -95,27 +96,27 @@ _data = {
 &"Wall_slide": SubResource("Animation_tdg3f")
 }
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1449829880 groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_8y7yc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2004552102]
 shape = SubResource("RectangleShape2D_v6p7n")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=770620882]
 offset_left = -20.0
 offset_top = -30.0
 offset_right = 20.0
 offset_bottom = 30.0
 color = Color(0.2, 0.6, 1, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=742094708]
 texture_filter = 3
 texture = ExtResource("2_kpjcp")
 hframes = 17
 frame = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_cxr5p")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2143640432]
+libraries/ = SubResource("AnimationLibrary_cxr5p")
+
+[node name="interacting componet" parent="." unique_id=262432127 instance=ExtResource("3_kne1u")]

@@ -1,38 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnfkdbtgnblwv"]
+[gd_scene format=3 uid="uid://cnfkdbtgnblwv"]
 
 [ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Level.tscn" id="1_4h0sv"]
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player.tscn" id="2_mqxgj"]
 [ext_resource type="Script" path="res://healthManager.gd" id="3_cm0pq"]
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="4_fos0i"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=2108477525]
 
-[node name="Level" parent="." instance=ExtResource("1_4h0sv")]
+[node name="Level" parent="." unique_id=1262363398 instance=ExtResource("1_4h0sv")]
 
-[node name="Player" parent="." instance=ExtResource("2_mqxgj")]
+[node name="Player" parent="." unique_id=408665470 instance=ExtResource("2_mqxgj")]
 position = Vector2(200, 200)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=122775076]
 position_smoothing_enabled = true
 
-[node name="health_ui" type="CanvasLayer" parent="."]
+[node name="health_ui" type="CanvasLayer" parent="." unique_id=134377908]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="health_ui"]
+[node name="HBoxContainer" type="HBoxContainer" parent="health_ui" unique_id=1845192462]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_cm0pq")
 
-[node name="TextureRect" type="TextureRect" parent="health_ui/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="health_ui/HBoxContainer" unique_id=767787313]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="health_ui/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="health_ui/HBoxContainer" unique_id=1298853748]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="health_ui/HBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="health_ui/HBoxContainer" unique_id=347383241]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
