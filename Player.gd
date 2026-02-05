@@ -380,7 +380,7 @@ func _physics_process(delta):
 				$Sprite2D.flip_h = false
 	else:
 		# === DASHING/DIVING ANIMATION ===
-		$AnimationPlayer.play("Slide")
+		$AnimationPlayer.play("Dash")
 		# Maintain sprite direction during dash
 		$Sprite2D.flip_h = dash_direction < 0
 	
