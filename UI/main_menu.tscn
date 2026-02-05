@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bn1tg0fvxq70r"]
+[gd_scene format=3 uid="uid://bn1tg0fvxq70r"]
 
 [ext_resource type="Script" uid="uid://danig46umrffy" path="res://UI/main_menu.gd" id="1_p8ccj"]
 
-[node name="MainMenu" type="CanvasLayer"]
+[node name="MainMenu" type="CanvasLayer" unique_id=325596706]
 script = ExtResource("1_p8ccj")
 
-[node name="VBoxTop" type="VBoxContainer" parent="."]
+[node name="VBoxTop" type="VBoxContainer" parent="." unique_id=1807492908]
 custom_minimum_size = Vector2(250, 250)
 anchors_preset = 5
 anchor_left = 0.5
@@ -16,13 +16,13 @@ offset_bottom = 40.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="VBoxTop"]
+[node name="Title" type="Label" parent="VBoxTop" unique_id=1993293699]
 layout_mode = 2
 text = "Platformer Game Thing"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxBottom" type="VBoxContainer" parent="."]
+[node name="VBoxBottom" type="VBoxContainer" parent="." unique_id=13864549]
 custom_minimum_size = Vector2(250, 250)
 anchors_preset = 7
 anchor_left = 0.5
@@ -36,16 +36,20 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="StartButton" type="Button" parent="VBoxBottom"]
+[node name="StartButton" type="Button" parent="VBoxBottom" unique_id=1333207031]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../SettingsButton")
 text = "Start"
 
-[node name="SettingsButton" type="Button" parent="VBoxBottom"]
+[node name="SettingsButton" type="Button" parent="VBoxBottom" unique_id=1447438172]
 layout_mode = 2
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
 text = "Settings"
 
-[node name="QuitButton" type="Button" parent="VBoxBottom"]
+[node name="QuitButton" type="Button" parent="VBoxBottom" unique_id=749203038]
 layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
 text = "Quit"
 
 [connection signal="pressed" from="VBoxBottom/StartButton" to="." method="_on_start_button_pressed"]
