@@ -4,7 +4,7 @@ var is_paused = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,6 +14,7 @@ func _process(delta: float) -> void:
 			get_tree().paused = not get_tree().paused
 			is_paused = true
 			show()
+			$ResumeButton.grab_focus()
 		elif is_paused == true:
 			get_tree().paused = not get_tree().paused
 			is_paused = false
