@@ -24,6 +24,7 @@ const WALL_STICK_DURATION := 0.5
 
 var wall_jump_lock: float = 0.0
 const WALL_JUMP_LOCK_TIME: float = 0.15
+var is_stuck_to_wall := false
 
 var health = 3
 var is_wall_jumping := false
@@ -257,6 +258,42 @@ func _physics_process(delta):
 				is_dash_jumping = false  # Wall jumps are NOT dash jumps
 				skip_gravity_this_frame = true  # Don't apply gravity on jump frame
 				wall_stick_time = 0.0
+				
+				# Handle wall jump
+				if Input.is_action_just_pressed("jump"):
+					velocity.y = JUMP_HEIGHT
+					velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
+					wall_jump_lock = WALL_JUMP_LOCK_TIME
+					is_wall_jumping = true
+					is_jumping = true
+					is_dash_jumping = false  # Wall jumps are NOT dash jumps
+					skip_gravity_this_frame = true  # Don't apply gravity on jump frame
+					wall_stick_time = 0.0
+
+				# === NEW: Handle wall dash ===
+				elif Input.is_action_just_pressed("dash") and dash_cooldown_remaining <= 0:
+				# Trigger air dash from wall
+					is_dashing = true
+					is_air_dive = true
+					air_dash_horizontal_timer = 0.0
+					dash_time_remaining = DASH_DURATION
+					wall_stick_time = 0.0  # Reset wall stick time
+	
+					# Dash AWAY from the wall (opposite direction of wall normal)
+					# If on left wall (wall_normal.x > 0), dash right
+					# If on right wall (wall_normal.x < 0), dash left
+					dash_direction = sign(wall_normal.x)
+	
+					# Reduce collision height for dash
+					$CollisionShape2D.scale.y = 0.5
+					$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
+	
+					# Set velocities for horizontal dash away from wall
+					velocity.x = dash_direction * DASH_SPEED
+					velocity.y = 0  # Start horizontal
+	
+					print("Wall dash initiated! Direction: ", dash_direction)
+				
 		else:
 			wall_stick_time = 0.0
 			
