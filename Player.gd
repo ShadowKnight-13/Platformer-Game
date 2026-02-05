@@ -77,6 +77,13 @@ func _physics_process(delta):
 		if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
 			velocity.x = sign(velocity.x) * SPEED
 		print("Player landed! Reset jump flags.")
+		# Restore collision if it was waiting
+		if needs_collision_restore:
+			$CollisionShape2D.scale.y = 1.0
+			$CollisionShape2D.position.y = 0
+			needs_collision_restore = false
+			print("Collision shape restored on landing!")
+	
 	
 	# Ground jump
 	if is_on_floor():
@@ -140,13 +147,12 @@ func _physics_process(delta):
 				is_air_dive = false
 				air_dash_horizontal_timer = 0.0
 				dash_cooldown_remaining = DASH_COOLDOWN
-				
-				# Only restore collision if on ground, otherwise mark for later
-				if is_on_floor():
-					$CollisionShape2D.scale.y = 1.0
-					$CollisionShape2D.position.y = 0
-				else:
-					needs_collision_restore = true
+	
+				# ALWAYS restore collision shape when dash ends
+				$CollisionShape2D.scale.y = 1.0
+				$CollisionShape2D.position.y = 0
+				needs_collision_restore = false  # No longer needed
+				print("Dash ended - collision restored")
 			else:
 				# Continue dashing
 				velocity.x = dash_direction * DASH_SPEED
