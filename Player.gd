@@ -226,20 +226,44 @@ func _physics_process(delta):
 		var wall_normal = get_wall_normal()
 		var on_left_wall = wall_normal.x > 0
 		var on_right_wall = wall_normal.x < 0
-		
-		# Check if player is pressing INTO the wall
+
+		# Check if player is pressing INTO the wall (for initial grab)
 		var pressing_into_wall = false
 		if on_left_wall and x_input < 0:
 			pressing_into_wall = true
 		elif on_right_wall and x_input > 0:
 			pressing_into_wall = true
-		
-		# Wall Stick & Wall Jump Logic
+
+		# Check if player is pressing AWAY from the wall (to release)
+		var pressing_away_from_wall = false
+		if on_left_wall and x_input > 0:
+			pressing_away_from_wall = true
+		elif on_right_wall and x_input < 0:
+			pressing_away_from_wall = true
+
+		# === WALL STICK STATE MANAGEMENT ===
+		# Check if we should START sticking to wall
+		if is_on_wall() and not is_on_floor() and pressing_into_wall and not is_stuck_to_wall:
+			# Initial grab - player pressed into wall
+			is_stuck_to_wall = true
+			wall_stick_time = 0.0
+			print("=== GRABBED WALL ===")
+
+		# Check if we should STOP sticking to wall
+		if is_stuck_to_wall:
+			# Release if player presses away from wall OR if no longer touching wall
+			if pressing_away_from_wall or not is_on_wall() or is_on_floor():
+				is_stuck_to_wall = false
+				wall_stick_time = 0.0
+				print("=== RELEASED WALL ===")
+
+		# === WALL STICK & SLIDE PHYSICS ===
 		var is_wall_sliding = false
-		
-		if is_on_wall() and not is_on_floor() and pressing_into_wall:
+
+		# Apply wall stick/slide physics if stuck
+		if is_stuck_to_wall and is_on_wall() and not is_on_floor():
 			is_wall_sliding = true
-			
+	
 			if wall_stick_time < WALL_STICK_DURATION:
 				wall_stick_time += delta
 				print("!!! Wall stick setting velocity.y to 0")
@@ -247,8 +271,8 @@ func _physics_process(delta):
 			else:
 				print("!!! Wall slide setting velocity.y to ", GRAVITY_WALL_SLIDE)
 				velocity.y = GRAVITY_WALL_SLIDE
-			
-			# Handle wall jump
+	
+		# Handle wall jump
 			if Input.is_action_just_pressed("jump"):
 				velocity.y = JUMP_HEIGHT
 				velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
@@ -258,6 +282,39 @@ func _physics_process(delta):
 				is_dash_jumping = false  # Wall jumps are NOT dash jumps
 				skip_gravity_this_frame = true  # Don't apply gravity on jump frame
 				wall_stick_time = 0.0
+				is_stuck_to_wall = false  # Release from wall
+				print("=== WALL JUMP - RELEASED WALL ===")
+	
+			# Handle wall dash
+			elif Input.is_action_just_pressed("dash") and dash_cooldown_remaining <= 0:
+				# Trigger air dash from wall
+				is_dashing = true
+				is_air_dive = true
+				air_dash_horizontal_timer = 0.0
+				dash_time_remaining = DASH_DURATION
+				wall_stick_time = 0.0
+				is_stuck_to_wall = false  # Release from wall
+		
+				# Dash AWAY from the wall
+				dash_direction = sign(wall_normal.x)
+		
+				# Reduce collision height for dash
+				$CollisionShape2D.scale.y = 0.5
+				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
+		
+				# Set velocities for horizontal dash away from wall
+				velocity.x = dash_direction * DASH_SPEED
+				velocity.y = 0  # Start horizontal
+		
+				print("=== WALL DASH - RELEASED WALL ===")
+		else:
+			wall_stick_time = 0.0
+	
+			# Apply normal gravity - BUT NOT on jump frames
+			if not is_on_floor() and not skip_gravity_this_frame:
+				print("!!! Applying normal gravity: ", velocity.y, " + ", GRAVITY_NORMAL, " (skip_gravity: ", skip_gravity_this_frame, ")")
+				velocity.y += GRAVITY_NORMAL
+				print("!!! After normal gravity: ", velocity.y)
 				
 				# Handle wall jump
 				if Input.is_action_just_pressed("jump"):
@@ -294,8 +351,8 @@ func _physics_process(delta):
 	
 					print("Wall dash initiated! Direction: ", dash_direction)
 				
-		else:
-			wall_stick_time = 0.0
+			else:
+				wall_stick_time = 0.0
 			
 			# Apply normal gravity - BUT NOT on jump frames
 			if not is_on_floor() and not skip_gravity_this_frame:
