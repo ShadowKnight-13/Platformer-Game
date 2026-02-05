@@ -19,6 +19,10 @@ const DASH_JUMP_SPEED_MULTIPLIER: float = 1.2
 const DASH_JUMP_HEIGHT_MULTIPLIER: float = 1.3
 const DASH_JUMP_AIR_CONTROL: float = 0.3
 
+# === STEP-UP CONSTANTS ===
+const STEP_UP_MAX_HEIGHT: float = 70.0
+const STEP_UP_CHECK_DISTANCE: float = 10.0
+
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
 
@@ -33,6 +37,7 @@ var is_dash_jumping := false
 var was_on_floor_last_frame := false
 var skip_gravity_this_frame := false
 var needs_collision_restore := false
+var facing_direction := 1.0  # Track which way player is facing (1 = right, -1 = left)
 
 # === DASH SLIDE VARIABLES ===
 var is_dashing := false
@@ -70,9 +75,29 @@ func _physics_process(delta):
 	
 	# === RESET JUMP FLAGS ON LANDING ===
 	# Check if we just landed this frame - MOVED TO TOP
+	print("[FRAME] is_on_floor: ", is_on_floor(), " | was_on_floor_last_frame: ", was_on_floor_last_frame, " | is_jumping: ", is_jumping)
+
 	if is_on_floor() and not was_on_floor_last_frame:
+		print("[LANDING] ✅ LANDING DETECTED - Resetting jump flags")
 		is_jumping = false
 		is_dash_jumping = false
+	# Clamp horizontal velocity to normal speed on landing
+	if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
+		velocity.x = sign(velocity.x) * SPEED
+	print("Player landed! Reset jump flags.")
+	# Restore collision if it was waiting
+	if needs_collision_restore:
+		$CollisionShape2D.scale.y = 1.0
+		$CollisionShape2D.position.y = 0
+		needs_collision_restore = false
+		print("Collision shape restored on landing!")
+
+	# ADDITIONAL SAFETY: Always reset jumping flag if on floor
+	if is_on_floor() and is_jumping:
+		print("[SAFETY] On floor but is_jumping still true - resetting!")
+		is_jumping = false
+		is_dash_jumping = false
+		
 		# Clamp horizontal velocity to normal speed on landing
 		if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
 			velocity.x = sign(velocity.x) * SPEED
@@ -235,7 +260,7 @@ func _physics_process(delta):
 				dash_direction = sign(x_input)
 			else:
 				# Dive in facing direction if no input
-				dash_direction = 1.0 if not $Sprite2D.flip_h else -1.0
+				dash_direction = facing_direction
 			
 			# Reduce collision height
 			$CollisionShape2D.scale.y = 0.5
@@ -254,30 +279,23 @@ func _physics_process(delta):
 		
 		# Determine which wall we're on
 		var wall_normal = get_wall_normal()
-		var on_left_wall = wall_normal.x > 0
-		var on_right_wall = wall_normal.x < 0
-
-		# Check if player is pressing INTO the wall (for initial grab)
-		var pressing_into_wall = false
-		if on_left_wall and x_input < 0:
-			pressing_into_wall = true
-		elif on_right_wall and x_input > 0:
-			pressing_into_wall = true
-
-		# Check if player is pressing AWAY from the wall (to release)
+		var on_left_wall = is_on_wall() and wall_normal.x > 0
+		var on_right_wall = is_on_wall() and wall_normal.x < 0
+		
+		# Check if pressing AWAY from wall
 		var pressing_away_from_wall = false
 		if on_left_wall and x_input > 0:
 			pressing_away_from_wall = true
 		elif on_right_wall and x_input < 0:
 			pressing_away_from_wall = true
-
-		# === WALL STICK STATE MANAGEMENT ===
-		# Check if we should START sticking to wall
-		if is_on_wall() and not is_on_floor() and pressing_into_wall and not is_stuck_to_wall:
-			# Initial grab - player pressed into wall
-			is_stuck_to_wall = true
-			wall_stick_time = 0.0
-			print("=== GRABBED WALL ===")
+		
+		# Check if we JUST touched a wall (and should grab it)
+		if is_on_wall() and not is_on_floor() and not is_stuck_to_wall and not pressing_away_from_wall:
+			# Only grab if moving downward (falling) or just barely upward
+			if velocity.y >= -100:  # Allow slight upward velocity
+				is_stuck_to_wall = true
+				wall_stick_time = 0.0
+				print("=== GRABBED WALL ===")
 
 		# === WALL STICK & SLIDE PHYSICS ===
 		var is_wall_sliding = false
@@ -351,6 +369,7 @@ func _physics_process(delta):
 		else:
 			if x_input != 0:
 				velocity.x = lerp(velocity.x, x_input * SPEED, 0.15)
+				facing_direction = sign(x_input)  # Track facing direction
 			else:
 				velocity.x = move_toward(velocity.x, 0, FRICTION)
 		
@@ -389,10 +408,33 @@ func _physics_process(delta):
 		$AnimationPlayer.play("Dash")
 		# Maintain sprite direction during dash
 		$Sprite2D.flip_h = dash_direction < 0
+		facing_direction = dash_direction  # Update facing direction during dash
 	
 	print("9. Just before move_and_slide - velocity.y: ", velocity.y)
 	move_and_slide()
 	print("10. Just after move_and_slide - velocity.y: ", velocity.y)
+	
+	# === STEP-UP MECHANIC ===
+	# Check if we should step up a small obstacle
+	# Works during normal movement AND dash/slide
+	print("[DEBUG] is_on_floor: ", is_on_floor(), " | is_jumping: ", is_jumping)
+
+	var step_height = 0.0  # Declare OUTSIDE the if block
+
+	if is_on_floor() and not is_jumping:
+		print("[DEBUG] Calling check_for_step()")
+		step_height = check_for_step(x_input)  # Now just assign, not declare
+		print("[DEBUG] Step height returned: ", step_height)
+	
+	if step_height > 0:
+		# Instantly move the player up by the step height (pixel-perfect style)
+		position.y -= step_height
+		print("✅ STEPPED UP ", step_height, " pixels")
+	else:
+		if not is_on_floor():
+			print("[DEBUG] NOT calling step-up: not on floor")
+		elif is_jumping:
+			print("[DEBUG] NOT calling step-up: currently jumping")
 	
 	if is_dash_jumping:
 		print("11. End of frame - still dash jumping, velocity.y: ", velocity.y, "\n")
@@ -401,3 +443,103 @@ func _physics_process(delta):
 	was_on_floor_last_frame = is_on_floor()
 	
 	player_death()
+
+# Check if there's a step in front of the player and return the step height
+func check_for_step(x_input: float) -> float:
+	print("[STEP-UP] === FUNCTION CALLED ===")
+	
+	# Only check for steps when on the ground
+	if not is_on_floor():
+		print("[STEP-UP] ❌ Not on floor")
+		return 0.0
+	
+	
+	print("[STEP-UP] x_input: ", x_input, " | facing_direction: ", facing_direction, " | is_dashing: ", is_dashing)
+	
+	# Player must be pressing toward the direction they're facing OR dashing
+	var trying_to_move_forward = false
+	
+	if is_dashing:
+		trying_to_move_forward = true
+		print("[STEP-UP] ✅ Dashing - allowing step-up")
+	else:
+		if abs(x_input) > 0.1:
+			if sign(x_input) == sign(facing_direction):
+				trying_to_move_forward = true
+				print("[STEP-UP] ✅ Pressing toward facing direction")
+			else:
+				print("[STEP-UP] ❌ Pressing AWAY from facing direction")
+		else:
+			print("[STEP-UP] ❌ No input (x_input too small)")
+	
+	if not trying_to_move_forward:
+		print("[STEP-UP] ❌ Not moving forward - returning 0")
+		return 0.0
+	
+	print("[STEP-UP] Checking for obstacle ahead...")
+	
+	# Use the direction the player is facing
+	var step_direction = facing_direction
+	
+	# Create a raycast to check for obstacles ahead
+	var space_state = get_world_2d().direct_space_state
+	
+	# Get the collision shape size
+	var collision_shape = $CollisionShape2D.shape
+	var player_width = collision_shape.size.x / 2.0
+	var player_height = collision_shape.size.y
+	
+	print("[STEP-UP] Player width: ", player_width, " | Player height: ", player_height)
+	print("[STEP-UP] Player position: ", global_position)
+	
+	# Check for wall ahead at player's FEET level
+	# Start from the front edge AND near the bottom
+	var feet_offset = player_height * 0.4  # Slightly above the very bottom to avoid floor
+	var ray_start = global_position + Vector2(step_direction * player_width, feet_offset)
+	var ray_end = ray_start + Vector2(step_direction * STEP_UP_CHECK_DISTANCE, 0)
+	
+	print("[STEP-UP] Raycast from: ", ray_start, " to: ", ray_end)
+	print("[STEP-UP] Distance: ", (ray_end - ray_start).length(), " pixels")
+	
+	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
+	query.exclude = [self]
+	query.collision_mask = 2  # Only check "World" layer (layer 2)
+	
+	var result = space_state.intersect_ray(query)
+	
+	# If we hit a wall
+	if result:
+		print("[STEP-UP] ✅ HIT OBSTACLE at: ", result.position)
+		
+		# Now check how high the wall is by casting a ray downward from above
+		var check_height = STEP_UP_MAX_HEIGHT
+		var top_check_start = result.position + Vector2(step_direction * 2, -check_height)
+		var top_check_end = result.position + Vector2(step_direction * 2, 0)
+		
+		print("[STEP-UP] Checking height - from: ", top_check_start, " to: ", top_check_end)
+		
+		var top_query = PhysicsRayQueryParameters2D.create(top_check_start, top_check_end)
+		top_query.exclude = [self]
+		top_query.collision_mask = 2
+		
+		var top_result = space_state.intersect_ray(top_query)
+		
+		if top_result:
+			# Calculate the height of the step
+			var step_height = top_result.position.y - global_position.y
+			
+			print("[STEP-UP] Player Y: ", global_position.y, " | Step top Y: ", top_result.position.y)
+			print("[STEP-UP] Calculated step height: ", step_height, " | Max: ", STEP_UP_MAX_HEIGHT)
+			
+			# Only return valid step heights
+			if step_height > 0 and step_height <= STEP_UP_MAX_HEIGHT:
+				print("[STEP-UP] ✅✅✅ VALID STEP! Returning: ", step_height)
+				return step_height
+			else:
+				print("[STEP-UP] ❌ Step invalid (too tall, too short, or negative)")
+		else:
+			print("[STEP-UP] ❌ No top surface found - obstacle might be too tall")
+	else:
+		print("[STEP-UP] ❌ No obstacle detected by raycast")
+	
+	return 0.0

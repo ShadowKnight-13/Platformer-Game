@@ -40,8 +40,16 @@ rotation = 1.5707964
 position = Vector2(-644, 601)
 rotation = -6.2831855
 
+[node name="Platform18" parent="." unique_id=2051752996 instance=ExtResource("1_qw8cm")]
+position = Vector2(-126, 592)
+rotation = -6.2831855
+
 [node name="Platform12" parent="." unique_id=807837156 instance=ExtResource("1_qw8cm")]
 position = Vector2(-1023, 330)
+rotation = -6.2831855
+
+[node name="Platform17" parent="." unique_id=2077298680 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1467, -8)
 rotation = -6.2831855
 
 [node name="Platform16" parent="." unique_id=854369621 instance=ExtResource("1_qw8cm")]
