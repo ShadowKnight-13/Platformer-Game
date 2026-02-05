@@ -6,7 +6,6 @@ func _ready() -> void:
 	$VBoxBottom/StartButton.grab_focus()
 
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
