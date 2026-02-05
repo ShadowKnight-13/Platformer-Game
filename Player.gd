@@ -176,7 +176,31 @@ func _physics_process(delta):
 	# === INITIATE DASH/DIVE ===
 	var before_initiate = velocity.y
 	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_remaining <= 0:
-		if is_on_floor():
+		# Check if we're on a wall FIRST (highest priority)
+		if is_stuck_to_wall and is_on_wall() and not is_on_floor():
+			# WALL DASH - Automatically dash away from wall
+			is_dashing = true
+			is_air_dive = true
+			air_dash_horizontal_timer = 0.0
+			dash_time_remaining = DASH_DURATION
+			wall_stick_time = 0.0
+			is_stuck_to_wall = false  # Release from wall
+			
+			# Dash AWAY from the wall automatically
+			var wall_normal = get_wall_normal()
+			dash_direction = sign(wall_normal.x)
+			
+			# Reduce collision height for dash
+			$CollisionShape2D.scale.y = 0.5
+			$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
+			
+			# Set velocities for horizontal dash away from wall
+			velocity.x = dash_direction * DASH_SPEED
+			velocity.y = 0  # Start horizontal
+			
+			print("=== WALL DASH INITIATED ===")
+			
+		elif is_on_floor():
 			# Ground dash - requires horizontal movement
 			if abs(x_input) > 0.1:  # Must be moving horizontally
 				is_dashing = true
@@ -249,14 +273,6 @@ func _physics_process(delta):
 			wall_stick_time = 0.0
 			print("=== GRABBED WALL ===")
 
-		# Check if we should STOP sticking to wall
-		if is_stuck_to_wall:
-			# Release if player presses away from wall OR if no longer touching wall
-			if pressing_away_from_wall or not is_on_wall() or is_on_floor():
-				is_stuck_to_wall = false
-				wall_stick_time = 0.0
-				print("=== RELEASED WALL ===")
-
 		# === WALL STICK & SLIDE PHYSICS ===
 		var is_wall_sliding = false
 
@@ -272,7 +288,7 @@ func _physics_process(delta):
 				print("!!! Wall slide setting velocity.y to ", GRAVITY_WALL_SLIDE)
 				velocity.y = GRAVITY_WALL_SLIDE
 	
-		# Handle wall jump
+			# Handle wall jump
 			if Input.is_action_just_pressed("jump"):
 				velocity.y = JUMP_HEIGHT
 				velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
@@ -284,75 +300,19 @@ func _physics_process(delta):
 				wall_stick_time = 0.0
 				is_stuck_to_wall = false  # Release from wall
 				print("=== WALL JUMP - RELEASED WALL ===")
-	
-			# Handle wall dash
-			elif Input.is_action_just_pressed("dash") and dash_cooldown_remaining <= 0:
-				# Trigger air dash from wall
-				is_dashing = true
-				is_air_dive = true
-				air_dash_horizontal_timer = 0.0
-				dash_time_remaining = DASH_DURATION
+		
+		# Check if we should STOP sticking to wall (AFTER checking actions)
+		# This way dash/jump take priority over manual release
+		if is_stuck_to_wall and not is_wall_sliding:
+			# Only release manually if NOT currently on wall OR pressing away OR on floor
+			if pressing_away_from_wall or not is_on_wall() or is_on_floor():
+				is_stuck_to_wall = false
 				wall_stick_time = 0.0
-				is_stuck_to_wall = false  # Release from wall
+				print("=== RELEASED WALL ===")
 		
-				# Dash AWAY from the wall
-				dash_direction = sign(wall_normal.x)
-		
-				# Reduce collision height for dash
-				$CollisionShape2D.scale.y = 0.5
-				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
-		
-				# Set velocities for horizontal dash away from wall
-				velocity.x = dash_direction * DASH_SPEED
-				velocity.y = 0  # Start horizontal
-		
-				print("=== WALL DASH - RELEASED WALL ===")
-		else:
+		# Apply gravity when NOT on wall
+		if not is_wall_sliding:
 			wall_stick_time = 0.0
-	
-			# Apply normal gravity - BUT NOT on jump frames
-			if not is_on_floor() and not skip_gravity_this_frame:
-				print("!!! Applying normal gravity: ", velocity.y, " + ", GRAVITY_NORMAL, " (skip_gravity: ", skip_gravity_this_frame, ")")
-				velocity.y += GRAVITY_NORMAL
-				print("!!! After normal gravity: ", velocity.y)
-				
-				# Handle wall jump
-				if Input.is_action_just_pressed("jump"):
-					velocity.y = JUMP_HEIGHT
-					velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
-					wall_jump_lock = WALL_JUMP_LOCK_TIME
-					is_wall_jumping = true
-					is_jumping = true
-					is_dash_jumping = false  # Wall jumps are NOT dash jumps
-					skip_gravity_this_frame = true  # Don't apply gravity on jump frame
-					wall_stick_time = 0.0
-
-				# === NEW: Handle wall dash ===
-				elif Input.is_action_just_pressed("dash") and dash_cooldown_remaining <= 0:
-				# Trigger air dash from wall
-					is_dashing = true
-					is_air_dive = true
-					air_dash_horizontal_timer = 0.0
-					dash_time_remaining = DASH_DURATION
-					wall_stick_time = 0.0  # Reset wall stick time
-	
-					# Dash AWAY from the wall (opposite direction of wall normal)
-					# If on left wall (wall_normal.x > 0), dash right
-					# If on right wall (wall_normal.x < 0), dash left
-					dash_direction = sign(wall_normal.x)
-	
-					# Reduce collision height for dash
-					$CollisionShape2D.scale.y = 0.5
-					$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
-	
-					# Set velocities for horizontal dash away from wall
-					velocity.x = dash_direction * DASH_SPEED
-					velocity.y = 0  # Start horizontal
-	
-					print("Wall dash initiated! Direction: ", dash_direction)
-				
-			else:
-				wall_stick_time = 0.0
 			
 			# Apply normal gravity - BUT NOT on jump frames
 			if not is_on_floor() and not skip_gravity_this_frame:
