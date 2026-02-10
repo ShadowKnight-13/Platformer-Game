@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c3b5baf8x6k11"]
+
+[ext_resource type="Script" uid="uid://c2co38p71xsvs" path="res://med_kit.gd" id="1_wi8lf"]
+[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactable.tscn" id="2_s3qcj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4hbw"]
+
+[node name="MedKit" type="StaticBody2D" unique_id=983136869]
+script = ExtResource("1_wi8lf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1093929525]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=112138592]
+shape = SubResource("RectangleShape2D_s4hbw")
+
+[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("2_s3qcj")]

@@ -10,7 +10,5 @@ collision_mask = 0
 script = ExtResource("1_wh154")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=633911532]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1741299617]
 shape = SubResource("CircleShape2D_jcy0q")
