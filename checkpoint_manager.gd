@@ -1,3 +1,4 @@
+extends Node
 # Autoload script that holds the last checkpoint reached
 # a spawn point.
 

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://HurtObject.tscn" id="2_t7iv1"]
 [ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://kill_object.tscn" id="3_2nifc"]
 [ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://checkpointnode.tscn" id="4_wkftn"]
+[ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://checkpoint.tscn" id="5_q4iis"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -12,7 +13,7 @@ position = Vector2(640, 600)
 scale = Vector2(10, 1)
 
 [node name="Ground2" parent="." unique_id=1832141108 instance=ExtResource("1_qw8cm")]
-position = Vector2(-1320, 1)
+position = Vector2(-1326, 0)
 scale = Vector2(10, 1)
 
 [node name="Platform1" parent="." unique_id=195863919 instance=ExtResource("1_qw8cm")]
@@ -39,12 +40,52 @@ rotation = 1.5707964
 position = Vector2(-644, 601)
 rotation = -6.2831855
 
+[node name="Platform18" parent="." unique_id=2051752996 instance=ExtResource("1_qw8cm")]
+position = Vector2(-126, 592)
+rotation = -6.2831855
+
+[node name="Platform12" parent="." unique_id=807837156 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1023, 330)
+rotation = -6.2831855
+
+[node name="Platform17" parent="." unique_id=2077298680 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1467, -8)
+rotation = -6.2831855
+
+[node name="Platform16" parent="." unique_id=854369621 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1503, 631)
+rotation = -6.2831855
+
 [node name="Platform6" parent="." unique_id=1001715764 instance=ExtResource("1_qw8cm")]
 position = Vector2(-340, 80)
 rotation = 1.5707964
 
+[node name="Platform11" parent="." unique_id=1486463356 instance=ExtResource("1_qw8cm")]
+position = Vector2(-789, 21)
+rotation = 1.5707964
+
 [node name="Platform7" parent="." unique_id=1961411841 instance=ExtResource("1_qw8cm")]
-position = Vector2(-504, 229)
+position = Vector2(-504, 230)
+rotation = 1.5707964
+scale = Vector2(2.5, 1)
+
+[node name="Platform10" parent="." unique_id=856835950 instance=ExtResource("1_qw8cm")]
+position = Vector2(-794, 469.00003)
+rotation = 1.5707964
+scale = Vector2(2.5, 1)
+
+[node name="Platform14" parent="." unique_id=1629696836 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1276, 270.00003)
+rotation = 1.5707964
+scale = Vector2(2.5, 1)
+
+[node name="Platform15" parent="." unique_id=1664720486 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1457, 379)
+rotation = 1.5707964
+scale = Vector2(2.5, 1)
+
+[node name="Platform13" parent="." unique_id=1268572438 instance=ExtResource("1_qw8cm")]
+position = Vector2(-1101, 24)
 rotation = 1.5707964
 scale = Vector2(2.5, 1)
 
@@ -73,3 +114,32 @@ position = Vector2(-1, 625)
 scale = Vector2(1000, 1)
 
 [node name="Node" parent="." unique_id=776996443 instance=ExtResource("4_wkftn")]
+
+[node name="Area2D" parent="." unique_id=1568768071 instance=ExtResource("5_q4iis")]
+position = Vector2(-342, -52)
+
+[node name="KillObject2" parent="." unique_id=1032760759 instance=ExtResource("3_2nifc")]
+position = Vector2(-769, 461)
+rotation = 1.5707964
+scale = Vector2(50, 1)
+
+[node name="KillObject4" parent="." unique_id=2042667331 instance=ExtResource("3_2nifc")]
+position = Vector2(-815, 461.00003)
+rotation = 1.5707964
+scale = Vector2(50, 1)
+
+[node name="KillObject3" parent="." unique_id=945826286 instance=ExtResource("3_2nifc")]
+position = Vector2(-791, 216)
+scale = Vector2(5, 1)
+
+[node name="KillObject5" parent="." unique_id=99069898 instance=ExtResource("3_2nifc")]
+position = Vector2(-786, 125)
+scale = Vector2(5, 1)
+
+[node name="KillObject6" parent="." unique_id=2130403462 instance=ExtResource("3_2nifc")]
+position = Vector2(-766, 72)
+scale = Vector2(1, 11.5)
+
+[node name="KillObject7" parent="." unique_id=320716982 instance=ExtResource("3_2nifc")]
+position = Vector2(-806, 72)
+scale = Vector2(1, 11.5)

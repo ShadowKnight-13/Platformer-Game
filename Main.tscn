@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnfkdbtgnblwv"]
+[gd_scene format=3 uid="uid://cnfkdbtgnblwv"]
 
 [ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Level.tscn" id="1_4h0sv"]
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player.tscn" id="2_mqxgj"]
@@ -6,39 +6,39 @@
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://c54stbsqji1bc" path="res://UI/pause_menu.gd" id="5_fos0i"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=618264885]
 
-[node name="Level" parent="." instance=ExtResource("1_4h0sv")]
+[node name="Level" parent="." unique_id=314983792 instance=ExtResource("1_4h0sv")]
 
-[node name="Player" parent="." instance=ExtResource("2_mqxgj")]
+[node name="Player" parent="." unique_id=1001394227 instance=ExtResource("2_mqxgj")]
 position = Vector2(200, 200)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1114919873]
 position_smoothing_enabled = true
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=470067946]
 
-[node name="Health" type="HBoxContainer" parent="UI"]
+[node name="Health" type="HBoxContainer" parent="UI" unique_id=1020977143]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_cm0pq")
 
-[node name="TextureRect" type="TextureRect" parent="UI/Health"]
+[node name="TextureRect" type="TextureRect" parent="UI/Health" unique_id=1480233141]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="UI/Health"]
+[node name="TextureRect2" type="TextureRect" parent="UI/Health" unique_id=1940240176]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="UI/Health"]
+[node name="TextureRect3" type="TextureRect" parent="UI/Health" unique_id=808781982]
 layout_mode = 2
 texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
-[node name="PauseMenu" type="VBoxContainer" parent="UI"]
+[node name="PauseMenu" type="VBoxContainer" parent="UI" unique_id=935452691]
 process_mode = 3
 visible = false
 custom_minimum_size = Vector2(250, 250)
@@ -56,24 +56,26 @@ grow_vertical = 2
 alignment = 1
 script = ExtResource("5_fos0i")
 
-[node name="PauseLabel" type="Label" parent="UI/PauseMenu"]
+[node name="PauseLabel" type="Label" parent="UI/PauseMenu" unique_id=77675873]
 layout_mode = 2
 text = "Game Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/PauseMenu"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/PauseMenu" unique_id=688277091]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="ResumeButton" type="Button" parent="UI/PauseMenu"]
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu" unique_id=228399729]
 process_mode = 3
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../MainMenuButton")
 text = "Resume"
 
-[node name="MainMenuButton" type="Button" parent="UI/PauseMenu"]
+[node name="MainMenuButton" type="Button" parent="UI/PauseMenu" unique_id=356900389]
 process_mode = 3
 layout_mode = 2
+focus_neighbor_top = NodePath("../ResumeButton")
 text = "Main Menu
 "
 

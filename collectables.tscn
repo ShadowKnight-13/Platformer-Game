@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cde7es5ucygj3"]
+
+[ext_resource type="Script" uid="uid://dleoybnw55j6p" path="res://collectables.gd" id="1_npbb8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cg3p"]
+
+[node name="collectables" type="Area2D" unique_id=1628419132]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1872160201]
+shape = SubResource("CapsuleShape2D_5cg3p")
+script = ExtResource("1_npbb8")
