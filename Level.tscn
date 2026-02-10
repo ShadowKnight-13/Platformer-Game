@@ -89,7 +89,7 @@ rotation = 1.5707964
 scale = Vector2(2.5, 1)
 
 [node name="Platform19" parent="." unique_id=858511435 instance=ExtResource("1_qw8cm")]
-position = Vector2(-1645, 272)
+position = Vector2(-1644, 265.00003)
 rotation = 1.5707964
 scale = Vector2(2.5, 1)
 
@@ -159,9 +159,17 @@ position = Vector2(-806, 72)
 scale = Vector2(1, 11.5)
 
 [node name="KillObject8" parent="." unique_id=1718908110 instance=ExtResource("3_2nifc")]
-position = Vector2(-1834, 494)
-scale = Vector2(1, 5)
+position = Vector2(-1837, 449.00003)
+scale = Vector2(1, 7.5)
+
+[node name="KillObject12" parent="." unique_id=769405799 instance=ExtResource("3_2nifc")]
+position = Vector2(-1665, 214)
+scale = Vector2(1, 7.5)
+
+[node name="KillObject13" parent="." unique_id=560013484 instance=ExtResource("3_2nifc")]
+position = Vector2(-1834, 149.00002)
+scale = Vector2(1, 7.5)
 
 [node name="KillObject9" parent="." unique_id=715915132 instance=ExtResource("3_2nifc")]
-position = Vector2(-1665, 497)
+position = Vector2(-1664, 490)
 scale = Vector2(1, 5)
