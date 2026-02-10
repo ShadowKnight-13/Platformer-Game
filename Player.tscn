@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dumlqjvjwddcd" path="res://interaction_area.tscn" id="3_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p7n"]
-size = Vector2(40, 60)
+size = Vector2(26, 60)
 
 [sub_resource type="Animation" id="Animation_5ncpa"]
 resource_name = "Dash"
@@ -135,9 +135,11 @@ collision_mask = 7
 script = ExtResource("1_8y7yc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=487469612]
+position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_v6p7n")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=834329966]
+visible = false
 offset_left = -20.0
 offset_top = -30.0
 offset_right = 20.0
