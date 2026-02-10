@@ -543,3 +543,26 @@ func check_for_step(x_input: float) -> float:
 		print("[STEP-UP] ❌ No obstacle detected by raycast")
 	
 	return 0.0
+
+
+# This variable will store the object we are currently standing near
+var current_interactable = null
+
+func _input(event):
+	# Check if the "interact" button was pressed AND we are near something
+	if event.is_action_pressed("interact") and current_interactable != null:
+		current_interactable.interact()
+
+# Connect the Area2D 'area_entered' signal to this function
+func _on_interaction_area_area_entered(area):
+	# If the area we entered has an 'interact' function, save it
+	if area.has_method("interact"):
+		current_interactable = area
+		print("Near interactable object!")
+
+# Connect the Area2D 'area_exited' signal to this function
+func _on_interaction_area_area_exited(area):
+	# If we walk away, forget the object
+	if area == current_interactable:
+		current_interactable = null
+		print("Left the interaction zone.")

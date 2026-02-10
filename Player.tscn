@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dl3hynw85ktt4" path="res://Player.gd" id="1_8y7yc"]
 [ext_resource type="Texture2D" uid="uid://fe21evhj0ubl" path="res://Assets/6. Character Animations 32p/Player/player-spritesheet.png" id="2_kpjcp"]
+[ext_resource type="PackedScene" uid="uid://dumlqjvjwddcd" path="res://interaction_area.tscn" id="3_kne1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p7n"]
 size = Vector2(40, 60)
@@ -151,3 +152,5 @@ frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1991847177]
 libraries/ = SubResource("AnimationLibrary_cxr5p")
+
+[node name="InteractionArea" parent="." unique_id=466089267 instance=ExtResource("3_kne1u")]

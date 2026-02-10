@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dumlqjvjwddcd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4hh6"]
-radius = 16.0
+radius = 35.014282
 
 [node name="InteractionArea" type="Area2D" unique_id=466089267]
 

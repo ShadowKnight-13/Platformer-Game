@@ -5,6 +5,6 @@ extends Area2D
 @export var interaction_text: String = "Heal" 
 
 # This function will be called by the Player script
-def interact():
+func interact():
 	print("Object says: ", interaction_text)
 	# You could add logic here to open a chest or play a sound
