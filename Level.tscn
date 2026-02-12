@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://checkpointnode.tscn" id="4_wkftn"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://checkpoint.tscn" id="5_q4iis"]
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://slippery_platform.tscn" id="6_m3clv"]
+[ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://moving_platform.tscn" id="7_mxnmf"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -179,3 +180,13 @@ scale = Vector2(1, 5)
 position = Vector2(-132, 257)
 rotation = 1.5707964
 scale = Vector2(3, 2)
+
+[node name="MovingPlatform" parent="." unique_id=1391459897 instance=ExtResource("7_mxnmf")]
+position = Vector2(-2301, 564)
+scale = Vector2(1.5, 1.5)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(300, 0)])
+
+[node name="MovingPlatform2" parent="." unique_id=513895650 instance=ExtResource("7_mxnmf")]
+position = Vector2(-2402, 100)
+scale = Vector2(1.5, 1.5)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 475)])
