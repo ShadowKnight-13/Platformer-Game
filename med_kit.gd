@@ -19,6 +19,7 @@ func _ready() -> void:
 	# Make sure the interactable is active at the start
 	interactable.is_interactable = true
 
+	CheckpointManager.connect("checkpoint_reached", Callable(self, "_on_checkpoint_reached"))
 
 func _on_interact():
 	# Only heal if the med kit hasn't been used yet in this checkpoint
@@ -34,3 +35,10 @@ func _on_interact():
 		
 		# Optional: Print a message so we know it worked
 		print("Med kit used! Player healed for ", heal_amount, " health")
+
+func _on_checkpoint_reached(_position: Vector2, _health: int):
+	# When a checkpoint is reached, reset this med kit
+	has_been_used = false
+	$Sprite2D.visible = true
+	interactable.is_interactable = true
+	print("Med kit reset at checkpoint")
