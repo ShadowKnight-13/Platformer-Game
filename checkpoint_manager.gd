@@ -5,6 +5,8 @@ extends Node
 var last_position: Vector2 = Vector2.INF
 var last_health: int = 3
 
+signal checkpoint_reached(position: Vector2, health:int)
+
 func set_checkpoint(position: Vector2, health: int) -> void:
 	last_position = position
 	last_health = clampi(health, 0, 3)
