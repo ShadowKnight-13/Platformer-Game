@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://kill_object.tscn" id="3_2nifc"]
 [ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://checkpointnode.tscn" id="4_wkftn"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://checkpoint.tscn" id="5_q4iis"]
+[ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://slippery_platform.tscn" id="6_m3clv"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -173,3 +174,8 @@ scale = Vector2(1, 7.5)
 [node name="KillObject9" parent="." unique_id=715915132 instance=ExtResource("3_2nifc")]
 position = Vector2(-1664, 490)
 scale = Vector2(1, 5)
+
+[node name="Slippery_Platform" parent="." unique_id=843605006 instance=ExtResource("6_m3clv")]
+position = Vector2(-132, 257)
+rotation = 1.5707964
+scale = Vector2(3, 2)

@@ -61,6 +61,27 @@ func damage_player():
 	health = health - 1
 	emit_signal("health_changed", health)
 
+# NEW FUNCTION: Check if we're on a grippable wall
+# Returns true only for layer 2 (World - Platforming)
+# Returns false for layer 4 (World - Slippery Walls)
+func is_on_grippable_wall() -> bool:
+	# First check if we're touching any wall
+	if not is_on_wall():
+		return false
+	
+	# Check each collision to see if it's on the grippable layer
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		
+		# Check if collider is on layer 2 (World - Platforming)
+		# Bit 1 represents layer 2 (0-indexed, so layer 2 = bit 1)
+		if collider.collision_layer & (1 << 1):
+			return true
+	
+	# No grippable walls found
+	return false
+
 func _physics_process(delta):
 	var x_input = Input.get_axis("move_left", "move_right")
 	
@@ -173,8 +194,9 @@ func _physics_process(delta):
 	
 	# === INITIATE DASH/DIVE ===
 	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_remaining <= 0:
-		# Check if we're on a wall FIRST (highest priority)
-		if is_stuck_to_wall and is_on_wall() and not is_on_floor():
+		# Check if we're on a GRIPPABLE wall FIRST (highest priority)
+		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
+		if is_stuck_to_wall and is_on_grippable_wall() and not is_on_floor():
 			# WALL DASH - Automatically dash away from wall
 			is_dashing = true
 			is_air_dive = true
@@ -240,8 +262,8 @@ func _physics_process(delta):
 		
 		# Determine which wall we're on
 		var wall_normal = get_wall_normal()
-		var on_left_wall = is_on_wall() and wall_normal.x > 0
-		var on_right_wall = is_on_wall() and wall_normal.x < 0
+		var on_left_wall = is_on_grippable_wall() and wall_normal.x > 0  # UPDATED
+		var on_right_wall = is_on_grippable_wall() and wall_normal.x < 0  # UPDATED
 		
 		# Check if pressing AWAY from wall
 		var pressing_away_from_wall = false
@@ -250,8 +272,9 @@ func _physics_process(delta):
 		elif on_right_wall and x_input < 0:
 			pressing_away_from_wall = true
 		
-		# Check if we JUST touched a wall (and should grab it)
-		if is_on_wall() and not is_on_floor() and not is_stuck_to_wall and not pressing_away_from_wall:
+		# Check if we JUST touched a GRIPPABLE wall (and should grab it)
+		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
+		if is_on_grippable_wall() and not is_on_floor() and not is_stuck_to_wall and not pressing_away_from_wall:
 			# Only grab if moving downward (falling) or just barely upward
 			if velocity.y >= -100:  # Allow slight upward velocity
 				is_stuck_to_wall = true
@@ -260,8 +283,9 @@ func _physics_process(delta):
 		# === WALL STICK & SLIDE PHYSICS ===
 		var is_wall_sliding = false
 
-		# Apply wall stick/slide physics if stuck
-		if is_stuck_to_wall and is_on_wall() and not is_on_floor():
+		# Apply wall stick/slide physics if stuck ON A GRIPPABLE WALL
+		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
+		if is_stuck_to_wall and is_on_grippable_wall() and not is_on_floor():
 			is_wall_sliding = true
 	
 			if wall_stick_time < WALL_STICK_DURATION:
@@ -284,9 +308,10 @@ func _physics_process(delta):
 		
 		# Check if we should STOP sticking to wall (AFTER checking actions)
 		# This way dash/jump take priority over manual release
+		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
 		if is_stuck_to_wall and not is_wall_sliding:
 			# Only release manually if NOT currently on wall OR pressing away OR on floor
-			if pressing_away_from_wall or not is_on_wall() or is_on_floor():
+			if pressing_away_from_wall or not is_on_grippable_wall() or is_on_floor():
 				is_stuck_to_wall = false
 				wall_stick_time = 0.0
 
