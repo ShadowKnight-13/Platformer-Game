@@ -2,15 +2,61 @@
 
 [ext_resource type="Script" uid="uid://c2co38p71xsvs" path="res://med_kit.gd" id="1_wi8lf"]
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactable.tscn" id="2_s3qcj"]
+[ext_resource type="Texture2D" uid="uid://cq6dixbxgamhr" path="res://Assets/general/pg-medkit.png" id="2_s4hbw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4hbw"]
+
+[sub_resource type="Animation" id="Animation_iv8o7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i051g"]
+resource_name = "Spin"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8nvsh"]
+_data = {
+&"RESET": SubResource("Animation_iv8o7"),
+&"Spin": SubResource("Animation_i051g")
+}
 
 [node name="MedKit" type="StaticBody2D" unique_id=983136869]
 script = ExtResource("1_wi8lf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1093929525]
+texture_filter = 1
+texture = ExtResource("2_s4hbw")
+hframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=112138592]
 shape = SubResource("RectangleShape2D_s4hbw")
 
 [node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("2_s3qcj")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1934777196]
+libraries/ = SubResource("AnimationLibrary_8nvsh")
+speed_scale = 0.8
