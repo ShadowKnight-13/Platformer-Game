@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://dt2thu5d5jnuu"]
+[gd_scene format=4 uid="uid://dt2thu5d5jnuu"]
 
-[ext_resource type="Texture2D" uid="uid://8cebcws6h6yq" path="res://Assets/5. Industrial Tileset - Starter Pack 32p/1_Industrial_Tileset_1C.png" id="1_8uh7m"]
-[ext_resource type="Texture2D" uid="uid://bkoeoqxjpbnwr" path="res://Assets/6. Character Animations 32p/player-sizetest.png" id="2_6uqi0"]
+[ext_resource type="Texture2D" uid="uid://8cebcws6h6yq" path="res://Art Assets/5. Industrial Tileset - Starter Pack 32p/1_Industrial_Tileset_1C.png" id="1_8uh7m"]
+[ext_resource type="Texture2D" uid="uid://bkoeoqxjpbnwr" path="res://Art Assets/6. Character Animations 32p/player-sizetest.png" id="2_6uqi0"]
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ppyta"]
 texture = ExtResource("1_8uh7m")

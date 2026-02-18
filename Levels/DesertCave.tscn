@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://cmvkuqwox10h5"]
 
-[ext_resource type="Texture2D" uid="uid://dh855sqhes1y7" path="res://Assets/desert/desert-ruins.png" id="1_4shgm"]
-[ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player.tscn" id="2_tc5f4"]
-[ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
-[ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
+[ext_resource type="Texture2D" uid="uid://dh855sqhes1y7" path="res://Art Assets/desert/desert-ruins.png" id="1_4shgm"]
+[ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_tc5f4"]
+[ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Art Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
+[ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tc5f4"]
 texture = ExtResource("1_4shgm")

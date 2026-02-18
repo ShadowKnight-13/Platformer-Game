@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://3ngjlfokelpb"]
+
+[ext_resource type="Script" uid="uid://cs37od0yb8unt" path="res://interactables/checkpoint.gd" id="1_luqgl"]
+[ext_resource type="Texture2D" uid="uid://cwgtnacbniud3" path="res://Art Assets/general/pg-checkpoint.png" id="2_r6hke"]
+
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6hke"]
+radius = 14.0
+height = 62.0
+
+[sub_resource type="Animation" id="Animation_s20m7"]
+resource_name = "Get"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000002, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8, 9, 10, 11, 12]
+}
+
+[sub_resource type="Animation" id="Animation_r6hke"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tnhlw"]
+resource_name = "Wave1"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5001515, 1.000303, 1.5004547),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_q25r3"]
+resource_name = "Wave2"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.50081515, 0.9935527, 1.5024456),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s20m7"]
+_data = {
+&"Get": SubResource("Animation_s20m7"),
+&"RESET": SubResource("Animation_r6hke"),
+&"Wave1": SubResource("Animation_tnhlw"),
+&"Wave2": SubResource("Animation_q25r3")
+}
+
+[node name="Area2D" type="Area2D" unique_id=1568768071]
+collision_layer = 2
+script = ExtResource("1_luqgl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=65125027]
+shape = SubResource("CapsuleShape2D_r6hke")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1245561801]
+texture_filter = 1
+texture = ExtResource("2_r6hke")
+hframes = 16
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1237495593]
+libraries/ = SubResource("AnimationLibrary_s20m7")

@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://cnfkdbtgnblwv"]
 
-[ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Level.tscn" id="1_4h0sv"]
-[ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player.tscn" id="2_mqxgj"]
-[ext_resource type="Script" path="res://healthManager.gd" id="3_cm0pq"]
-[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Assets/hearts/heart_32x32.png" id="4_fos0i"]
+[ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Levels/Test Level.tscn" id="1_4h0sv"]
+[ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_mqxgj"]
+[ext_resource type="Script" path="res://Player/healthManager.gd" id="3_cm0pq"]
+[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="4_fos0i"]
 [ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="5_fos0i"]
+
 
 [node name="Main" type="Node2D" unique_id=618264885]
 
