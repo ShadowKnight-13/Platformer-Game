@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgq0n06by8rk1"]
+[gd_scene format=3 uid="uid://bgq0n06by8rk1"]
 
 <<<<<<< Updated upstream
 [ext_resource type="Script" uid="uid://bscivubcrm4kt" path="res://healthManager.gd" id="1_iy3an"]

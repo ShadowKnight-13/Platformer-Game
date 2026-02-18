@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CheckpointManager="*uid://cfgpsnj1k67qt"
+UiGlobals="*uid://8vvtn6oqu5ow"
 
 [display]
 

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dfbtx32arpvrc"]
 
 [ext_resource type="Script" uid="uid://dmlk6mxf7ynuv" path="res://UI/settings_menu.gd" id="1_77no7"]
+[ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_0adsa"]
 
 [node name="SettingsMenu" type="CanvasLayer" unique_id=60479775]
 script = ExtResource("1_77no7")
@@ -21,6 +22,138 @@ alignment = 1
 
 [node name="BackButton" type="Button" parent="VBoxContainer" unique_id=516134700]
 layout_mode = 2
+focus_neighbor_top = NodePath("../../HBoxContainer/VBoxCenterRight/InputMappingButton")
+focus_neighbor_bottom = NodePath("../../HBoxContainer/VBoxCenterRight/ResolutionDropDown")
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
 text = "Back to Menu"
 
+[node name="VBoxTop" type="VBoxContainer" parent="." unique_id=370007672]
+custom_minimum_size = Vector2(250, 250)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.5
+offset_right = 90.5
+offset_bottom = 40.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxTop" unique_id=193944148]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Settings Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1949498284]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxCenterLeft" type="VBoxContainer" parent="HBoxContainer" unique_id=1901905206]
+custom_minimum_size = Vector2(100, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Resolution" type="Label" parent="HBoxContainer/VBoxCenterLeft" unique_id=567729941]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Resolution - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Fullscreen" type="Label" parent="HBoxContainer/VBoxCenterLeft" unique_id=1483091059]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Fullscreen - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextSize" type="Label" parent="HBoxContainer/VBoxCenterLeft" unique_id=1608345942]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Text Size - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxCenterLeft" unique_id=295476774]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="VBoxCenterRight" type="VBoxContainer" parent="HBoxContainer" unique_id=2032869372]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="ResolutionDropDown" type="OptionButton" parent="HBoxContainer/VBoxCenterRight" unique_id=1021799756]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
+focus_neighbor_bottom = NodePath("../FullscreenToggle")
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "1280X720"
+popup/item_0/id = 0
+popup/item_1/text = "1600X900"
+popup/item_1/id = 1
+popup/item_2/text = "1920X1080"
+popup/item_2/id = 2
+popup/item_3/text = "2560X1440"
+popup/item_3/id = 3
+
+[node name="FullscreenToggle" type="CheckButton" parent="HBoxContainer/VBoxCenterRight" unique_id=72292035]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ResolutionDropDown")
+focus_neighbor_bottom = NodePath("../TextSizeDropDown")
+
+[node name="TextSizeDropDown" type="OptionButton" parent="HBoxContainer/VBoxCenterRight" unique_id=1671528757]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_neighbor_top = NodePath("../FullscreenToggle")
+focus_neighbor_bottom = NodePath("../InputMappingButton")
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "18 px"
+popup/item_0/id = 0
+popup/item_1/text = "24 px"
+popup/item_1/id = 1
+popup/item_2/text = "32 px"
+popup/item_2/id = 2
+
+[node name="InputMappingButton" type="Button" parent="HBoxContainer/VBoxCenterRight" unique_id=1519363938]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_neighbor_top = NodePath("../TextSizeDropDown")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Input Mapping"
+
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/ResolutionDropDown" to="." method="_on_resolution_drop_down_item_selected"]
+[connection signal="toggled" from="HBoxContainer/VBoxCenterRight/FullscreenToggle" to="." method="_on_fullscreen_toggle_toggled"]
+[connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/TextSizeDropDown" to="." method="_on_text_size_drop_down_item_selected"]
+[connection signal="pressed" from="HBoxContainer/VBoxCenterRight/InputMappingButton" to="." method="_on_input_mapping_button_pressed"]

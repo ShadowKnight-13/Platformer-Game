@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cq8n1nsit3vwx"]
 
 [ext_resource type="Script" uid="uid://c54stbsqji1bc" path="res://UI/pause_menu.gd" id="1_ltd3m"]
+[ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_jfm1e"]
 
 [node name="PauseMenu" type="VBoxContainer" unique_id=1336150361]
 process_mode = 3
@@ -21,6 +22,8 @@ script = ExtResource("1_ltd3m")
 
 [node name="PauseLabel" type="Label" parent="." unique_id=2020461511]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jfm1e")
+theme_override_font_sizes/font_size = 18
 text = "Game Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -32,13 +35,19 @@ layout_mode = 2
 [node name="ResumeButton" type="Button" parent="." unique_id=132874842]
 process_mode = 3
 layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
+theme_override_fonts/font = ExtResource("2_jfm1e")
+theme_override_font_sizes/font_size = 18
 text = "Resume"
 
 [node name="MainMenuButton" type="Button" parent="." unique_id=1886198093]
 process_mode = 3
 layout_mode = 2
 focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../ResumeButton")
+theme_override_fonts/font = ExtResource("2_jfm1e")
+theme_override_font_sizes/font_size = 18
 text = "Main Menu
 "
 
