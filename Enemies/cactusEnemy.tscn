@@ -9,7 +9,6 @@ height = 32.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433602609]
 texture_filter = 1
-texture = SubResource("CompressedTexture2D_50gw8")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2105335936]
 
