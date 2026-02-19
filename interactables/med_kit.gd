@@ -1,7 +1,6 @@
 extends StaticBody2D
 
-# Reference to the health system (autoload)
-@onready var health_system = get_node("/root/Health")
+var health_system  # This will reference the autoload singleton
 
 # Reference to the interactable Area2D
 @onready var interactable: Area2D = $interactable
@@ -13,19 +12,21 @@ extends StaticBody2D
 var has_been_used: bool = false
 
 func _ready() -> void:
-	# Connect the interact function to be called when player uses this med kit
-	interactable.interact = _on_interact
+	# Get reference to the health system autoload
+	health_system = get_node("/root/healthManager")  # Use exact name from project.godot
 	
-	# Make sure the interactable is active at the start
-	interactable.is_interactable = true
+	# Connect the interact function...
+	interactable.interact = _on_interact
 
 	CheckpointManager.connect("checkpoint_reached", Callable(self, "_on_checkpoint_reached"))
 
 func _on_interact():
 	# Only heal if the med kit hasn't been used yet in this checkpoint
 	if not has_been_used:
-		# Call the heal function from the health system
-		health_system.heal(heal_amount)
+		# Get the Player node and call heal on it
+		var player = get_tree().get_first_node_in_group("player")
+		if player and player.has_method("heal"):
+			health_system.heal(heal_amount)
 		
 		# Mark this med kit as used
 		has_been_used = true
