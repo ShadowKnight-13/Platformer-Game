@@ -25,7 +25,6 @@ CheckpointManager="*uid://cfgpsnj1k67qt"
 UiGlobals="*uid://8vvtn6oqu5ow"
 HealthManager="*res://Player/healthManager.gd"
 
-
 [display]
 
 window/size/viewport_width=1280

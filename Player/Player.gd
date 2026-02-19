@@ -61,6 +61,10 @@ func damage_player():
 	health = health - 1
 	emit_signal("health_changed", health)
 
+func heal(amount: int = 1) -> void:
+	health = mini(health + amount, 3)
+	emit_signal("health_changed", health)
+
 # NEW FUNCTION: Check if we're on a grippable wall
 # Returns true only for layer 2 (World - Platforming)
 # Returns false for layer 4 (World - Slippery Walls)
