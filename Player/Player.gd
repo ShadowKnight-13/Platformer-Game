@@ -65,23 +65,26 @@ func heal(amount: int = 1) -> void:
 	health = mini(health + amount, 3)
 	emit_signal("health_changed", health)
 
-# NEW FUNCTION: Check if we're on a grippable wall
-# Returns true only for layer 2 (World - Platforming)
-# Returns false for layer 4 (World - Slippery Walls)
 func is_on_grippable_wall() -> bool:
-	# First check if we're touching any wall
 	if not is_on_wall():
 		return false
 	
-	# Check each collision to see if it's on the grippable layer
 	for i in get_slide_collision_count():
 		var collision := get_slide_collision(i)
 		var collider := collision.get_collider()
 		
-		# Check if collider is on layer 2 (World - Platforming)
-		# Bit 1 represents layer 2 (0-indexed, so layer 2 = bit 1)
-		if collider.collision_layer & (1 << 1):
-			return true
+		# Handle TileMapLayer using groups
+		if collider is TileMapLayer:
+			if collider.is_in_group("grippable_wall"):
+				return true
+			# Slippery or ungrouped - not grippable
+			continue
+				
+		# Handle physics bodies (moving platforms, etc.)
+		elif "collision_layer" in collider:
+			# Check if on layer 2 (World - Platforming)
+			if collider.collision_layer & (1 << 1):
+				return true
 	
 	# No grippable walls found
 	return false
