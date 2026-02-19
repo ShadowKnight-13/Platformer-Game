@@ -18,6 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://slippery_platform.tscn" id="6_m3clv"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://med_kit.tscn" id="7_mxnmf"]
 <<<<<<< Updated upstream:Levels/Test Level.tscn
+<<<<<<< Updated upstream:Levels/Test Level.tscn
+>>>>>>> Stashed changes:Level.tscn
+=======
 >>>>>>> Stashed changes:Level.tscn
 =======
 >>>>>>> Stashed changes:Level.tscn
@@ -197,6 +200,7 @@ scale = Vector2(3, 2)
 
 <<<<<<< Updated upstream:Levels/Test Level.tscn
 <<<<<<< Updated upstream:Levels/Test Level.tscn
+<<<<<<< Updated upstream:Levels/Test Level.tscn
 [node name="MovingPlatform" parent="." unique_id=1391459897 instance=ExtResource("7_nff53")]
 position = Vector2(-2301, 564)
 scale = Vector2(1.5, 1.5)
@@ -211,12 +215,17 @@ path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 475)])
 =======
 =======
 >>>>>>> Stashed changes:Level.tscn
+=======
+>>>>>>> Stashed changes:Level.tscn
 [node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("7_mxnmf")]
 position = Vector2(1677, 215)
 
 [node name="MedKit2" parent="." unique_id=444677774 instance=ExtResource("7_mxnmf")]
 position = Vector2(-408, -36)
 <<<<<<< Updated upstream:Levels/Test Level.tscn
+<<<<<<< Updated upstream:Levels/Test Level.tscn
+>>>>>>> Stashed changes:Level.tscn
+=======
 >>>>>>> Stashed changes:Level.tscn
 =======
 >>>>>>> Stashed changes:Level.tscn
