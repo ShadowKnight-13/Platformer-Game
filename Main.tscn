@@ -5,9 +5,11 @@
 [ext_resource type="Script" path="res://Player/healthManager.gd" id="3_cm0pq"]
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="4_fos0i"]
 [ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="5_fos0i"]
+[ext_resource type="Script" uid="uid://bexpts2fd7op" path="res://main.gd" id="6_main"]
 
 
 [node name="Main" type="Node2D" unique_id=618264885]
+script = ExtResource("6_main")
 
 [node name="Level" parent="." unique_id=314983792 instance=ExtResource("1_4h0sv")]
 

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cs37od0yb8unt" path="res://interactables/checkpoint.gd" id="1_luqgl"]
 [ext_resource type="Texture2D" uid="uid://cwgtnacbniud3" path="res://Art Assets/general/pg-checkpoint.png" id="2_r6hke"]
 
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6hke"]
 radius = 14.0
 height = 62.0

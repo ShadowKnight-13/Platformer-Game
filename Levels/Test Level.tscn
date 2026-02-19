@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4gxvtbqe0x2p"]
+[gd_scene load_steps=9 format=3 uid="uid://c4gxvtbqe0x2p"]
 
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platforms/Platform.tscn" id="1_mbm6m"]
 [ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://Obstacles/HurtObject.tscn" id="2_j0rrd"]
 [ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://Obstacles/kill_object.tscn" id="3_hklbw"]
-[ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://interactables/checkpointnode.tscn" id="4_mnmnm"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="5_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://Platforms/slippery_platform.tscn" id="6_d1skg"]
 [ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://Platforms/moving_platform.tscn" id="7_nff53"]
@@ -131,9 +130,7 @@ position = Vector2(-505, -263)
 position = Vector2(-1, 625)
 scale = Vector2(1000, 1)
 
-[node name="Node" parent="." unique_id=776996443 instance=ExtResource("4_mnmnm")]
-
-[node name="Area2D" parent="." unique_id=1568768071 instance=ExtResource("5_pbvpm")]
+[node name="Checkpoint" parent="." unique_id=1568768071 instance=ExtResource("5_pbvpm")]
 position = Vector2(-342, -52)
 
 [node name="KillObject2" parent="." unique_id=1032760759 instance=ExtResource("3_hklbw")]

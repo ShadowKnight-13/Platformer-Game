@@ -10,6 +10,7 @@ signal checkpoint_reached(position: Vector2, health:int)
 func set_checkpoint(position: Vector2, health: int) -> void:
 	last_position = position
 	last_health = clampi(health, 0, 3)
+	checkpoint_reached.emit(position, last_health)
 
 func get_spawn_position() -> Vector2:
 	return last_position
