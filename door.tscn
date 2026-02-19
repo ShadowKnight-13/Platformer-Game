@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://drxxs2laxnkrd"]
+
+[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_ba8gm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6xrn"]
+size = Vector2(20, 39)
+
+[node name="Door" type="StaticBody2D" unique_id=1104411225]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=214366090]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1992466277]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_v6xrn")
+
+[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("1_ba8gm")]
