@@ -5,13 +5,13 @@ const JUMP_HEIGHT: float = -500.0
 const JUMP_CUT_MULTIPLIER: float = 0.2
 const FRICTION: float = 22.5
 
-const GRAVITY_NORMAL: float = 16
+const GRAVITY_NORMAL: float = 19
 const GRAVITY_WALL_SLIDE: float = 100.5
 const WALL_JUMP_PUSH_FORCE: float = 600.0
 
 # === DASH SLIDE CONSTANTS ===
 const DASH_SPEED: float = 700.0
-const DASH_DURATION: float = 0.4
+const DASH_DURATION: float = 0.3
 const DASH_COOLDOWN: float = 0.8
 const DIVE_VERTICAL_BOOST: float = 200.0
 const AIR_DASH_HORIZONTAL_TIME: float = 0.15
