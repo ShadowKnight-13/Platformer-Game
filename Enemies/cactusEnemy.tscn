@@ -1,23 +1,11 @@
 [gd_scene format=3 uid="uid://du6qi10yob8v4"]
 
-<<<<<<< Updated upstream
-[ext_resource type="Texture2D" uid="uid://d1ukcet8d5m8a" path="res://Art Assets/desert/pg-cactusBot.png" id="1_5m8x6"]
-=======
-[ext_resource type="Script" uid="uid://xw0mrm0vuduw" path="res://Enemies/cactus_enemy.gd" id="1_5m8x6"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_50gw8"]
-load_path = "res://.godot/imported/pg-cactusBot.png-a964dd931b14ac8e8f6770ed9c626406.ctex"
->>>>>>> Stashed changes
+[ext_resource type="Texture2D" uid="uid://d1ukcet8d5m8a" path="res://Assets/desert/pg-cactusBot.png" id="1_5m8x6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_50gw8"]
 height = 32.0
 
-<<<<<<< Updated upstream
-[node name="Node2D2" type="Node2D" unique_id=1867671195]
-=======
-[node name="Node2D" type="CharacterBody2D" unique_id=1589312293]
-script = ExtResource("1_5m8x6")
->>>>>>> Stashed changes
+[node name="Node2D" type="Node2D" unique_id=1867671195]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433602609]
 texture_filter = 1

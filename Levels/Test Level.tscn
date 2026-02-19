@@ -1,6 +1,5 @@
-[gd_scene format=3 uid="uid://c4gxvtbqe0x2p"]
+[gd_scene load_steps=10 format=3 uid="uid://c4gxvtbqe0x2p"]
 
-<<<<<<< Updated upstream:Levels/Test Level.tscn
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platforms/Platform.tscn" id="1_mbm6m"]
 [ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://Obstacles/HurtObject.tscn" id="2_j0rrd"]
 [ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://Obstacles/kill_object.tscn" id="3_hklbw"]
@@ -9,18 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://Platforms/slippery_platform.tscn" id="6_d1skg"]
 [ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://Platforms/moving_platform.tscn" id="7_nff53"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="8_j0rrd"]
-=======
-[ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platform.tscn" id="1_qw8cm"]
-[ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://HurtObject.tscn" id="2_t7iv1"]
-[ext_resource type="PackedScene" uid="uid://bdnqctr86ybgi" path="res://kill_object.tscn" id="3_2nifc"]
-[ext_resource type="PackedScene" uid="uid://j4e6j6iup1jo" path="res://checkpointnode.tscn" id="4_wkftn"]
-[ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://checkpoint.tscn" id="5_q4iis"]
-[ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://slippery_platform.tscn" id="6_m3clv"]
-[ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://med_kit.tscn" id="7_mxnmf"]
-<<<<<<< Updated upstream:Levels/Test Level.tscn
->>>>>>> Stashed changes:Level.tscn
-=======
->>>>>>> Stashed changes:Level.tscn
+[ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="9_mxnmf"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -195,8 +183,6 @@ position = Vector2(-132, 257)
 rotation = 1.5707964
 scale = Vector2(3, 2)
 
-<<<<<<< Updated upstream:Levels/Test Level.tscn
-<<<<<<< Updated upstream:Levels/Test Level.tscn
 [node name="MovingPlatform" parent="." unique_id=1391459897 instance=ExtResource("7_nff53")]
 position = Vector2(-2301, 564)
 scale = Vector2(1.5, 1.5)
@@ -208,15 +194,9 @@ scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 475)])
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("8_j0rrd")]
-=======
-=======
->>>>>>> Stashed changes:Level.tscn
-[node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("7_mxnmf")]
+
+[node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("9_mxnmf")]
 position = Vector2(1677, 215)
 
-[node name="MedKit2" parent="." unique_id=444677774 instance=ExtResource("7_mxnmf")]
+[node name="MedKit2" parent="." unique_id=444677774 instance=ExtResource("9_mxnmf")]
 position = Vector2(-408, -36)
-<<<<<<< Updated upstream:Levels/Test Level.tscn
->>>>>>> Stashed changes:Level.tscn
-=======
->>>>>>> Stashed changes:Level.tscn
