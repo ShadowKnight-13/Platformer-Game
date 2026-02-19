@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://mx7vlnt8slb7"]
+
+[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_0ohsc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1btnt"]
+
+[node name="Lever" type="StaticBody2D" unique_id=1247505503]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1250066600]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=563766271]
+shape = SubResource("RectangleShape2D_1btnt")
+
+[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("1_0ohsc")]

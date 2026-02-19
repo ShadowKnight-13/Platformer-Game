@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cr3mqow5eljje"]
+
+[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_r04n3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4tde"]
+
+[node name="Button" type="StaticBody2D" unique_id=350515242]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1421034697]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944637220]
+shape = SubResource("RectangleShape2D_n4tde")
+
+[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("1_r04n3")]
