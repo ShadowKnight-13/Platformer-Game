@@ -22,19 +22,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 CheckpointManager="*uid://cfgpsnj1k67qt"
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 UiGlobals="*uid://8vvtn6oqu5ow"
-=======
 HealthManager="*res://healthManager.gd"
->>>>>>> Stashed changes
-=======
-HealthManager="*res://healthManager.gd"
->>>>>>> Stashed changes
-=======
-HealthManager="*res://healthManager.gd"
->>>>>>> Stashed changes
 
 [display]
 
