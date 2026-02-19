@@ -42,10 +42,202 @@ alignment = 1
 
 [node name="BackButton" type="Button" parent="VBoxContainer" unique_id=767223576]
 layout_mode = 2
-focus_neighbor_top = NodePath("../../HBoxContainer/VBoxCenterRight/InputMappingButton")
-focus_neighbor_bottom = NodePath("../../HBoxContainer/VBoxCenterRight/ResolutionDropDown")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
 text = "Back to Settings"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=838220434]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxLabel" type="VBoxContainer" parent="HBoxContainer" unique_id=718398368]
+custom_minimum_size = Vector2(150, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Moves" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=527214302]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Actions"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Left" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1716111473]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Left - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Right" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1564678556]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Right - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=920629578]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Jump - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SlideDash" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1799870044]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Slide Dash - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Interact" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=121473571]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Interact - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=341662725]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Pause - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VBoxController" type="VBoxContainer" parent="HBoxContainer" unique_id=1036427059]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Controller" type="Label" parent="HBoxContainer/VBoxController" unique_id=42527753]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Controller"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=1832293722]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="RightCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=2078531309]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="JumpCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=812981172]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="SlideCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=727786444]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="InteractCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=497626113]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="PauseCon" type="Button" parent="HBoxContainer/VBoxController" unique_id=1245113162]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="VBoxKeyboard" type="VBoxContainer" parent="HBoxContainer" unique_id=2134368648]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Keyboard" type="Label" parent="HBoxContainer/VBoxKeyboard" unique_id=1183959434]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Keyboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=131823502]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="RightKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1324917157]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="JumpKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1927697536]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="SlideKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=191704531]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="InteractKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=86676911]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
+[node name="PauseKey" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=322553518]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxKeyboard/LeftKey" to="." method="_on_left_key_pressed"]

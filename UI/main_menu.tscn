@@ -41,14 +41,23 @@ alignment = 1
 
 [node name="StartButton" type="Button" parent="VBoxBottom" unique_id=1333207031]
 layout_mode = 2
-focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../LevelSelect")
 theme_override_fonts/font = ExtResource("2_tk8dj")
 theme_override_font_sizes/font_size = 18
 text = "Start"
 
-[node name="SettingsButton" type="Button" parent="VBoxBottom" unique_id=1447438172]
+[node name="LevelSelect" type="Button" parent="VBoxBottom" unique_id=1159944614]
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 18
+text = "Level Select"
+
+[node name="SettingsButton" type="Button" parent="VBoxBottom" unique_id=1447438172]
+layout_mode = 2
+focus_neighbor_top = NodePath("../LevelSelect")
 focus_neighbor_bottom = NodePath("../QuitButton")
 theme_override_fonts/font = ExtResource("2_tk8dj")
 theme_override_font_sizes/font_size = 18
@@ -57,10 +66,12 @@ text = "Settings"
 [node name="QuitButton" type="Button" parent="VBoxBottom" unique_id=749203038]
 layout_mode = 2
 focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../StartButton")
 theme_override_fonts/font = ExtResource("2_tk8dj")
 theme_override_font_sizes/font_size = 18
 text = "Quit"
 
 [connection signal="pressed" from="VBoxBottom/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxBottom/LevelSelect" to="." method="_on_level_select_pressed"]
 [connection signal="pressed" from="VBoxBottom/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxBottom/QuitButton" to="." method="_on_quit_button_pressed"]

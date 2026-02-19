@@ -70,7 +70,7 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
-text = "Resolution - "
+text = "Resolution -"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -79,7 +79,7 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
-text = "Fullscreen - "
+text = "Text Size - "
 horizontal_alignment = 2
 vertical_alignment = 1
 
