@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4gxvtbqe0x2p"]
+[gd_scene format=3 uid="uid://c4gxvtbqe0x2p"]
 
 [ext_resource type="PackedScene" uid="uid://bw5iu7vnkhxym" path="res://Platforms/Platform.tscn" id="1_mbm6m"]
 [ext_resource type="PackedScene" uid="uid://fauhrumalkbo" path="res://Obstacles/HurtObject.tscn" id="2_j0rrd"]
@@ -7,7 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://Platforms/slippery_platform.tscn" id="6_d1skg"]
 [ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://Platforms/moving_platform.tscn" id="7_nff53"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="8_j0rrd"]
-[ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="9_mxnmf"]
+[ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="9_hklbw"]
+[ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://med_kit.tscn" id="9_mxnmf"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -197,3 +198,6 @@ position = Vector2(1677, 215)
 
 [node name="MedKit2" parent="." unique_id=444677774 instance=ExtResource("9_mxnmf")]
 position = Vector2(-408, -36)
+
+[node name="CactusEnemy" parent="." unique_id=1867671195 instance=ExtResource("9_hklbw")]
+position = Vector2(942, 310)
