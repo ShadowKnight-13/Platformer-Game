@@ -1,12 +1,21 @@
 [gd_scene format=3 uid="uid://mx7vlnt8slb7"]
 
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_0ohsc"]
+[ext_resource type="Script" uid="uid://b0frfcturl7qj" path="res://lever.gd" id="1_7uavd"]
+[ext_resource type="Script" uid="uid://cg1tiehpy28p3" path="res://lever_animation.gd" id="2_soi7j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1btnt"]
 
 [node name="Lever" type="StaticBody2D" unique_id=1247505503]
+script = ExtResource("1_7uavd")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1250066600]
+[node name="Lever Animator" type="Node2D" parent="." unique_id=1132154651]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Lever Animator" unique_id=1887850250]
+root_node = NodePath("../Sprite2D")
+script = ExtResource("2_soi7j")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lever Animator" unique_id=1250066600]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=563766271]
 shape = SubResource("RectangleShape2D_1btnt")

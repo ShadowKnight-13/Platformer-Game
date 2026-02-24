@@ -1,8 +1,47 @@
 [gd_scene format=3 uid="uid://c3b5baf8x6k11"]
 
 [ext_resource type="Script" uid="uid://c2co38p71xsvs" path="res://interactables/med_kit.gd" id="1_wi8lf"]
+[ext_resource type="Script" uid="uid://4jlyase2vurx" path="res://med_animation.gd" id="2_iv8o7"]
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="2_s3qcj"]
 [ext_resource type="Texture2D" uid="uid://cq6dixbxgamhr" path="res://Art Assets/general/pg-medkit.png" id="2_s4hbw"]
+
+[sub_resource type="Animation" id="Animation_s3qcj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Med Animator/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_s4hbw"]
+resource_name = "spin"
+length = 1.6666701
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Med Animator/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 32), Rect2(32, 0, 32, 32), Rect2(64, 0, 32, 32), Rect2(96, 0, 32, 32), Rect2(128, 0, 32, 32), Rect2(160, 0, 32, 32), Rect2(192, 0, 32, 32), Rect2(224, 0, 32, 32), Rect2(256, 0, 32, 32), Rect2(288, 0, 32, 32), Rect2(320, 0, 32, 32), Rect2(352, 0, 32, 32), Rect2(0, 0, 32, 32)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iv8o7"]
+_data = {
+&"RESET": SubResource("Animation_s3qcj"),
+&"spin": SubResource("Animation_s4hbw")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4hbw"]
 size = Vector2(32, 23)
@@ -11,7 +50,14 @@ size = Vector2(32, 23)
 collision_layer = 0
 script = ExtResource("1_wi8lf")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1093929525]
+[node name="Med Animator" type="Node2D" parent="." unique_id=744743685]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Med Animator" unique_id=1496785635]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_iv8o7")
+script = ExtResource("2_iv8o7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Med Animator" unique_id=1093929525]
 texture = ExtResource("2_s4hbw")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)

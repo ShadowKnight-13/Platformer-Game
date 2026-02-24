@@ -1,13 +1,21 @@
 [gd_scene format=3 uid="uid://drxxs2laxnkrd"]
 
+[ext_resource type="Script" uid="uid://b00ako06f8moj" path="res://door.gd" id="1_0phs7"]
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_ba8gm"]
+[ext_resource type="Script" uid="uid://x3t7c7rf1me1" path="res://door_animation.gd" id="2_50cdl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6xrn"]
 size = Vector2(20, 39)
 
 [node name="Door" type="StaticBody2D" unique_id=1104411225]
+script = ExtResource("1_0phs7")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=214366090]
+[node name="Door Animator" type="Node2D" parent="." unique_id=211563499]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door Animator" unique_id=958811993]
+script = ExtResource("2_50cdl")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door Animator" unique_id=214366090]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1992466277]
 position = Vector2(0, -2.5)
