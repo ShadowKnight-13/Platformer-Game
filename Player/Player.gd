@@ -11,6 +11,7 @@ const WALL_JUMP_PUSH_FORCE: float = 600.0
 
 # === DASH SLIDE CONSTANTS ===
 const DASH_SPEED: float = 700.0
+const CROUCH_SPEED: float = 150.0
 const DASH_DURATION: float = 0.3
 const DASH_COOLDOWN: float = 0.8
 const DIVE_VERTICAL_BOOST: float = 200.0
@@ -49,6 +50,7 @@ var dash_cooldown_remaining := 0.0
 var dash_direction := 1.0
 var is_air_dive := false
 var air_dash_horizontal_timer := 0.0
+var is_crouching := false
 
 #var debug_rays = []
 
@@ -112,11 +114,15 @@ func _physics_process(delta):
 	# Clamp horizontal velocity to normal speed on landing
 	if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
 		velocity.x = sign(velocity.x) * SPEED
-	# Restore collision if it was waiting
+	# Restore collision if it was waiting and there's space
 	if needs_collision_restore:
-		$CollisionShape2D.scale.y = 1.0
-		$CollisionShape2D.position.y = 0
-		needs_collision_restore = false
+		if can_stand_up():
+			$CollisionShape2D.scale.y = 1.0
+			$CollisionShape2D.position.y = 0
+			needs_collision_restore = false
+			is_crouching = false
+		else:
+			is_crouching = true
 
 	# ADDITIONAL SAFETY: Always reset jumping flag if on floor
 	if is_on_floor() and is_jumping:
@@ -126,11 +132,15 @@ func _physics_process(delta):
 		# Clamp horizontal velocity to normal speed on landing
 		if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
 			velocity.x = sign(velocity.x) * SPEED
-		# Restore collision if it was waiting
+		# Restore collision if it was waiting and there's space
 		if needs_collision_restore:
-			$CollisionShape2D.scale.y = 1.0
-			$CollisionShape2D.position.y = 0
-			needs_collision_restore = false
+			if can_stand_up():
+				$CollisionShape2D.scale.y = 1.0
+				$CollisionShape2D.position.y = 0
+				needs_collision_restore = false
+				is_crouching = false
+			else:
+				is_crouching = true
 	
 	
 	# Ground jump
@@ -179,10 +189,16 @@ func _physics_process(delta):
 				air_dash_horizontal_timer = 0.0
 				dash_cooldown_remaining = DASH_COOLDOWN
 	
-				# ALWAYS restore collision shape when dash ends
-				$CollisionShape2D.scale.y = 1.0
-				$CollisionShape2D.position.y = 0
-				needs_collision_restore = false  # No longer needed
+				# Only restore collision shape if there's space above
+				if can_stand_up():
+					$CollisionShape2D.scale.y = 1.0
+					$CollisionShape2D.position.y = 0
+					needs_collision_restore = false
+					is_crouching = false
+				else:
+					# No space to stand — enter crouch state
+					is_crouching = true
+					needs_collision_restore = false
 			else:
 				# Continue dashing
 				velocity.x = dash_direction * DASH_SPEED
@@ -354,6 +370,19 @@ func _physics_process(delta):
 				velocity.x = lerp(velocity.x, x_input * SPEED, DASH_JUMP_AIR_CONTROL)
 			else:
 				velocity.x = lerp(velocity.x, 0.0, DASH_JUMP_AIR_CONTROL * 0.5)
+		elif is_crouching:
+			# Check each frame if space has opened up to stand
+			if can_stand_up():
+				$CollisionShape2D.scale.y = 1.0
+				$CollisionShape2D.position.y = 0
+				needs_collision_restore = false
+				is_crouching = false
+			# Move at reduced crouch speed
+			if x_input != 0:
+				velocity.x = lerp(velocity.x, x_input * CROUCH_SPEED, 0.15)
+				facing_direction = sign(x_input)
+			else:
+				velocity.x = move_toward(velocity.x, 0, FRICTION)
 		else:
 			if x_input != 0:
 				velocity.x = lerp(velocity.x, x_input * SPEED, 0.15)
@@ -381,6 +410,12 @@ func _physics_process(delta):
 			elif x_input > 0:
 				$Sprite2D.flip_h = false
 				
+		elif is_crouching:
+			$AnimationPlayer.play("Dash")
+			if x_input < 0:
+				$Sprite2D.flip_h = true
+			elif x_input > 0:
+				$Sprite2D.flip_h = false
 		else:
 			if x_input != 0:
 				$AnimationPlayer.play("Run")
@@ -431,6 +466,28 @@ func _physics_process(delta):
 	was_on_floor_last_frame = is_on_floor()
 	
 	player_death()
+
+func can_stand_up() -> bool:
+	if $CollisionShape2D.scale.y >= 1.0:
+		return true
+	
+	var space_state = get_world_2d().direct_space_state
+	var collision_shape = $CollisionShape2D.shape
+	var player_height = collision_shape.size.y
+	
+	# Current height is 0.5 scale; full height is 1.0 scale
+	var height_difference = player_height * 0.5  # The amount we're adding
+	
+	# Check from current top of collision to where new top would be
+	var ray_start = global_position - Vector2(0, player_height * 0.25)  # Current top
+	var ray_end = ray_start - Vector2(0, height_difference + 5.0)  # Add small buffer
+	
+	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
+	query.exclude = [self]
+	query.collision_mask = 2  # World layer
+	
+	var result = space_state.intersect_ray(query)
+	return result.is_empty()
 
 # Check if there's a step in front of the player and return the step height
 func check_for_step(x_input: float) -> float:
