@@ -122,7 +122,11 @@ func _physics_process(delta):
 			needs_collision_restore = false
 			is_crouching = false
 		else:
+			# Entering crouch - maintain reduced collision
+			$CollisionShape2D.scale.y = 0.5
+			$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
 			is_crouching = true
+			needs_collision_restore = false
 
 	# ADDITIONAL SAFETY: Always reset jumping flag if on floor
 	if is_on_floor() and is_jumping:
@@ -140,7 +144,11 @@ func _physics_process(delta):
 				needs_collision_restore = false
 				is_crouching = false
 			else:
+				# Entering crouch - maintain reduced collision
+				$CollisionShape2D.scale.y = 0.5
+				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
 				is_crouching = true
+				needs_collision_restore = false
 	
 	
 	# Ground jump
@@ -197,6 +205,9 @@ func _physics_process(delta):
 					is_crouching = false
 				else:
 					# No space to stand — enter crouch state
+					# CRITICAL: Keep the collision shape at reduced height
+					$CollisionShape2D.scale.y = 0.5
+					$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
 					is_crouching = true
 					needs_collision_restore = false
 			else:
@@ -377,6 +388,10 @@ func _physics_process(delta):
 				$CollisionShape2D.position.y = 0
 				needs_collision_restore = false
 				is_crouching = false
+			else:
+				# MAKE SURE collision stays reduced while crouching
+				$CollisionShape2D.scale.y = 0.5
+				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
 			# Move at reduced crouch speed
 			if x_input != 0:
 				velocity.x = lerp(velocity.x, x_input * CROUCH_SPEED, 0.15)
