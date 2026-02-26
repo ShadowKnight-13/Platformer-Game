@@ -4,7 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_tc5f4"]
 [ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Art Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
-[ext_resource type="PackedScene" uid="uid://u37851rkch65" path="res://Obstacles/spike.tscn" id="5_eevto"]
+[ext_resource type="PackedScene" path="res://Obstacles/spike.tscn" id="5_eevto"]
+[ext_resource type="Script" path="res://Player/healthManager.gd" id="6_1vagx"]
+[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="7_7gn3o"]
+[ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="8_fg734"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tc5f4"]
 texture = ExtResource("1_4shgm")
@@ -324,3 +327,28 @@ position = Vector2(581, -1440)
 
 [node name="HurtObject8" parent="Node" unique_id=1395280262 instance=ExtResource("5_eevto")]
 position = Vector2(581, -1459)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1233337934]
+
+[node name="Health" type="HBoxContainer" parent="UI" unique_id=1032034620]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_1vagx")
+
+[node name="TextureRect" type="TextureRect" parent="UI/Health" unique_id=2043999751]
+layout_mode = 2
+texture = ExtResource("7_7gn3o")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Health" unique_id=53571383]
+layout_mode = 2
+texture = ExtResource("7_7gn3o")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Health" unique_id=541381873]
+layout_mode = 2
+texture = ExtResource("7_7gn3o")
+stretch_mode = 2
+
+[node name="PauseMenu" parent="UI" unique_id=1336150361 instance=ExtResource("8_fg734")]
+visible = false
