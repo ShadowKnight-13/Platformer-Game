@@ -647,6 +647,34 @@ func check_for_ledge() -> Vector2:
 
 func _process(_delta):
 	queue_redraw()
+	
+	# DEBUG: Update ColorRect to match collision shape size
+	if OS.is_debug_build() and has_node("ColorRect") and has_node("CollisionShape2D"):
+		var color_rect = $ColorRect
+		var collision = $CollisionShape2D
+		var shape = collision.shape as RectangleShape2D
+		
+		if shape:
+			# Make it visible for debugging
+			color_rect.visible = true
+			
+			# Calculate the actual size based on shape size and scale
+			var actual_width = shape.size.x * collision.scale.x
+			var actual_height = shape.size.y * collision.scale.y
+			
+			# Update ColorRect size (centered around origin)
+			color_rect.offset_left = -actual_width / 2
+			color_rect.offset_right = actual_width / 2
+			color_rect.offset_top = -actual_height / 2 + collision.position.y
+			color_rect.offset_bottom = actual_height / 2 + collision.position.y
+			
+			# Optional: Change color based on state for better debugging
+			if is_crouching:
+				color_rect.color = Color(1, 0.5, 0, 0.5)  # Orange when crouching
+			elif is_dashing:
+				color_rect.color = Color(1, 0, 0, 0.5)  # Red when dashing
+			else:
+				color_rect.color = Color(0.2, 0.6, 1, 0.5)  # Blue normally
 
 #func _draw():
 	# Draw all stored debug rays
