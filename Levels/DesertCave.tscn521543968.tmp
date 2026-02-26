@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dh855sqhes1y7" path="res://Art Assets/desert/desert-ruins.png" id="1_4shgm"]
 [ext_resource type="Texture2D" uid="uid://bed85ls462eh" path="res://Art Assets/general/Tileset_8.png" id="2_7gn3o"]
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_tc5f4"]
-[ext_resource type="Texture2D" uid="uid://chdij55euk6o6" path="res://Art Assets/general/Wasteland-Files.png" id="3_fg734"]
 [ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Art Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
 [ext_resource type="PackedScene" uid="uid://u37851rkch65" path="res://Obstacles/spike.tscn" id="5_eevto"]
@@ -369,70 +368,6 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_fg734")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_80kg0"]
-texture = ExtResource("3_fg734")
-16:6/0 = 0
-17:6/0 = 0
-20:6/0 = 0
-21:6/0 = 0
-22:6/0 = 0
-23:6/0 = 0
-24:6/0 = 0
-8:7/0 = 0
-9:7/0 = 0
-10:7/0 = 0
-12:7/0 = 0
-13:7/0 = 0
-14:7/0 = 0
-20:7/0 = 0
-21:7/0 = 0
-22:7/0 = 0
-23:7/0 = 0
-24:7/0 = 0
-6:8/0 = 0
-8:8/0 = 0
-10:8/0 = 0
-12:8/0 = 0
-13:8/0 = 0
-14:8/0 = 0
-16:8/0 = 0
-18:8/0 = 0
-20:8/0 = 0
-21:8/0 = 0
-22:8/0 = 0
-23:8/0 = 0
-24:8/0 = 0
-8:9/0 = 0
-9:9/0 = 0
-10:9/0 = 0
-12:9/0 = 0
-13:9/0 = 0
-14:9/0 = 0
-23:9/0 = 0
-24:9/0 = 0
-17:10/0 = 0
-18:10/0 = 0
-19:10/0 = 0
-22:10/0 = 0
-23:10/0 = 0
-24:10/0 = 0
-25:10/0 = 0
-8:11/0 = 0
-9:11/0 = 0
-10:11/0 = 0
-11:11/0 = 0
-12:11/0 = 0
-20:11/0 = 0
-21:11/0 = 0
-8:12/0 = 0
-9:12/0 = 0
-10:12/0 = 0
-11:12/0 = 0
-12:12/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_ifivw"]
-sources/0 = SubResource("TileSetAtlasSource_80kg0")
-
 [node name="DesertCave" type="Node2D" unique_id=1588144092]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1768396249 groups=["grippable_wall"]]
@@ -444,11 +379,6 @@ tile_set = SubResource("TileSet_fn1r1")
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAsAJ7/AAAEAAIAAAAsAJ//AAAEAAIAAAAsAKD/AAAEAAIAAAAsAKH/AAAEAAIAAAA=")
 tile_set = SubResource("TileSet_80kg0")
-
-[node name="Decor" type="TileMapLayer" parent="." unique_id=1462630218]
-texture_filter = 1
-tile_map_data = PackedByteArray("AAD7/wQAAAAWAAoAAAACAAQAAAAXAAoAAAADAAQAAAAYAAoAAAACAAMAAAAXAAkAAAADAAMAAAAYAAkAAAAIAAQAAAAZAAoAAAD7//H/AAAVAAsAAAATAPD/AAAUAAsAAAD2//z/AAATAAoAAAD2//r/AAAUAAsAAAD3/wEAAAARAAoAAAD4/wQAAAATAAoAAAAgAAMAAAATAAoAAAAwAAcAAAASAAoAAAAvAAcAAAARAAoAAAAtAAcAAAATAAoAAAA7AP7/AAAZAAoAAAAnAO//AAAVAAsAAABIAPH/AAAVAAsAAABQAPb/AAAUAAsAAABRAOD/AAAUAAsAAAA=")
-tile_set = SubResource("TileSet_ifivw")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1291162429]
 texture_filter = 1
