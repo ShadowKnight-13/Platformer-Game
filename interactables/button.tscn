@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://cr3mqow5eljje"]
 
-[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_r04n3"]
-[ext_resource type="Script" uid="uid://cr5e0wbx6goqb" path="res://button.gd" id="1_vxja4"]
-[ext_resource type="Script" uid="uid://cskl3jnpbtkjr" path="res://button_animation.gd" id="2_lt4la"]
+[ext_resource type="Script" uid="uid://cr5e0wbx6goqb" path="res://interactables/button.gd" id="1_04y4t"]
+[ext_resource type="Script" uid="uid://cskl3jnpbtkjr" path="res://interactables/button_animation.gd" id="2_auae5"]
+[ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="3_hob56"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4tde"]
 
 [node name="Button" type="StaticBody2D" unique_id=350515242]
-script = ExtResource("1_vxja4")
+script = ExtResource("1_04y4t")
 
 [node name="Button Animator" type="Node2D" parent="." unique_id=1960405843]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Button Animator" unique_id=1112618501]
-script = ExtResource("2_lt4la")
+script = ExtResource("2_auae5")
 
 [node name="Sprite2D" type="Sprite2D" parent="Button Animator" unique_id=1421034697]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944637220]
 shape = SubResource("RectangleShape2D_n4tde")
 
-[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("1_r04n3")]
+[node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("3_hob56")]

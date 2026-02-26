@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://mx7vlnt8slb7"]
 
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_0ohsc"]
-[ext_resource type="Script" uid="uid://b0frfcturl7qj" path="res://lever.gd" id="1_7uavd"]
+[ext_resource type="Script" uid="uid://b0frfcturl7qj" path="res://interactables/lever.gd" id="1_7uavd"]
 [ext_resource type="Script" uid="uid://cg1tiehpy28p3" path="res://lever_animation.gd" id="2_soi7j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1btnt"]
