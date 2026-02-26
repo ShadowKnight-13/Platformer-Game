@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cnmn45grr2pel"]
+
+[ext_resource type="Script" uid="uid://4yoy1xmsuncv" path="res://Obstacles/cactus.gd" id="1_ag3oq"]
+[ext_resource type="Texture2D" uid="uid://qvvlt26gi0c7" path="res://Art Assets/general/pg-spike2.png" id="2_ag3oq"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_arctj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3bmc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2xdd"]
+size = Vector2(7.5, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nf58h"]
+size = Vector2(15, 14)
+
+[node name="HurtObject" type="StaticBody2D" unique_id=1262544450]
+material = SubResource("CanvasItemMaterial_arctj")
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_v3bmc")
+script = ExtResource("1_ag3oq")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=267008401]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1206553604]
+position = Vector2(-0.5, -1)
+scale = Vector2(2, 4)
+shape = SubResource("RectangleShape2D_l2xdd")
+debug_color = Color(0.22583255, 0.62284905, 0.41006103, 0.41960785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=875200507]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_nf58h")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=311195174]
+texture_filter = 1
+offset_left = -8.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = 7.0
+texture = ExtResource("2_ag3oq")
+stretch_mode = 1
+
+[connection signal="body_shape_entered" from="HurtBox" to="." method="_on_hurt_box_body_shape_entered"]
