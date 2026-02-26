@@ -23,6 +23,9 @@ const DASH_JUMP_AIR_CONTROL: float = 0.3
 const STEP_UP_MAX_HEIGHT: float = 70.0
 const STEP_UP_CHECK_DISTANCE: float = 10.0
 
+# === LEDGE GRAB CONSTANTS ===
+const LEDGE_GRAB_DISTANCE: float = 30.0  # Reduced - how far above player to check for ledge
+
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
 
@@ -46,6 +49,8 @@ var dash_cooldown_remaining := 0.0
 var dash_direction := 1.0
 var is_air_dive := false
 var air_dash_horizontal_timer := 0.0
+
+#var debug_rays = []
 
 signal health_changed
 
@@ -241,7 +246,10 @@ func _physics_process(delta):
 				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
 				
 				velocity.x = dash_direction * DASH_SPEED
-				velocity.y = 10  # Small downward nudge to stay grounded
+				
+				# OPTIONAL: keep player grounded during dash
+				if velocity.y < 10:
+					velocity.y = 10  # Small downward nudge to stay grounded
 		else:
 			# Air dive - no horizontal movement required
 			is_dashing = true
@@ -405,6 +413,20 @@ func _physics_process(delta):
 		# Instantly move the player up by the step height (pixel-perfect style)
 		position.y -= step_height
 	
+	# === LEDGE GRAB MECHANIC ===
+	# Check for ledge grab when in the air and touching a wall
+	# === LEDGE GRAB MECHANIC ===
+# Check for ledge grab when in the air and touching a wall
+	if not is_on_floor() and is_on_wall():
+		var ledge_data = check_for_ledge()
+		if ledge_data != Vector2.ZERO:
+		# Teleport to ledge position
+			global_position = ledge_data
+			velocity.y = 0  # Cancel vertical velocity
+		# Release from wall if stuck
+			is_stuck_to_wall = false
+			wall_stick_time = 0.0
+	
 	# Track floor state for next frame
 	was_on_floor_last_frame = is_on_floor()
 	
@@ -467,32 +489,97 @@ func check_for_step(x_input: float) -> float:
 		var top_result = space_state.intersect_ray(top_query)
 		
 		if top_result:
-			# Calculate the height of the step
-			var step_height = top_result.position.y - global_position.y
+			# Found the top! Calculate step height
+			var step_top_y = top_result.position.y
+			var player_bottom_y = global_position.y + feet_offset
 			
-			# Only return valid step heights
-			if step_height > 0 and step_height <= STEP_UP_MAX_HEIGHT:
-				return step_height
+			var step_height_measured = player_bottom_y - step_top_y
+			
+			# Only step up if it's within our max height AND positive
+			if step_height_measured > 0 and step_height_measured <= STEP_UP_MAX_HEIGHT:
+				return step_height_measured
 	
 	return 0.0
 
 
-# This variable will store the object we are currently standing near
-var current_interactable = null
+func check_for_ledge() -> Vector2:
+	#debug_rays.clear()  # Clear previous frame's debug data
+	
+	if not is_on_wall():
+		return Vector2.ZERO
+	
+	var space_state = get_world_2d().direct_space_state
+	var wall_normal = get_wall_normal()
+	
+	# Direction INTO the wall (opposite of normal)
+	var into_wall_direction = -wall_normal.x
+	
+	# Get collision shape info
+	var collision_shape = $CollisionShape2D.shape
+	var player_width = collision_shape.size.x / 2.0
+	var player_height = collision_shape.size.y / 2.0
+	
+	# Start checking from the BOTTOM of the player (feet level)
+	var player_bottom_y = global_position.y + player_height
+	
+	# Check upward in smaller increments for better detection
+	for i in range(6):
+		var check_offset = i * 5.0
+		var check_y = player_bottom_y - check_offset
+		
+		if check_offset > LEDGE_GRAB_DISTANCE:
+			break
+		
+		# Check if there's still a wall at this height
+		# Cast from player position TOWARD the wall
+		var wall_check_start = Vector2(global_position.x, check_y)
+		var wall_check_end = wall_check_start + Vector2(into_wall_direction * 20, 0)
+		
+		# Store debug info
+		#debug_rays.append({"type": "line", "start": wall_check_start, "end": wall_check_end, "color": Color.YELLOW})
+		
+		var wall_query = PhysicsRayQueryParameters2D.create(wall_check_start, wall_check_end)
+		wall_query.exclude = [self]
+		wall_query.collision_mask = 2
+		
+		var wall_result = space_state.intersect_ray(wall_query)
+		
+		# If we DON'T hit a wall at this height, the wall has ended - check for floor
+		if not wall_result:
+			# Now check if there's a floor where the wall used to be
+			# Cast downward from where the wall check ended (into the wall area)
+			var floor_check_start = wall_check_end  # Start from where wall check ended
+			var floor_check_end = floor_check_start + Vector2(0, 50)
+			
+			# Store debug info
+			#debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
+			
+			var floor_query = PhysicsRayQueryParameters2D.create(floor_check_start, floor_check_end)
+			floor_query.exclude = [self]
+			floor_query.collision_mask = 2
+			
+			var floor_result = space_state.intersect_ray(floor_query)
+			
+			if floor_result:
+				# Store debug info
+				#debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
+				
+				# Found a valid ledge! Return position to teleport to
+				var teleport_pos = Vector2(
+					floor_result.position.x,
+					floor_result.position.y - player_height - 2
+				)
+				return teleport_pos
+	
+	return Vector2.ZERO
 
-func _input(event):
-	# Check if the "interact" button was pressed AND we are near something
-	if event.is_action_pressed("interact") and current_interactable != null:
-		current_interactable.interact()
+func _process(_delta):
+	queue_redraw()
 
-# Connect the Area2D 'area_entered' signal to this function
-func _on_interaction_area_area_entered(area):
-	# If the area we entered has an 'interact' function, save it
-	if area.has_method("interact"):
-		current_interactable = area
-
-# Connect the Area2D 'area_exited' signal to this function
-func _on_interaction_area_area_exited(area):
-	# If we walk away, forget the object
-	if area == current_interactable:
-		current_interactable = null
+#func _draw():
+	# Draw all stored debug rays
+	#for ray in debug_rays:
+		#if ray.type == "line":
+			#draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
+		#elif ray.type == "circle":
+			#draw_circle(ray.pos - global_position, 5, ray.color)
