@@ -52,7 +52,9 @@ var is_air_dive := false
 var air_dash_horizontal_timer := 0.0
 var is_crouching := false
 
-var debug_rays = []
+@onready var melee_hitbox: Area2D = $MeleeHitbox
+
+#var debug_rays = []
 
 signal health_changed
 
@@ -106,6 +108,9 @@ func _physics_process(delta):
 	if dash_cooldown_remaining > 0:
 		dash_cooldown_remaining -= delta
 	
+	# Melee attack input
+	if Input.is_action_just_pressed("attack"):
+		_try_attack()
 	# === RESET JUMP FLAGS ON LANDING ===
 
 	if is_on_floor() and not was_on_floor_last_frame:
@@ -447,7 +452,8 @@ func _physics_process(delta):
 		# Maintain sprite direction during dash
 		$Sprite2D.flip_h = dash_direction < 0
 		facing_direction = dash_direction  # Update facing direction during dash
-	
+	_update_attack_timers(delta)
+	_update_melee_hitbox_position()
 	move_and_slide()
 	
 	# === STEP-UP MECHANIC ===
@@ -689,8 +695,57 @@ func _process(_delta):
 
 func _draw():
 	# Draw all stored debug rays
-	for ray in debug_rays:
-		if ray.type == "line":
-			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
-		elif ray.type == "circle":
-			draw_circle(ray.pos - global_position, 5, ray.color)
+	#for ray in debug_rays:
+		#if ray.type == "line":
+			#draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
+		#elif ray.type == "circle":
+			#draw_circle(ray.pos - global_position, 5, ray.color)
+
+var is_attacking: bool = false
+var attack_duration: float = 0.18
+var attack_cooldown: float = 0.25
+var _attack_timer: float = 0.0
+var _attack_cooldown_timer: float = 0.0
+
+var melee_offset := Vector2(40, 0) #this can change to match hitbox
+
+func _try_attack() -> void:
+	if is_attacking or _attack_cooldown_timer > 0.0 or is_dashing:
+		return
+
+	is_attacking = true
+	_attack_timer = attack_duration
+	_attack_cooldown_timer = attack_cooldown
+
+	print("Attack started")
+
+	melee_hitbox.monitoring = true
+	melee_hitbox.monitorable = true
+
+	if $AnimationPlayer.has_animation("Attack"):
+		$AnimationPlayer.play("Attack")
+
+
+func _update_attack_timers(delta: float) -> void:
+	if _attack_cooldown_timer > 0.0:
+		_attack_cooldown_timer -= delta
+
+	if is_attacking:
+		_attack_timer -= delta
+		if _attack_timer <= 0.0:
+			is_attacking = false
+			melee_hitbox.monitoring = false
+			melee_hitbox.monitorable = false
+
+
+func _update_melee_hitbox_position() -> void:
+	if melee_hitbox:
+		melee_hitbox.position = Vector2(melee_offset.x * facing_direction, melee_offset.y)
+
+
+func _on_melee_hitbox_body_entered(body: Node2D) -> void:
+	if not is_attacking:
+		return
+
+	if body.has_method("take_damage"):
+		body.take_damage(1)

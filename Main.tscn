@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="5_fos0i"]
 [ext_resource type="Script" uid="uid://bexpts2fd7op" path="res://main.gd" id="6_main"]
 
-
 [node name="Main" type="Node2D" unique_id=618264885]
 script = ExtResource("6_main")
 

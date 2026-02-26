@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dl3hynw85ktt4" path="res://Player/Player.gd" id="1_8y7yc"]
 [ext_resource type="Texture2D" uid="uid://fe21evhj0ubl" path="res://Art Assets/6. Character Animations 32p/Player/player-spritesheet.png" id="2_kpjcp"]
 [ext_resource type="PackedScene" uid="uid://dumlqjvjwddcd" path="res://Player/interaction_area.tscn" id="3_kne1u"]
+[ext_resource type="Script" uid="uid://b8rcmd3uv2s03" path="res://Player/melee_hitbox.gd" id="4_ddoul"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p7n"]
 size = Vector2(26, 60)
@@ -130,9 +131,12 @@ _data = {
 &"Wall_slide": SubResource("Animation_tdg3f")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8g4oa"]
+size = Vector2(52, 13)
+
 [node name="Player" type="CharacterBody2D" unique_id=509081286 groups=["player"]]
 collision_layer = 3
-collision_mask = 15
+collision_mask = 7
 script = ExtResource("1_8y7yc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=487469612]
@@ -157,3 +161,15 @@ frame = 2
 libraries/ = SubResource("AnimationLibrary_cxr5p")
 
 [node name="InteractionArea" parent="." unique_id=466089267 instance=ExtResource("3_kne1u")]
+
+[node name="MeleeHitbox" type="Area2D" parent="." unique_id=730947021]
+monitoring = false
+monitorable = false
+collision_mask = 9
+script = ExtResource("4_ddoul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHitbox" unique_id=493722756]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_8g4oa")
+
+[connection signal="body_entered" from="MeleeHitbox" to="." method="_on_melee_hitbox_body_entered"]

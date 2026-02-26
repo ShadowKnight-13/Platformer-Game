@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var start_direction: int = -1
 
 var dir: int = -1
+var health: int = 2
+@onready var player: Node2D = null
 
 @onready var ground_ahead: RayCast2D = $GroundAhead
 @onready var wall_check: RayCast2D = $WallCheck
@@ -17,6 +19,11 @@ func _ready() -> void:
 	# Exclude self so raycasts don't hit our own collision shape
 	ground_ahead.add_exception_rid(get_rid())
 	wall_check.add_exception_rid(get_rid())
+	# Also ignore the player so they don't count as walls for detection
+	player = get_tree().get_first_node_in_group("player")
+	if player:
+		ground_ahead.add_exception(player)
+		wall_check.add_exception(player)
 
 func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
@@ -24,7 +31,19 @@ func _physics_process(delta: float) -> void:
 
 	ground_ahead.force_raycast_update()
 	wall_check.force_raycast_update()
-	var hit_wall := is_on_wall()
+	# Detect walls, but ignore collisions with the player
+	var hit_wall := false
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		# Skip the player so they don't cause a turn-around
+		if collider is Node and (collider as Node).is_in_group("player"):
+			continue
+		# Treat any non-player side collision as a wall
+		if collision.get_normal().x != 0.0:
+			hit_wall = true
+			break
+
 	var no_floor_ahead := ground_ahead != null and not ground_ahead.is_colliding()
 	var wall_ray_hit := wall_check != null and wall_check.is_colliding()
 
@@ -45,6 +64,12 @@ func flip_raycasts() -> void:
 	if wall_check:
 		wall_check.position = Vector2(dir * 20, 0)
 		wall_check.target_position = Vector2(dir * 24, 0)
+
+
+func take_damage(amount: int) -> void:
+	health -= amount
+	if health <= 0:
+		queue_free()
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
