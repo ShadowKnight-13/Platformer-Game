@@ -511,12 +511,12 @@ func can_stand_up() -> bool:
 	
 	var can_stand = result.is_empty()
 	var debug_color = Color.GREEN if can_stand else Color.RED
-	debug_rays.append({
-		"type": "line",
-		"start": ray_start,
-		"end": ray_end if can_stand else result.position,
-		"color": debug_color
-	})
+	#debug_rays.append({
+		#"type": "line",
+		#"start": ray_start,
+		#"end": ray_end if can_stand else result.position,
+		#"color": debug_color
+	#})
 	
 	return can_stand
 
@@ -662,7 +662,7 @@ func check_for_ledge() -> Vector2:
 	return Vector2.ZERO
 
 func _process(_delta):
-	debug_rays.clear()
+	#debug_rays.clear()
 	queue_redraw()
 	
 	# DEBUG: Update ColorRect to match collision shape size
@@ -693,7 +693,7 @@ func _process(_delta):
 			else:
 				color_rect.color = Color(0.2, 0.6, 1, 0.5)  # Blue normally
 
-func _draw():
+#func _draw():
 	# Draw all stored debug rays
 	#for ray in debug_rays:
 		#if ray.type == "line":
