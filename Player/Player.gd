@@ -646,8 +646,11 @@ func check_for_ledge() -> Vector2:
 		
 		var wall_result = space_state.intersect_ray(wall_query)
 		
-		# If we DON'T hit a wall at this height, the wall has ended - check for floor
-		if not wall_result:
+		# If we DON'T hit a wall at this height AND we're above the player's feet,
+		# the wall has ended - check for floor.
+		# Skip if check_y is at or below the player's bottom to avoid detecting
+		# ground beneath the character while wall-sliding.
+		if not wall_result and check_y < player_bottom_y:
 			# Now check if there's a floor where the wall used to be
 			# Cast downward from where the wall check ended (into the wall area)
 			var floor_check_start = wall_check_end  # Start from where wall check ended
