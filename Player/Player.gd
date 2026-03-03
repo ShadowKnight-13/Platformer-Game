@@ -102,6 +102,10 @@ func is_on_grippable_wall() -> bool:
 func _physics_process(delta):
 	var x_input = Input.get_axis("move_left", "move_right")
 	
+	# Clear debug rays at the start of each physics frame so _draw() sees fresh data
+	if OS.is_debug_build():
+		debug_rays.clear()
+	
 	# Reset gravity skip flag at start of frame
 	skip_gravity_this_frame = false
 	
@@ -566,6 +570,8 @@ func check_for_step(x_input: float) -> float:
 	
 	# If we hit a wall
 	if result:
+		if OS.is_debug_build():
+			debug_rays.append({"type": "line", "start": ray_start, "end": result.position, "color": Color.ORANGE})
 		
 		# Now check how high the wall is by casting a ray downward from above
 		var check_height = STEP_UP_MAX_HEIGHT
@@ -585,17 +591,20 @@ func check_for_step(x_input: float) -> float:
 			
 			var step_height_measured = player_bottom_y - step_top_y
 			
+			if OS.is_debug_build():
+				debug_rays.append({"type": "line", "start": top_check_start, "end": top_result.position, "color": Color.CYAN})
+			
 			# Only step up if it's within our max height AND positive
 			if step_height_measured > 0 and step_height_measured <= STEP_UP_MAX_HEIGHT:
 				return step_height_measured
+	else:
+		if OS.is_debug_build():
+			debug_rays.append({"type": "line", "start": ray_start, "end": ray_end, "color": Color.ORANGE})
 	
 	return 0.0
 
 
 func check_for_ledge() -> Vector2:
-	if OS.is_debug_build():
-		debug_rays.clear()  # Clear previous frame's debug data
-	
 	if not is_on_wall():
 		return Vector2.ZERO
 	
@@ -669,21 +678,19 @@ func check_for_ledge() -> Vector2:
 
 func _process(_delta):
 	if OS.is_debug_build():
-		debug_rays.clear()
 		if Input.is_action_just_pressed("debug_raycast"):
 			show_debug_rays = !show_debug_rays
 			print("Debug rays: ", "ON" if show_debug_rays else "OFF")
 	queue_redraw()
 	
-	# DEBUG: Update ColorRect to match collision shape size
+	# DEBUG: Update ColorRect to match collision shape size, toggled with debug_raycast
 	if OS.is_debug_build() and has_node("ColorRect") and has_node("CollisionShape2D"):
 		var color_rect = $ColorRect
 		var collision = $CollisionShape2D
 		var shape = collision.shape as RectangleShape2D
 		
 		if shape:
-			# Make it visible for debugging
-			color_rect.visible = true
+			color_rect.visible = show_debug_rays
 			
 			# Calculate the actual size based on shape size and scale
 			var actual_width = shape.size.x * collision.scale.x
@@ -695,7 +702,7 @@ func _process(_delta):
 			color_rect.offset_top = -actual_height / 2 + collision.position.y
 			color_rect.offset_bottom = actual_height / 2 + collision.position.y
 			
-			# Optional: Change color based on state for better debugging
+			# Change color based on state for better debugging
 			if is_crouching:
 				color_rect.color = Color(1, 0.5, 0, 0.5)  # Orange when crouching
 			elif is_dashing:
@@ -710,6 +717,8 @@ func _draw():
 	for ray in debug_rays:
 		if ray.type == "line":
 			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
+			# Draw a filled dot at the endpoint so hits are clearly visible
+			draw_circle(ray.end - global_position, 5, ray.color)
 		elif ray.type == "circle":
 			draw_circle(ray.pos - global_position, 5, ray.color)
 
