@@ -26,6 +26,7 @@ const STEP_UP_CHECK_DISTANCE: float = 10.0
 
 # === LEDGE GRAB CONSTANTS ===
 const LEDGE_GRAB_DISTANCE: float = 30.0  # Reduced - how far above player to check for ledge
+const LEDGE_DETECTION_BUFFER_PX: float = 10.0  # Min pixels above feet required to trigger ledge floor check
 
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
@@ -650,7 +651,7 @@ func check_for_ledge() -> Vector2:
 		# player's feet, the wall has ended - check for floor.
 		# Skip if check_y is within 10 pixels of the player's bottom to avoid
 		# detecting ground as a ledge while wall-sliding near the ground.
-		if not wall_result and check_y < (player_bottom_y - 10):
+		if not wall_result and check_y < (player_bottom_y - LEDGE_DETECTION_BUFFER_PX):
 			# Now check if there's a floor where the wall used to be
 			# Cast downward from where the wall check ended (into the wall area)
 			var floor_check_start = wall_check_end  # Start from where wall check ended
