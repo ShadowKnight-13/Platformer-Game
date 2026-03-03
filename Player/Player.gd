@@ -504,8 +504,9 @@ func can_stand_up() -> bool:
 	# Current height is 0.5 scale; full height is 1.0 scale
 	var height_difference = player_height * 0.5  # The amount we're adding
 	
-	# Check from current top of collision to where new top would be
-	var ray_start = global_position - Vector2(0, player_height * 0.25)  # Current top
+	# Check from current top of crouched collision shape to where new top would be when standing
+	# Crouched shape: scale.y=0.5, position.y=player_height*0.25 → top is exactly at global_position.y
+	var ray_start = global_position  # Actual top of the shrunken collision shape
 	var ray_end = ray_start - Vector2(0, height_difference + 5.0)  # Add small buffer
 	
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
