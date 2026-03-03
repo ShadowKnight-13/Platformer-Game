@@ -15,6 +15,6 @@ func check_for_ledge():
             var floor_result = floor_raycast.get_collision_point()
             if floor_result.y < global_position.y:
                 # Allow teleport if the floor position is above the player's position
-                teleport()  # Replace with the actual teleport logic
+                global_position = floor_result
             else:
                 print("Can't teleport downward when wall sliding near the floor.")
