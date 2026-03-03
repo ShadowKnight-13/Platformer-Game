@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmlk6mxf7ynuv" path="res://UI/settings_menu.gd" id="1_77no7"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_0adsa"]
+[ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="3_0adsa"]
 
 [node name="SettingsMenu" type="CanvasLayer" unique_id=60479775]
 script = ExtResource("1_77no7")
@@ -151,6 +152,8 @@ focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
 text = "Input Mapping"
+
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_0adsa")]
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/ResolutionDropDown" to="." method="_on_resolution_drop_down_item_selected"]

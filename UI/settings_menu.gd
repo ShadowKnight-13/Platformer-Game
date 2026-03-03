@@ -2,6 +2,7 @@ extends CanvasLayer
 
 var is_fullscreen = false
 var text_size
+@onready var anim = $SceneFade/Fade
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,6 +12,7 @@ func _ready() -> void:
 	$HBoxContainer/VBoxCenterRight/ResolutionDropDown.selected = UiGlobals.resolution_slected
 	$HBoxContainer/VBoxCenterRight/FullscreenToggle.button_pressed = UiGlobals.is_fullscreen
 	set_font_size_recursive(self, UiGlobals.text_size)
+	fade_in()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -19,6 +21,8 @@ func _process(delta: float) -> void:
 
 
 func _on_back_button_pressed() -> void:
+	fade_out()
+	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://UI/main_menu.tscn")
 
 
@@ -84,4 +88,15 @@ func set_font_size_recursive(node: Node, size: int):
 
 
 func _on_input_mapping_button_pressed() -> void:
+	fade_out()
+	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://UI/input_mapping_menu.tscn")
+
+func fade_in():
+	anim.play("fade_in")
+	await get_tree().create_timer(1.0).timeout
+	$SceneFade.hide()
+
+func fade_out():
+	$SceneFade.show()
+	anim.play("fade_out")
