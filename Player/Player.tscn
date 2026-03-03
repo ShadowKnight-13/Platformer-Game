@@ -172,4 +172,7 @@ script = ExtResource("4_ddoul")
 position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_8g4oa")
 
+[node name="FloorRaycast" type="RayCast2D" parent="." unique_id=312045678]
+target_position = Vector2(0, 50)
+
 [connection signal="body_entered" from="MeleeHitbox" to="." method="_on_melee_hitbox_body_entered"]
