@@ -670,7 +670,7 @@ func check_for_ledge() -> Vector2:
 func _process(_delta):
 	if OS.is_debug_build():
 		debug_rays.clear()
-		if Input.is_key_just_pressed(KEY_F3):
+		if Input.is_action_just_pressed("debug_raycast"):
 			show_debug_rays = !show_debug_rays
 			print("Debug rays: ", "ON" if show_debug_rays else "OFF")
 	queue_redraw()

@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Player/healthManager.gd" id="6_1vagx"]
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="7_7gn3o"]
 [ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="8_fg734"]
-[ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="10_fg734"]
+[ext_resource type="PackedScene" path="res://Obstacles/spike2.tscn" id="10_fg734"]
 [ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Art Assets/general/pg-cryoTube.png" id="11_ifivw"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="12_q8pk5"]
 
