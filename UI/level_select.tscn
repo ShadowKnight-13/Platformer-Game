@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkwds4seji1vh"]
 
-[ext_resource type="Script" uid="uid://cii7x55uvrnbg" path="res://level_select.gd" id="1_qgm14"]
+[ext_resource type="Script" uid="uid://cii7x55uvrnbg" path="res://UI/level_select.gd" id="1_qgm14"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_q0b5w"]
 
 [node name="LevelSelect" type="CanvasLayer" unique_id=669125434]

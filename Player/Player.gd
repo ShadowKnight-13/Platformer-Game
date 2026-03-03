@@ -9,7 +9,7 @@ const GRAVITY_NORMAL: float = 19
 const GRAVITY_WALL_SLIDE: float = 100.5
 const WALL_JUMP_PUSH_FORCE: float = 600.0
 
-# === DASH SLIDE CONSTANTS ===
+# === DASH / CROUCH CONSTANTS ===
 const DASH_SPEED: float = 700.0
 const CROUCH_SPEED: float = 150.0
 const DASH_DURATION: float = 0.3
@@ -20,7 +20,7 @@ const DASH_JUMP_SPEED_MULTIPLIER: float = 1.2
 const DASH_JUMP_HEIGHT_MULTIPLIER: float = 1.3
 const DASH_JUMP_AIR_CONTROL: float = 0.3
 
-# === STEP-UP CONSTANTS ===
+# === STEP-UP / LEDGE CONSTANTS ===
 const STEP_UP_MAX_HEIGHT: float = 70.0
 const STEP_UP_CHECK_DISTANCE: float = 10.0
 
@@ -34,6 +34,7 @@ var wall_jump_lock: float = 0.0
 const WALL_JUMP_LOCK_TIME: float = 0.15
 var is_stuck_to_wall := false
 
+## === HEALTH & STATE FLAGS ===
 var health = 3
 var is_wall_jumping := false
 var is_jumping := false
@@ -43,7 +44,7 @@ var skip_gravity_this_frame := false
 var needs_collision_restore := false
 var facing_direction := 1.0  # Track which way player is facing (1 = right, -1 = left)
 
-# === DASH SLIDE VARIABLES ===
+## === DASH / CROUCH STATE ===
 var is_dashing := false
 var dash_time_remaining := 0.0
 var dash_cooldown_remaining := 0.0
@@ -52,6 +53,7 @@ var is_air_dive := false
 var air_dash_horizontal_timer := 0.0
 var is_crouching := false
 
+## === NODES / CHILDREN ===
 @onready var melee_hitbox: Area2D = $MeleeHitbox
 
 #var debug_rays = []
@@ -98,6 +100,7 @@ func is_on_grippable_wall() -> bool:
 	# No grippable walls found
 	return false
 
+## === MAIN PHYSICS LOOP ===
 func _physics_process(delta):
 	var x_input = Input.get_axis("move_left", "move_right")
 	
@@ -520,6 +523,7 @@ func can_stand_up() -> bool:
 	
 	return can_stand
 
+## === STEP-UP MECHANIC HELPERS ===
 # Check if there's a step in front of the player and return the step height
 func check_for_step(x_input: float) -> float:
 	
@@ -590,6 +594,7 @@ func check_for_step(x_input: float) -> float:
 	return 0.0
 
 
+## === LEDGE GRAB HELPERS ===
 func check_for_ledge() -> Vector2:
 	#debug_rays.clear()  # Clear previous frame's debug data
 	
@@ -661,6 +666,7 @@ func check_for_ledge() -> Vector2:
 	
 	return Vector2.ZERO
 
+## === DEBUG VISUALIZATION ===
 func _process(_delta):
 	#debug_rays.clear()
 	queue_redraw()
@@ -701,6 +707,7 @@ func _process(_delta):
 		#elif ray.type == "circle":
 			#draw_circle(ray.pos - global_position, 5, ray.color)
 
+## === MELEE COMBAT STATE & HELPERS ===
 var is_attacking: bool = false
 var attack_duration: float = 0.18
 var attack_cooldown: float = 0.25
