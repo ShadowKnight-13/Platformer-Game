@@ -67,3 +67,5 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_s4hbw")
 
 [node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("2_s3qcj")]
+collision_layer = 1
+collision_mask = 1
