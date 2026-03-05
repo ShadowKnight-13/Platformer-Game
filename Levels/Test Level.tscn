@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="8_j0rrd"]
 [ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="9_hklbw"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://med_kit.tscn" id="9_mxnmf"]
+[ext_resource type="PackedScene" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -201,3 +202,6 @@ position = Vector2(-408, -36)
 
 [node name="CactusEnemy" parent="." unique_id=1867671195 instance=ExtResource("9_hklbw")]
 position = Vector2(942, 310)
+
+[node name="BirdEnemy" parent="." unique_id=548068155 instance=ExtResource("10_mnmnm")]
+position = Vector2(1182, 2)

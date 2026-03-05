@@ -643,8 +643,7 @@ func check_for_ledge() -> Vector2:
 			# Cast downward from where the wall check ended (into the wall area)
 			var floor_check_start = wall_check_end  # Start from where wall check ended
 			var floor_check_end = floor_check_start + Vector2(0, 50)
-			
-			# Store debug info
+# Store debug info
 			#debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
 			
 			var floor_query = PhysicsRayQueryParameters2D.create(floor_check_start, floor_check_end)
