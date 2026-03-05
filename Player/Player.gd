@@ -663,11 +663,36 @@ func check_for_ledge() -> Vector2:
 				if debug_rays_visible:
 					debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
 				
-				# Found a valid ledge! Return position to teleport to
+				# Found a valid ledge! But first check if player fits
 				var teleport_pos = Vector2(
 					floor_result.position.x,
 					floor_result.position.y - player_height - 2
 				)
+				
+				# Check if there's enough space for the player
+				# Account for current collision shape scale (0.5 when dashing, 1.0 normally)
+				var current_scale = $CollisionShape2D.scale.y
+				var required_height = player_height * current_scale
+				# Cast upward from feet level (teleport_pos) to where the player's head would be
+				var space_check_start = teleport_pos
+				var space_check_end = teleport_pos + Vector2(0, -required_height)
+				
+				var space_query = PhysicsRayQueryParameters2D.create(space_check_start, space_check_end)
+				space_query.exclude = [self]
+				space_query.collision_mask = 2  # World collision layer
+				
+				if debug_rays_visible:
+					debug_rays.append({"type": "line", "start": space_check_start, "end": space_check_end, "color": Color.CYAN})
+				
+				var space_result = space_state.intersect_ray(space_query)
+				
+				# If we hit something, there's not enough space
+				if space_result:
+					if debug_rays_visible:
+						debug_rays.append({"type": "circle", "pos": space_result.position, "color": Color.ORANGE})
+					continue  # Try next height check
+				
+				# Space is clear - return the teleport position
 				return teleport_pos
 	
 	return Vector2.ZERO
