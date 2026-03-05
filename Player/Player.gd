@@ -56,7 +56,8 @@ var is_crouching := false
 ## === NODES / CHILDREN ===
 @onready var melee_hitbox: Area2D = $MeleeHitbox
 
-#var debug_rays = []
+var debug_rays = []
+var debug_rays_visible := false
 
 signal health_changed
 
@@ -514,12 +515,13 @@ func can_stand_up() -> bool:
 	
 	var can_stand = result.is_empty()
 	var debug_color = Color.GREEN if can_stand else Color.RED
-	#debug_rays.append({
-		#"type": "line",
-		#"start": ray_start,
-		#"end": ray_end if can_stand else result.position,
-		#"color": debug_color
-	#})
+	if debug_rays_visible:
+		debug_rays.append({
+			"type": "line",
+			"start": ray_start,
+			"end": ray_end if can_stand else result.position,
+			"color": debug_color
+		})
 	
 	return can_stand
 
@@ -629,7 +631,8 @@ func check_for_ledge() -> Vector2:
 		var wall_check_end = wall_check_start + Vector2(into_wall_direction * 20, 0)
 		
 		# Store debug info
-		#debug_rays.append({"type": "line", "start": wall_check_start, "end": wall_check_end, "color": Color.YELLOW})
+		if debug_rays_visible:
+			debug_rays.append({"type": "line", "start": wall_check_start, "end": wall_check_end, "color": Color.YELLOW})
 		
 		var wall_query = PhysicsRayQueryParameters2D.create(wall_check_start, wall_check_end)
 		wall_query.exclude = [self]
@@ -645,7 +648,8 @@ func check_for_ledge() -> Vector2:
 			var floor_check_end = floor_check_start + Vector2(0, 50)
 			
 			# Store debug info
-			#debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
+			if debug_rays_visible:
+				debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
 			
 			var floor_query = PhysicsRayQueryParameters2D.create(floor_check_start, floor_check_end)
 			floor_query.exclude = [self]
@@ -655,7 +659,8 @@ func check_for_ledge() -> Vector2:
 			
 			if floor_result:
 				# Store debug info
-				#debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
+				if debug_rays_visible:
+					debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
 				
 				# Found a valid ledge! Return position to teleport to
 				var teleport_pos = Vector2(
@@ -668,7 +673,14 @@ func check_for_ledge() -> Vector2:
 
 ## === DEBUG VISUALIZATION ===
 func _process(_delta):
-	#debug_rays.clear()
+	# Toggle debug rays with F3
+	if Input.is_action_just_pressed("debug_raycast"):
+		debug_rays_visible = !debug_rays_visible
+		print("Debug raycasts: ", "ON" if debug_rays_visible else "OFF")
+	
+	# Clear rays from previous frame BEFORE next physics frame
+	debug_rays.clear()
+	
 	queue_redraw()
 	
 	# DEBUG: Update ColorRect to match collision shape size
@@ -699,13 +711,16 @@ func _process(_delta):
 			else:
 				color_rect.color = Color(0.2, 0.6, 1, 0.5)  # Blue normally
 
-#func _draw():
+func _draw():
+	if not debug_rays_visible:
+		return
+	
 	# Draw all stored debug rays
-	#for ray in debug_rays:
-		#if ray.type == "line":
-			#draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
-		#elif ray.type == "circle":
-			#draw_circle(ray.pos - global_position, 5, ray.color)
+	for ray in debug_rays:
+		if ray.type == "line":
+			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
+		elif ray.type == "circle":
+			draw_circle(ray.pos - global_position, 5, ray.color)
 
 ## === MELEE COMBAT STATE & HELPERS ===
 var is_attacking: bool = false
