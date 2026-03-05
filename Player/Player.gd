@@ -504,7 +504,8 @@ func can_stand_up() -> bool:
 	var height_difference = player_height * 0.5  # The amount we're adding
 	
 	# Check from current top of collision to where new top would be
-	var ray_start = global_position - Vector2(0, player_height * 0.25)  # Current top
+	var collision_offset = $CollisionShape2D.position.y
+	var ray_start = global_position + Vector2(0, collision_offset - player_height * 0.25)  # Current top
 	var ray_end = ray_start - Vector2(0, height_difference + 5.0)  # Add small buffer
 	
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
