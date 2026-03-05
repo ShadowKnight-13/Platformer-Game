@@ -682,7 +682,7 @@ func _process(_delta):
 	debug_rays.clear()
 	
 	queue_redraw()
-	
+	3
 	# DEBUG: Update ColorRect to match collision shape size
 	if OS.is_debug_build() and has_node("ColorRect") and has_node("CollisionShape2D"):
 		var color_rect = $ColorRect
