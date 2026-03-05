@@ -678,11 +678,7 @@ func _process(_delta):
 		debug_rays_visible = !debug_rays_visible
 		print("Debug raycasts: ", "ON" if debug_rays_visible else "OFF")
 	
-	# Clear rays from previous frame BEFORE next physics frame
-	debug_rays.clear()
-	
 	queue_redraw()
-	3
 	# DEBUG: Update ColorRect to match collision shape size
 	if OS.is_debug_build() and has_node("ColorRect") and has_node("CollisionShape2D"):
 		var color_rect = $ColorRect
@@ -721,6 +717,9 @@ func _draw():
 			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
 		elif ray.type == "circle":
 			draw_circle(ray.pos - global_position, 5, ray.color)
+	
+	# Clear AFTER drawing, ready for next physics frame
+	debug_rays.clear()
 
 ## === MELEE COMBAT STATE & HELPERS ===
 var is_attacking: bool = false
