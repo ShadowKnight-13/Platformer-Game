@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bkwds4seji1vh"]
 
+[ext_resource type="Script" uid="uid://cii7x55uvrnbg" path="res://UI/level_select.gd" id="1_qgm14"]
 [ext_resource type="Script" uid="uid://cii7x55uvrnbg" path="res://level_select.gd" id="1_qgm14"]
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="2_miaug"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_q0b5w"]
