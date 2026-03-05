@@ -1,11 +1,10 @@
-extends CharacterBody2D
+extends BaseEnemy
 
 @export var speed: float = 60.0
 @export var gravity: float = 1200.0
 @export var start_direction: int = -1
 
 var dir: int = -1
-var health: int = 2
 @onready var player: Node2D = null
 
 @onready var ground_ahead: RayCast2D = $GroundAhead
@@ -13,6 +12,7 @@ var health: int = 2
 @onready var sprite: Node = get_node_or_null("Sprite2D")
 
 func _ready() -> void:
+	super._ready()
 	dir = start_direction
 	flip_raycasts()
 	$Area2D.body_entered.connect(_on_hurt_box_body_entered)
@@ -64,13 +64,6 @@ func flip_raycasts() -> void:
 	if wall_check:
 		wall_check.position = Vector2(dir * 20, 0)
 		wall_check.target_position = Vector2(dir * 24, 0)
-
-
-func take_damage(amount: int) -> void:
-	health -= amount
-	if health <= 0:
-		queue_free()
-
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.damage_player()
