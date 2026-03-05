@@ -477,7 +477,7 @@ func _physics_process(delta):
 	# Check for ledge grab when in the air and touching a wall
 	# === LEDGE GRAB MECHANIC ===
 # Check for ledge grab when in the air and touching a wall
-	if not is_on_floor() and is_on_wall():
+	if not is_on_floor() and is_on_wall() and not is_stuck_to_wall:
 		var ledge_data = check_for_ledge()
 		if ledge_data != Vector2.ZERO:
 		# Teleport to ledge position
