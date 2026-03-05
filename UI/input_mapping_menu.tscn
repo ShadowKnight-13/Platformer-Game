@@ -2,11 +2,25 @@
 
 [ext_resource type="Script" uid="uid://b72aib5qfpy8n" path="res://UI/input_mapping_menu.gd" id="1_ufp61"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_jiusq"]
+[ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="2_n8kdd"]
 [ext_resource type="Script" uid="uid://tix5jrmndks0" path="res://UI/remap_button_Keyboard.gd" id="3_jiusq"]
 [ext_resource type="Script" uid="uid://cw65xpjnop1sj" path="res://UI/remap_button_Gamepad.gd" id="3_vfpio"]
+[ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="5_d6ibo"]
 
 [node name="InputMappingMenu" type="CanvasLayer" unique_id=1678311426]
 script = ExtResource("1_ufp61")
+
+[node name="Background" type="Parallax2D" parent="." unique_id=1854520842]
+scroll_scale = Vector2(0.2, 0.2)
+scroll_offset = Vector2(139, -151)
+repeat_size = Vector2(30, 30)
+repeat_times = 50
+
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=393827153]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("2_n8kdd")
+offset = Vector2(600, 300)
 
 [node name="VBoxTop" type="VBoxContainer" parent="." unique_id=144004282]
 custom_minimum_size = Vector2(250, 250)
@@ -111,6 +125,15 @@ text = "Slide Dash - "
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Attack" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=815960535]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Attack - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Interact" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=121473571]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -143,23 +166,15 @@ text = "Controller"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Left" type="Label" parent="HBoxContainer/VBoxController" unique_id=1591673514]
+[node name="Left" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=2019493654]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_jiusq")
-theme_override_font_sizes/font_size = 18
-text = "Joypad Axis 0"
-horizontal_alignment = 1
-vertical_alignment = 1
+stretch_mode = 3
 
-[node name="Right" type="Label" parent="HBoxContainer/VBoxController" unique_id=266914231]
+[node name="Right" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=379145276]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_jiusq")
-theme_override_font_sizes/font_size = 18
-text = "Joypad Axis 0"
-horizontal_alignment = 1
-vertical_alignment = 1
+stretch_mode = 3
 
 [node name="jump_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=812981172]
 custom_minimum_size = Vector2(0, 40)
@@ -170,6 +185,14 @@ text = "_"
 script = ExtResource("3_vfpio")
 
 [node name="dash_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=727786444]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+script = ExtResource("3_vfpio")
+
+[node name="attack" type="Button" parent="HBoxContainer/VBoxController" unique_id=837226604]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_jiusq")
@@ -239,6 +262,14 @@ theme_override_font_sizes/font_size = 18
 text = "_"
 script = ExtResource("3_jiusq")
 
+[node name="attack" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=449757348]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "_"
+script = ExtResource("3_jiusq")
+
 [node name="interact" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=86676911]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -254,6 +285,8 @@ theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
 text = "_"
 script = ExtResource("3_jiusq")
+
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_d6ibo")]
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxKeyboard/move_left" to="." method="_on_left_key_pressed"]
