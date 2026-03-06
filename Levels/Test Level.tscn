@@ -192,6 +192,11 @@ position = Vector2(-2402, 100)
 scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 475)])
 
+[node name="MovingPlatform4" parent="." unique_id=1667973995 instance=ExtResource("7_nff53")]
+position = Vector2(-2038, -254)
+scale = Vector2(1.5, 1.5)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 475)])
+
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("8_j0rrd")]
 
 [node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("9_mxnmf")]
