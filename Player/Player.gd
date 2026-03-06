@@ -715,7 +715,7 @@ func _process(_delta):
 		
 		if shape:
 			# Make it visible for debugging
-			color_rect.visible = true
+			color_rect.visible = debug_rays_visible
 			
 			# Calculate the actual size based on shape size and scale
 			var actual_width = shape.size.x * collision.scale.x
