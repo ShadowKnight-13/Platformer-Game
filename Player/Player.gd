@@ -57,7 +57,8 @@ var is_crouching := false
 @onready var melee_hitbox: Area2D = $MeleeHitbox
 @onready var interaction_area = $InteractionArea
 
-#var debug_rays = []
+var debug_rays = []
+var debug_rays_visible := false
 
 signal health_changed
 
@@ -478,9 +479,9 @@ func _physics_process(delta):
 	
 	# === LEDGE GRAB MECHANIC ===
 	# Check for ledge grab when in the air and touching a wall
-	# === LEDGE GRAB MECHANIC ===
-# Check for ledge grab when in the air and touching a wall
-	if not is_on_floor() and is_on_wall():
+	# BUT NOT when wall sliding (to prevent raycasting issues)
+	# AND only on grippable walls (not slippery walls)
+	if not is_on_floor() and is_on_wall() and not is_stuck_to_wall and is_on_grippable_wall():
 		var ledge_data = check_for_ledge()
 		if ledge_data != Vector2.ZERO:
 		# Teleport to ledge position
@@ -507,7 +508,8 @@ func can_stand_up() -> bool:
 	var height_difference = player_height * 0.5  # The amount we're adding
 	
 	# Check from current top of collision to where new top would be
-	var ray_start = global_position - Vector2(0, player_height * 0.25)  # Current top
+	var collision_offset = $CollisionShape2D.position.y
+	var ray_start = global_position + Vector2(0, collision_offset - player_height * 0.25)  # Current top
 	var ray_end = ray_start - Vector2(0, height_difference + 5.0)  # Add small buffer
 	
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
@@ -518,12 +520,13 @@ func can_stand_up() -> bool:
 	
 	var can_stand = result.is_empty()
 	var debug_color = Color.GREEN if can_stand else Color.RED
-	#debug_rays.append({
-		#"type": "line",
-		#"start": ray_start,
-		#"end": ray_end if can_stand else result.position,
-		#"color": debug_color
-	#})
+	if debug_rays_visible:
+		debug_rays.append({
+			"type": "line",
+			"start": ray_start,
+			"end": ray_end if can_stand else result.position,
+			"color": debug_color
+		})
 	
 	return can_stand
 
@@ -633,7 +636,8 @@ func check_for_ledge() -> Vector2:
 		var wall_check_end = wall_check_start + Vector2(into_wall_direction * 20, 0)
 		
 		# Store debug info
-		#debug_rays.append({"type": "line", "start": wall_check_start, "end": wall_check_end, "color": Color.YELLOW})
+		if debug_rays_visible:
+			debug_rays.append({"type": "line", "start": wall_check_start, "end": wall_check_end, "color": Color.YELLOW})
 		
 		var wall_query = PhysicsRayQueryParameters2D.create(wall_check_start, wall_check_end)
 		wall_query.exclude = [self]
@@ -649,6 +653,9 @@ func check_for_ledge() -> Vector2:
 			var floor_check_end = floor_check_start + Vector2(0, 50)
 			
 			# Store debug info
+			if debug_rays_visible:
+				debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
+# Store debug info
 			#debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
 			
 			var floor_query = PhysicsRayQueryParameters2D.create(floor_check_start, floor_check_end)
@@ -659,22 +666,51 @@ func check_for_ledge() -> Vector2:
 			
 			if floor_result:
 				# Store debug info
-				#debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
+				if debug_rays_visible:
+					debug_rays.append({"type": "circle", "pos": floor_result.position, "color": Color.RED})
 				
-				# Found a valid ledge! Return position to teleport to
+				# Found a valid ledge! But first check if player fits
 				var teleport_pos = Vector2(
 					floor_result.position.x,
 					floor_result.position.y - player_height - 2
 				)
+				
+				# Check if there's enough space for the player
+				# Account for current collision shape scale (0.5 when dashing, 1.0 normally)
+				var current_scale = $CollisionShape2D.scale.y
+				var required_height = player_height * current_scale
+				# Cast upward from feet level (teleport_pos) to where the player's head would be
+				var space_check_start = teleport_pos
+				var space_check_end = teleport_pos + Vector2(0, -required_height)
+				
+				var space_query = PhysicsRayQueryParameters2D.create(space_check_start, space_check_end)
+				space_query.exclude = [self]
+				space_query.collision_mask = 2  # World collision layer
+				
+				if debug_rays_visible:
+					debug_rays.append({"type": "line", "start": space_check_start, "end": space_check_end, "color": Color.CYAN})
+				
+				var space_result = space_state.intersect_ray(space_query)
+				
+				# If we hit something, there's not enough space
+				if space_result:
+					if debug_rays_visible:
+						debug_rays.append({"type": "circle", "pos": space_result.position, "color": Color.ORANGE})
+					continue  # Try next height check
+				
+				# Space is clear - return the teleport position
 				return teleport_pos
 	
 	return Vector2.ZERO
 
 ## === DEBUG VISUALIZATION ===
 func _process(_delta):
-	#debug_rays.clear()
-	queue_redraw()
+	# Toggle debug rays with F3
+	if Input.is_action_just_pressed("debug_raycast"):
+		debug_rays_visible = !debug_rays_visible
+		print("Debug raycasts: ", "ON" if debug_rays_visible else "OFF")
 	
+	queue_redraw()
 	# DEBUG: Update ColorRect to match collision shape size
 	if OS.is_debug_build() and has_node("ColorRect") and has_node("CollisionShape2D"):
 		var color_rect = $ColorRect
@@ -683,7 +719,7 @@ func _process(_delta):
 		
 		if shape:
 			# Make it visible for debugging
-			color_rect.visible = true
+			color_rect.visible = debug_rays_visible
 			
 			# Calculate the actual size based on shape size and scale
 			var actual_width = shape.size.x * collision.scale.x
@@ -703,13 +739,19 @@ func _process(_delta):
 			else:
 				color_rect.color = Color(0.2, 0.6, 1, 0.5)  # Blue normally
 
-#func _draw():
+func _draw():
+	if not debug_rays_visible:
+		return
+	
 	# Draw all stored debug rays
-	#for ray in debug_rays:
-		#if ray.type == "line":
-			#draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
-		#elif ray.type == "circle":
-			#draw_circle(ray.pos - global_position, 5, ray.color)
+	for ray in debug_rays:
+		if ray.type == "line":
+			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
+		elif ray.type == "circle":
+			draw_circle(ray.pos - global_position, 5, ray.color)
+	
+	# Clear AFTER drawing, ready for next physics frame
+	debug_rays.clear()
 
 ## === MELEE COMBAT STATE & HELPERS ===
 var is_attacking: bool = false
