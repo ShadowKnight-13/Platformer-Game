@@ -1,4 +1,4 @@
 extends AnimationPlayer
 
-#if med_kit is :
-#animation_player.play
+func _ready() -> void:
+	play("spin")

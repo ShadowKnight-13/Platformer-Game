@@ -12,8 +12,8 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("interact"):
 		_interactables.append(area)
-	if _interactables.size() == 1 and area.has_variable("interaction_text"):
-		interactable_entered.emit(area.interaction_text)
+	#if _interactables.size() == 1 and area.has_variable("interaction_text"):
+		#interactable_entered.emit(area.interaction_text)
 
 func _on_area_exited(area: Area2D) -> void:
 	if area in _interactables:
