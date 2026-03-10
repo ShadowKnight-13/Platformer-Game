@@ -37,7 +37,7 @@ const UI_ACTIONS := [
 	"ui_right",
 ]
 
-func _apply_new_binding(event):
+func _apply_new_binding(event: InputEvent):
 	listening = false
 
 	# Check if this event is already used by another non-UI action
@@ -62,6 +62,7 @@ func _apply_new_binding(event):
 
 	# Update UI
 	text = _event_to_string(event)
+	print(event)
 
 
 
@@ -78,6 +79,7 @@ func _get_current_binding() -> String:
 
 func _event_to_string(event: InputEvent) -> String:
 	if event is InputEventKey:
+		print(event)
 		return event.as_text()
 	if event is InputEventMouseButton:
 		return "Mouse %d" % event.button_index

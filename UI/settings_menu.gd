@@ -93,6 +93,7 @@ func _on_input_mapping_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://UI/input_mapping_menu.tscn")
 
 func fade_in():
+	$SceneFade.show()
 	anim.play("fade_in")
 	await get_tree().create_timer(1.0).timeout
 	$SceneFade.hide()
