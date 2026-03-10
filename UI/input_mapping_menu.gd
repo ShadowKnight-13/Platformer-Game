@@ -30,6 +30,7 @@ func _on_back_button_pressed() -> void:
 
 
 func fade_in():
+	$SceneFade.show()
 	anim.play("fade_in")
 	await get_tree().create_timer(1.0).timeout
 	$SceneFade.hide()
