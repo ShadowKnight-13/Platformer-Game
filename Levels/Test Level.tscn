@@ -192,14 +192,24 @@ scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(-200, 0), Vector2(200, 0)])
 
 [node name="MovingPlatform2" parent="." unique_id=513895650 instance=ExtResource("7_nff53")]
-position = Vector2(-2402, 100)
+position = Vector2(-2395, 121)
 scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
 
-[node name="MovingPlatform4" parent="." unique_id=1667973995 instance=ExtResource("7_nff53")]
-position = Vector2(-2038, -254)
+[node name="MovingPlatform5" parent="." unique_id=1841204608 instance=ExtResource("7_nff53")]
+position = Vector2(-2257, -132)
 scale = Vector2(1.5, 1.5)
+forward_speed = 1000.0
+forward_wait_time = 3.0
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 500)])
+
+[node name="MovingPlatform4" parent="." unique_id=1800692679 instance=ExtResource("7_nff53")]
+position = Vector2(-2063, -268)
+scale = Vector2(1.5, 1.5)
+forward_speed = 1000.0
+forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
+platform_size = Vector2(64, 128)
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("8_j0rrd")]
 

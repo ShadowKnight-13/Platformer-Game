@@ -2,18 +2,24 @@ extends AnimatableBody2D
 
 # Movement settings
 @export_group("Movement")
-@export var speed: float = 100.0
+@export var forward_speed: float = 100.0   # Speed when moving toward end point
+@export var return_speed: float = 100.0    # Speed when moving back to start
 @export var move_mode: MoveMode = MoveMode.PING_PONG
-@export var wait_time: float = 1.0
+@export var forward_wait_time: float = 1.0  # Wait time when reaching the end point
+@export var return_wait_time: float = 1.0   # Wait time when returning to the start point
 
 # Simple path definition - edit these in inspector!
 @export_group("Path Points")
 @export var path_points: Array[Vector2] = [Vector2(0, 0), Vector2(200, 0)]
 
+# Platform size — use THIS instead of scaling the root node transform
+@export_group("Platform Size")
+@export var platform_size: Vector2 = Vector2(64, 16)
+
 # Crush detection
 @export_group("Crush Settings")
 @export var can_crush: bool = true
-@export var crush_distance: float = 20.0  # How far from platform edge to check for player
+@export var crush_distance: float = 20.0
 
 # Path following
 @onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
@@ -27,7 +33,7 @@ var direction: int = 1
 var waiting: bool = false
 var wait_timer: float = 0.0
 
-# Debug drawing — platform stores its own rays each frame
+# Debug drawing
 var debug_rays: Array = []
 
 enum MoveMode {
@@ -37,28 +43,59 @@ enum MoveMode {
 }
 
 func _ready() -> void:
-	# Store initial position
 	start_position = global_position
-	
-	# Build path from the points array
 	build_path()
-	
-	# Ensure Path2D is at origin
 	path_2d.position = Vector2.ZERO
-	
-	# Initialize PathFollow2D
 	path_follow.progress = 0.0
 	path_follow.rotates = false
 	path_follow.loop = false
+	
+	# Apply the exported size to the collision shape (and sprite if you have one)
+	_apply_platform_size()
+
+func _apply_platform_size() -> void:
+	# Reset root transform to identity — never scale the AnimatableBody2D itself
+	scale = Vector2.ONE
+	
+	# Resize the collision shape directly
+	var collision_shape = $CollisionShape2D
+	if collision_shape and collision_shape.shape:
+		if collision_shape.shape is RectangleShape2D:
+			# Use .duplicate() so instances don't share the same shape resource
+			if not collision_shape.shape.is_local_to_scene():
+				collision_shape.shape = collision_shape.shape.duplicate()
+			collision_shape.shape.size = platform_size
+			collision_shape.scale = Vector2.ONE  # No extra scale on the shape node either
+	
+	# If you have a Sprite2D or ColorRect, resize it to match
+	if has_node("Sprite2D"):
+		var sprite = $Sprite2D
+		# Assuming the sprite texture is some base size, scale it to match platform_size
+		if sprite.texture:
+			var tex_size = sprite.texture.get_size()
+			sprite.scale = platform_size / tex_size
+	
+	if has_node("ColorRect"):
+		var rect = $ColorRect
+		rect.size = platform_size
+		rect.position = -platform_size / 2.0  # Center it
 
 func build_path() -> void:
-	# Create curve from path_points array
 	var curve = Curve2D.new()
-	
 	for point in path_points:
 		curve.add_point(point)
-	
 	path_2d.curve = curve
+
+func _get_current_speed() -> float:
+	# direction = 1 means moving forward (toward end), -1 means returning (toward start)
+	if direction == 1:
+		return forward_speed
+	else:
+		return return_speed
+
+# Maximum distance the platform should move per substep (in pixels).
+# If the platform would move further than this in one frame, we split it into multiple steps.
+const MAX_STEP_DISTANCE: float = 8.0
 
 func _physics_process(delta: float) -> void:
 	if waiting:
@@ -68,47 +105,69 @@ func _physics_process(delta: float) -> void:
 			direction *= -1
 		return
 	
-	match move_mode:
-		MoveMode.LOOP:
-			move_loop(delta)
-		MoveMode.PING_PONG:
-			move_ping_pong(delta)
-		MoveMode.ONCE:
-			move_once(delta)
+	var current_speed = _get_current_speed()
 	
-	update_platform_position()
+	# Scale crush distance based on speed — the faster we move, the further we need to look
+	# This ensures we detect the player BEFORE we reach them, not after we've passed through
+	var speed_based_crush = crush_distance + (current_speed * delta)
 	
-	# Check for crush after moving
-	if can_crush:
-		check_for_crush()
+	var total_movement = current_speed * delta
+	var step_count = max(1, ceili(total_movement / MAX_STEP_DISTANCE))
+	var sub_delta = delta / float(step_count)
+	
+	for i in range(step_count):
+		match move_mode:
+			MoveMode.LOOP:
+				move_loop(sub_delta, current_speed)
+			MoveMode.PING_PONG:
+				if move_ping_pong(sub_delta, current_speed, speed_based_crush):
+					break
+			MoveMode.ONCE:
+				move_once(sub_delta, current_speed)
+		
+		update_platform_position()
+		
+		if can_crush:
+			check_for_crush(speed_based_crush)
 
-func move_loop(delta: float) -> void:
-	path_follow.progress += speed * delta
-	
+func move_loop(delta: float, current_speed: float) -> void:
+	path_follow.progress += current_speed * delta
 	if path_follow.progress_ratio >= 1.0:
 		path_follow.progress = 0.0
 
-func move_ping_pong(delta: float) -> void:
-	path_follow.progress += speed * delta * direction
+func move_ping_pong(delta: float, current_speed: float, effective_crush_distance: float) -> bool:
+	path_follow.progress += current_speed * delta * direction
 	
 	if direction > 0 and path_follow.progress_ratio >= 1.0:
 		path_follow.progress_ratio = 1.0
-		start_waiting()
+		start_waiting(true)
+		update_platform_position()
+		if can_crush:
+			check_for_crush(effective_crush_distance)
+		return true
 	elif direction < 0 and path_follow.progress_ratio <= 0.0:
 		path_follow.progress_ratio = 0.0
-		start_waiting()
-
-func move_once(delta: float) -> void:
-	path_follow.progress += speed * delta
+		start_waiting(false)
+		update_platform_position()
+		if can_crush:
+			check_for_crush(effective_crush_distance)
+		return true
 	
+	return false
+
+func move_once(delta: float, current_speed: float) -> void:
+	path_follow.progress += current_speed * delta
 	if path_follow.progress_ratio >= 1.0:
 		path_follow.progress_ratio = 1.0
 		set_physics_process(false)
 
-func start_waiting() -> void:
-	if wait_time > 0:
+func start_waiting(reached_end: bool) -> void:
+	var wait = forward_wait_time if reached_end else return_wait_time
+	if wait > 0:
 		waiting = true
-		wait_timer = wait_time
+		wait_timer = wait
+	else:
+		direction *= -1
 
 func update_platform_position() -> void:
 	global_position = start_position + path_follow.position
@@ -117,7 +176,6 @@ func update_platform_position() -> void:
 # === DEBUG HELPERS ===
 
 func _get_debug_player() -> Node2D:
-	## Find the player node so we can read debug_rays_visible
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		return players[0]
@@ -130,15 +188,12 @@ func _is_debug_visible() -> bool:
 	return false
 
 func _add_debug_ray(data: Dictionary) -> void:
-	## Push a ray dict into the platform's own debug_rays array
 	debug_rays.append(data)
 
 func _process(_delta: float) -> void:
-	# Only redraw when debug is on
 	if _is_debug_visible():
 		queue_redraw()
 	else:
-		# Clear leftover data when debug is toggled off
 		if debug_rays.size() > 0:
 			debug_rays.clear()
 			queue_redraw()
@@ -146,60 +201,76 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if not _is_debug_visible():
 		return
-	
 	for ray in debug_rays:
 		if ray.type == "line":
-			# Convert from global to local coords (same pattern as Player._draw)
 			draw_line(ray.start - global_position, ray.end - global_position, ray.color, 2.0)
 		elif ray.type == "circle":
 			draw_circle(ray.pos - global_position, 5, ray.color)
-	
-	# Clear AFTER drawing, ready for next physics frame
 	debug_rays.clear()
 
 
+# === CRUSH DETECTION ===
+
 # === CRUSH DETECTION (ALL 4 DIRECTIONS) ===
-func check_for_crush() -> void:
+
+func _get_platform_edges() -> Dictionary:
+	## Returns the TRUE world-space edges of the platform's collision shape,
+	## accounting for CollisionShape2D.scale AND the root node's transform scale.
+	var collision_shape = $CollisionShape2D
+	var shape = collision_shape.shape
+	var half_w = 0.0
+	var half_h = 0.0
+	
+	if shape is RectangleShape2D:
+		half_w = shape.size.x / 2.0
+		half_h = shape.size.y / 2.0
+	elif shape is CapsuleShape2D:
+		half_w = shape.radius
+		half_h = shape.height / 2.0
+	
+	# Account for ALL scale: the CollisionShape2D's own scale AND the root node's global scale
+	var root_scale = global_transform.get_scale()
+	var total_scale_x = collision_shape.scale.x * root_scale.x
+	var total_scale_y = collision_shape.scale.y * root_scale.y
+	
+	half_w *= abs(total_scale_x)
+	half_h *= abs(total_scale_y)
+	
+	# The shape's position is also affected by root scale
+	var shape_offset = collision_shape.position * root_scale
+	var center = global_position + shape_offset
+	
+	return {
+		"center": center,
+		"half_w": half_w,
+		"half_h": half_h,
+		"left": center.x - half_w,
+		"right": center.x + half_w,
+		"top": center.y - half_h,
+		"bottom": center.y + half_h,
+	}
+
+
+func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var space_state = get_world_2d().direct_space_state
 	var show_debug = _is_debug_visible()
 	
-	# Get platform collision shape to determine size
 	var collision_shape = $CollisionShape2D
 	if not collision_shape or not collision_shape.shape:
 		return
 	
-	var shape = collision_shape.shape
-	var platform_half_width = 0.0
-	var platform_half_height = 0.0
+	# Use the passed-in distance, or fall back to the export default
+	var cd = effective_crush_distance if effective_crush_distance > 0 else crush_distance
 	
-	if shape is RectangleShape2D:
-		platform_half_width = (shape.size.x * collision_shape.scale.x) / 2.0
-		platform_half_height = (shape.size.y * collision_shape.scale.y) / 2.0
-	elif shape is CapsuleShape2D:
-		platform_half_width = shape.radius * collision_shape.scale.x
-		platform_half_height = (shape.height / 2.0) * collision_shape.scale.y
+	var edges = _get_platform_edges()
 	
-	# The TRUE center of the collision shape in world space
-	var shape_center = global_position + collision_shape.position
+	var x_positions: Array[float] = _build_ray_positions(edges.left, edges.right, 10.0)
+	var y_positions: Array[float] = _build_ray_positions(edges.top, edges.bottom, 10.0)
 	
-	# The exact four edges
-	var left_edge = shape_center.x - platform_half_width
-	var right_edge = shape_center.x + platform_half_width
-	var top_edge = shape_center.y - platform_half_height
-	var bottom_edge = shape_center.y + platform_half_height
-	
-	# Build X positions: corners first, then evenly spaced fill between
-	var x_positions: Array[float] = _build_ray_positions(left_edge, right_edge, 10.0)
-	# Build Y positions: corners first, then evenly spaced fill between
-	var y_positions: Array[float] = _build_ray_positions(top_edge, bottom_edge, 10.0)
-	
-		# === UP CHECK (platform pushing player into ceiling) ===
+	# === UP CHECK ===
 	for ray_x in x_positions:
-		# Start from inside the platform (which is excluded from the query)
-		# to guarantee we don't start inside the player's collision shape
-		var ray_start = Vector2(ray_x, top_edge + 4.0)
-		var ray_end = Vector2(ray_x, top_edge - crush_distance)
-		
+		var ray_start = Vector2(ray_x, edges.top + 4.0)
+		var ray_end = Vector2(ray_x, edges.top - cd)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.UP, show_debug):
 			if player.has_method("kill_player"):
@@ -207,11 +278,10 @@ func check_for_crush() -> void:
 				print("Player crushed by platform (from below)!")
 			return
 	
-		# === DOWN CHECK (platform pushing player into floor) ===
+	# === DOWN CHECK ===
 	for ray_x in x_positions:
-		var ray_start = Vector2(ray_x, bottom_edge - 4.0)
-		var ray_end = Vector2(ray_x, bottom_edge + crush_distance)
-		
+		var ray_start = Vector2(ray_x, edges.bottom - 4.0)
+		var ray_end = Vector2(ray_x, edges.bottom + cd)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
 			if player.has_method("kill_player"):
@@ -219,11 +289,10 @@ func check_for_crush() -> void:
 				print("Player crushed by platform (from above)!")
 			return
 	
-	# === LEFT CHECK (platform pushing player into right wall) ===
+	# === LEFT CHECK ===
 	for ray_y in y_positions:
-		var ray_start = Vector2(left_edge + 4.0, ray_y)
-		var ray_end = Vector2(left_edge - crush_distance, ray_y)
-		
+		var ray_start = Vector2(edges.left + 4.0, ray_y)
+		var ray_end = Vector2(edges.left - cd, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
 			if player.has_method("kill_player"):
@@ -231,11 +300,10 @@ func check_for_crush() -> void:
 				print("Player crushed by platform (from right)!")
 			return
 	
-	# === RIGHT CHECK (platform pushing player into left wall) ===
+	# === RIGHT CHECK ===
 	for ray_y in y_positions:
-		var ray_start = Vector2(right_edge - 4.0, ray_y)
-		var ray_end = Vector2(right_edge + crush_distance, ray_y)
-		
+		var ray_start = Vector2(edges.right - 4.0, ray_y)
+		var ray_end = Vector2(edges.right + cd, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
 			if player.has_method("kill_player"):
@@ -245,14 +313,8 @@ func check_for_crush() -> void:
 
 
 func _build_ray_positions(edge_min: float, edge_max: float, spacing: float) -> Array[float]:
-	## Always includes both corners (edge_min and edge_max).
-	## Fills evenly spaced rays between them based on spacing.
 	var positions: Array[float] = []
-	
-	# Always add the first corner
 	positions.append(edge_min)
-	
-	# Calculate how many fill rays we need between the corners
 	var total_length = edge_max - edge_min
 	if total_length > 0:
 		var fill_count = int(total_length / spacing)
@@ -260,10 +322,7 @@ func _build_ray_positions(edge_min: float, edge_max: float, spacing: float) -> A
 			var actual_spacing = total_length / float(fill_count + 1)
 			for i in range(1, fill_count + 1):
 				positions.append(edge_min + actual_spacing * float(i))
-	
-	# Always add the second corner
 	positions.append(edge_max)
-	
 	return positions
 
 
@@ -280,40 +339,29 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 		player_width = player_collision.shape.size.x * player_collision.scale.x
 		player_height = player_collision.shape.size.y * player_collision.scale.y
 	
-	# Get platform edge info
-	var collision_shape = $CollisionShape2D
-	var shape_center = global_position + collision_shape.position
-	var shape = collision_shape.shape
-	var phw = 0.0
-	var phh = 0.0
-	if shape is RectangleShape2D:
-		phw = (shape.size.x * collision_shape.scale.x) / 2.0
-		phh = (shape.size.y * collision_shape.scale.y) / 2.0
+	var edges = _get_platform_edges()
 	
-	# --- FIX: Cast from the PLATFORM EDGE outward past the player, not from player center ---
-	# This avoids the ray-starts-inside-geometry problem entirely.
 	var ray_start = Vector2.ZERO
 	var check_distance = 0.0
 	
 	if crush_direction == Vector2.UP:
-		# Cast from just above the platform's top edge, upward past where the player's head should be
-		ray_start = Vector2(player.global_position.x, shape_center.y - phh - 1.0)
+		ray_start = Vector2(player.global_position.x, edges.top - 1.0)
 		check_distance = player_height + crush_distance
 	elif crush_direction == Vector2.DOWN:
-		ray_start = Vector2(player.global_position.x, shape_center.y + phh + 1.0)
+		ray_start = Vector2(player.global_position.x, edges.bottom + 1.0)
 		check_distance = player_height + crush_distance
 	elif crush_direction == Vector2.LEFT:
-		ray_start = Vector2(shape_center.x - phw - 1.0, player.global_position.y)
+		ray_start = Vector2(edges.left - 1.0, player.global_position.y)
 		check_distance = player_width + crush_distance
 	elif crush_direction == Vector2.RIGHT:
-		ray_start = Vector2(shape_center.x + phw + 1.0, player.global_position.y)
+		ray_start = Vector2(edges.right + 1.0, player.global_position.y)
 		check_distance = player_width + crush_distance
 	
 	var ray_end = ray_start + (crush_direction * check_distance)
 	
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
 	query.exclude = [player, self]
-	query.collision_mask = 2  # World layer
+	query.collision_mask = 2
 	
 	var result = space_state.intersect_ray(query)
 	
@@ -330,16 +378,15 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 			_add_debug_ray({"type": "circle", "pos": result.position, "color": Color.RED})
 	
 	if result:
-		# How much space is between the platform edge and the wall?
 		var space_available = 0.0
 		if crush_direction == Vector2.UP:
-			space_available = abs((shape_center.y - phh) - result.position.y)
+			space_available = abs(edges.top - result.position.y)
 		elif crush_direction == Vector2.DOWN:
-			space_available = abs(result.position.y - (shape_center.y + phh))
+			space_available = abs(result.position.y - edges.bottom)
 		elif crush_direction == Vector2.LEFT:
-			space_available = abs((shape_center.x - phw) - result.position.x)
+			space_available = abs(edges.left - result.position.x)
 		elif crush_direction == Vector2.RIGHT:
-			space_available = abs(result.position.x - (shape_center.x + phw))
+			space_available = abs(result.position.x - edges.right)
 		
 		var required_space = 0.0
 		if crush_direction == Vector2.UP or crush_direction == Vector2.DOWN:
@@ -353,16 +400,12 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 
 
 func _cast_for_player(space_state: PhysicsDirectSpaceState2D, ray_start: Vector2, ray_end: Vector2, show_debug: bool, debug_color: Color) -> Node2D:
-	## Cast a ray on the player layer. Returns the player node if hit, null otherwise.
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
 	query.exclude = [self]
-	query.collision_mask = 1  # Player layer
-	
+	query.collision_mask = 1
 	var result = space_state.intersect_ray(query)
-	
 	if show_debug:
 		var hit = result.size() > 0
-		# Magenta = searching for player, Yellow = found player
 		var color = Color.YELLOW if (hit and result.collider.is_in_group("player")) else debug_color
 		_add_debug_ray({
 			"type": "line",
@@ -372,7 +415,6 @@ func _cast_for_player(space_state: PhysicsDirectSpaceState2D, ray_start: Vector2
 		})
 		if hit:
 			_add_debug_ray({"type": "circle", "pos": result.position, "color": color})
-	
 	if result and result.collider.is_in_group("player"):
 		return result.collider
 	return null
