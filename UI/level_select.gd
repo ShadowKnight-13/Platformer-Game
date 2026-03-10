@@ -29,17 +29,19 @@ func set_font_size_recursive(node: Node, size: int) -> void:
 func _on_level_1_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/Desert.tscn")
+	get_tree().change_scene_to_file("res://Levels/DesertCave.tscn")
 
 
 func _on_level_2_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/DesertCave.tscn")
+	get_tree().change_scene_to_file("res://Levels/Test Level.tscn")
 
 
 func _on_level_3_button_pressed() -> void:
-	pass # Replace with function body.
+	fade_out()
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://Levels/Desert.tscn")
 
 
 func fade_in():

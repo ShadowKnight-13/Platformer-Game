@@ -2,10 +2,60 @@
 
 [ext_resource type="Script" uid="uid://c54stbsqji1bc" path="res://UI/pause_menu.gd" id="1_ltd3m"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_jfm1e"]
+[ext_resource type="Texture2D" uid="uid://bd4lycbt7v2uv" path="res://UI/Buttons/button.png" id="3_03fe5"]
+[ext_resource type="Texture2D" uid="uid://bbvyij4ga3dni" path="res://UI/Buttons/buttonpress.png" id="4_0b5ob"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0b5ob"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nben2"]
+texture = ExtResource("4_0b5ob")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xv4gp"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mxjhc"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pqlge"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k6dah"]
+texture = ExtResource("4_0b5ob")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mexjk"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu28r"]
+texture = ExtResource("3_03fe5")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
 
 [node name="PauseMenu" type="VBoxContainer" unique_id=1336150361]
 process_mode = 3
-custom_minimum_size = Vector2(250, 250)
+custom_minimum_size = Vector2(200, 200)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -21,6 +71,7 @@ alignment = 1
 script = ExtResource("1_ltd3m")
 
 [node name="PauseLabel" type="Label" parent="." unique_id=2020461511]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_jfm1e")
 theme_override_font_sizes/font_size = 18
@@ -29,25 +80,35 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1098736929]
-custom_minimum_size = Vector2(0, 200)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
 [node name="ResumeButton" type="Button" parent="." unique_id=132874842]
 process_mode = 3
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
 theme_override_fonts/font = ExtResource("2_jfm1e")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_0b5ob")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nben2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xv4gp")
+theme_override_styles/focus = SubResource("StyleBoxTexture_mxjhc")
 text = "Resume"
 
 [node name="MainMenuButton" type="Button" parent="." unique_id=1886198093]
 process_mode = 3
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ResumeButton")
 focus_neighbor_bottom = NodePath("../ResumeButton")
 theme_override_fonts/font = ExtResource("2_jfm1e")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_pqlge")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k6dah")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mexjk")
+theme_override_styles/focus = SubResource("StyleBoxTexture_fu28r")
 text = "Main Menu
 "
 

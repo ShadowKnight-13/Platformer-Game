@@ -40,6 +40,8 @@ modulate_color = Color(0.47843137, 0.023529412, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bpm4f"]
 texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
 modulate_color = Color(0, 0.54509807, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t2nhh"]
@@ -62,6 +64,8 @@ modulate_color = Color(0.47843137, 0.023529412, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7137b"]
 texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
 modulate_color = Color(0, 0.54509807, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cwv5u"]
@@ -84,6 +88,8 @@ modulate_color = Color(0.47843137, 0.023529412, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_voib7"]
 texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
 modulate_color = Color(0, 0.54509807, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27vi8"]
@@ -170,10 +176,10 @@ alignment = 1
 
 [node name="Title" type="Label" parent="VBoxTop" unique_id=1993293699]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_tk8dj")
-theme_override_font_sizes/font_size = 18
-text = "Platformer Game Thing"
+theme_override_font_sizes/font_size = 40
+text = "H3lix Protoc0l"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -192,7 +198,7 @@ grow_vertical = 0
 alignment = 1
 
 [node name="StartButton" type="Button" parent="VBoxBottom" unique_id=1333207031]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../LevelSelect")
@@ -205,7 +211,7 @@ theme_override_styles/focus = SubResource("StyleBoxTexture_cafmx")
 text = "Start"
 
 [node name="LevelSelect" type="Button" parent="VBoxBottom" unique_id=1159944614]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
 focus_neighbor_bottom = NodePath("../SettingsButton")
@@ -218,7 +224,7 @@ theme_override_styles/focus = SubResource("StyleBoxTexture_saki1")
 text = "Level Select"
 
 [node name="SettingsButton" type="Button" parent="VBoxBottom" unique_id=1447438172]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../LevelSelect")
 focus_neighbor_bottom = NodePath("../QuitButton")
@@ -231,7 +237,7 @@ theme_override_styles/focus = SubResource("StyleBoxTexture_c2iqt")
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="VBoxBottom" unique_id=749203038]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_top = NodePath("../SettingsButton")
 focus_neighbor_bottom = NodePath("../StartButton")
