@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="1_0ohsc"]
 [ext_resource type="Script" uid="uid://b0frfcturl7qj" path="res://interactables/lever.gd" id="1_7uavd"]
-[ext_resource type="Script" uid="uid://cg1tiehpy28p3" path="res://lever_animation.gd" id="2_soi7j"]
 [ext_resource type="Texture2D" uid="uid://npmjte0if6pi" path="res://Art Assets/general/pg-lever.png" id="3_13u0f"]
 
 [sub_resource type="Animation" id="Animation_bfxmr"]
@@ -71,7 +70,6 @@ script = ExtResource("1_7uavd")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Lever Animator" unique_id=1887850250]
 root_node = NodePath("../Sprite2D")
 libraries/ = SubResource("AnimationLibrary_reu4k")
-script = ExtResource("2_soi7j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Lever Animator" unique_id=1250066600]
 texture_filter = 1
