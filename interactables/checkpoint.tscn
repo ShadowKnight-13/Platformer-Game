@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cs37od0yb8unt" path="res://interactables/checkpoint.gd" id="1_luqgl"]
 [ext_resource type="Texture2D" uid="uid://cwgtnacbniud3" path="res://Art Assets/general/pg-checkpoint.png" id="2_r6hke"]
+[ext_resource type="AudioStream" uid="uid://yui71sko4v1s" path="res://sounds/checkpoint.wav" id="3_ucyyf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6hke"]
 radius = 14.0
@@ -22,6 +23,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [4, 5, 6, 7, 8, 9, 10, 11, 12]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_r6hke"]
 length = 0.001
@@ -36,6 +49,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_tnhlw"]
@@ -94,5 +119,8 @@ hframes = 16
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1237495593]
 libraries/ = SubResource("AnimationLibrary_s20m7")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=248165407]
+stream = ExtResource("3_ucyyf")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
