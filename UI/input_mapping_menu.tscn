@@ -287,6 +287,7 @@ text = "_"
 script = ExtResource("3_jiusq")
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_d6ibo")]
+visible = false
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxKeyboard/move_left" to="." method="_on_left_key_pressed"]

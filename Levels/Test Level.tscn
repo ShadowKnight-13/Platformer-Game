@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="8_j0rrd"]
 [ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="9_hklbw"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://med_kit.tscn" id="9_mxnmf"]
-[ext_resource type="PackedScene" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
+[ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 

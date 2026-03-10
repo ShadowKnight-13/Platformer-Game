@@ -193,10 +193,12 @@ func check_for_crush() -> void:
 	# Build Y positions: corners first, then evenly spaced fill between
 	var y_positions: Array[float] = _build_ray_positions(top_edge, bottom_edge, 10.0)
 	
-	# === UP CHECK (platform pushing player into ceiling) ===
+		# === UP CHECK (platform pushing player into ceiling) ===
 	for ray_x in x_positions:
-		var ray_start = Vector2(ray_x, top_edge - 1.0)
-		var ray_end = Vector2(ray_x, top_edge - 1.0 - crush_distance)
+		# Start from inside the platform (which is excluded from the query)
+		# to guarantee we don't start inside the player's collision shape
+		var ray_start = Vector2(ray_x, top_edge + 4.0)
+		var ray_end = Vector2(ray_x, top_edge - crush_distance)
 		
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.UP, show_debug):
@@ -205,10 +207,10 @@ func check_for_crush() -> void:
 				print("Player crushed by platform (from below)!")
 			return
 	
-	# === DOWN CHECK (platform pushing player into floor) ===
+		# === DOWN CHECK (platform pushing player into floor) ===
 	for ray_x in x_positions:
-		var ray_start = Vector2(ray_x, bottom_edge + 1.0)
-		var ray_end = Vector2(ray_x, bottom_edge + 1.0 + crush_distance)
+		var ray_start = Vector2(ray_x, bottom_edge - 4.0)
+		var ray_end = Vector2(ray_x, bottom_edge + crush_distance)
 		
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
@@ -219,8 +221,8 @@ func check_for_crush() -> void:
 	
 	# === LEFT CHECK (platform pushing player into right wall) ===
 	for ray_y in y_positions:
-		var ray_start = Vector2(left_edge - 1.0, ray_y)
-		var ray_end = Vector2(left_edge - 1.0 - crush_distance, ray_y)
+		var ray_start = Vector2(left_edge + 4.0, ray_y)
+		var ray_end = Vector2(left_edge - crush_distance, ray_y)
 		
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
@@ -231,8 +233,8 @@ func check_for_crush() -> void:
 	
 	# === RIGHT CHECK (platform pushing player into left wall) ===
 	for ray_y in y_positions:
-		var ray_start = Vector2(right_edge + 1.0, ray_y)
-		var ray_end = Vector2(right_edge + 1.0 + crush_distance, ray_y)
+		var ray_start = Vector2(right_edge - 4.0, ray_y)
+		var ray_end = Vector2(right_edge + crush_distance, ray_y)
 		
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
@@ -278,13 +280,35 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 		player_width = player_collision.shape.size.x * player_collision.scale.x
 		player_height = player_collision.shape.size.y * player_collision.scale.y
 	
-	var check_distance = 0.0
-	if crush_direction == Vector2.UP or crush_direction == Vector2.DOWN:
-		check_distance = player_height + 5.0
-	else:
-		check_distance = player_width + 5.0
+	# Get platform edge info
+	var collision_shape = $CollisionShape2D
+	var shape_center = global_position + collision_shape.position
+	var shape = collision_shape.shape
+	var phw = 0.0
+	var phh = 0.0
+	if shape is RectangleShape2D:
+		phw = (shape.size.x * collision_shape.scale.x) / 2.0
+		phh = (shape.size.y * collision_shape.scale.y) / 2.0
 	
-	var ray_start = player.global_position
+	# --- FIX: Cast from the PLATFORM EDGE outward past the player, not from player center ---
+	# This avoids the ray-starts-inside-geometry problem entirely.
+	var ray_start = Vector2.ZERO
+	var check_distance = 0.0
+	
+	if crush_direction == Vector2.UP:
+		# Cast from just above the platform's top edge, upward past where the player's head should be
+		ray_start = Vector2(player.global_position.x, shape_center.y - phh - 1.0)
+		check_distance = player_height + crush_distance
+	elif crush_direction == Vector2.DOWN:
+		ray_start = Vector2(player.global_position.x, shape_center.y + phh + 1.0)
+		check_distance = player_height + crush_distance
+	elif crush_direction == Vector2.LEFT:
+		ray_start = Vector2(shape_center.x - phw - 1.0, player.global_position.y)
+		check_distance = player_width + crush_distance
+	elif crush_direction == Vector2.RIGHT:
+		ray_start = Vector2(shape_center.x + phw + 1.0, player.global_position.y)
+		check_distance = player_width + crush_distance
+	
 	var ray_end = ray_start + (crush_direction * check_distance)
 	
 	var query = PhysicsRayQueryParameters2D.create(ray_start, ray_end)
@@ -306,15 +330,7 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 			_add_debug_ray({"type": "circle", "pos": result.position, "color": Color.RED})
 	
 	if result:
-		var collision_shape = $CollisionShape2D
-		var shape_center = global_position + collision_shape.position
-		var shape = collision_shape.shape
-		var phw = 0.0
-		var phh = 0.0
-		if shape is RectangleShape2D:
-			phw = (shape.size.x * collision_shape.scale.x) / 2.0
-			phh = (shape.size.y * collision_shape.scale.y) / 2.0
-		
+		# How much space is between the platform edge and the wall?
 		var space_available = 0.0
 		if crush_direction == Vector2.UP:
 			space_available = abs((shape_center.y - phh) - result.position.y)

@@ -60,7 +60,6 @@ func _apply_new_binding(event):
 	text = _event_to_string(event)
 
 
-
 func _get_current_binding() -> String:
 	if action_name == "" or not InputMap.has_action(action_name):
 		return "Unassigned"
