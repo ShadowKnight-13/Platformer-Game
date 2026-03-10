@@ -9,6 +9,8 @@
 size = Vector2(22, 25)
 
 [node name="Button" type="StaticBody2D" unique_id=350515242]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_04y4t")
 
 [node name="Button Animator" type="Node2D" parent="." unique_id=1960405843]
@@ -26,3 +28,5 @@ position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_n4tde")
 
 [node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("3_hob56")]
+collision_layer = 1
+collision_mask = 1
