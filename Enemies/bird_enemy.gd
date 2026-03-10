@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 
 	match state:
 		State.PATROL:
+			$AnimationPlayer.play('fly')
 			_patrol_update(delta)
 		State.DIVE:
 			_dive_update(delta)
@@ -117,4 +118,3 @@ func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if is_diving and body.has_method("damage_player"):
 		body.damage_player()
 		_enter_return_state()
-
