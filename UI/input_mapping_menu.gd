@@ -5,6 +5,7 @@ var text_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$VBoxContainer/BackButton.grab_focus()
 	text_size = UiGlobals.text_size
 	set_font_size_recursive(self, text_size)
 	fade_in()

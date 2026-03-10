@@ -83,7 +83,7 @@ focus_neighbor_left = NodePath("../Level3Button")
 focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level2Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
-text = "(Desert)"
+text = "(Cave)"
 
 [node name="MarginContainer2" type="MarginContainer" parent="LevelButtons" unique_id=1518642549]
 custom_minimum_size = Vector2(30, 0)
@@ -96,7 +96,7 @@ focus_neighbor_left = NodePath("../Level1Button")
 focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level3Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
-text = "(Cave)"
+text = "(Desert)"
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelButtons" unique_id=1992822629]
 custom_minimum_size = Vector2(30, 0)
@@ -109,7 +109,7 @@ focus_neighbor_left = NodePath("../Level2Button")
 focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
-text = "(Nothing)"
+text = "(Test Level)"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false

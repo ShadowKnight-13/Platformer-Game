@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 @onready var interactable: Area2D = $interactable
+@onready var sprite_2d: Sprite2D = $"Med Animator/Sprite2D"
 
 @export var heal_amount: int = 1
 
@@ -17,10 +18,10 @@ func _on_interact():
 	if player and player.has_method("heal"):
 		player.heal(heal_amount)
 	has_been_used = true
-	$Sprite2D.visible = false
+	sprite_2d.visible = false
 	print("Med kit used! Player healed for ", heal_amount, " health")
 
 func _on_checkpoint_reached(_position: Vector2, _health: int):
 	has_been_used = false
-	$Sprite2D.visible = true
+	sprite_2d.visible = true
 	print("Med kit reset at checkpoint")

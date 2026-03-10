@@ -55,6 +55,7 @@ var is_crouching := false
 
 ## === NODES / CHILDREN ===
 @onready var melee_hitbox: Area2D = $MeleeHitbox
+@onready var interaction_area = $InteractionArea
 
 var debug_rays = []
 var debug_rays_visible := false
@@ -105,6 +106,9 @@ func is_on_grippable_wall() -> bool:
 func _physics_process(delta):
 	var x_input = Input.get_axis("move_left", "move_right")
 	
+	if Input.is_action_just_pressed("interact"):
+		if interaction_area and interaction_area.has_method("trigger_interact"):
+			interaction_area.trigger_interact()
 	# Reset gravity skip flag at start of frame
 	skip_gravity_this_frame = false
 	
