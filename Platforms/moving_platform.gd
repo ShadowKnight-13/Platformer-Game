@@ -218,11 +218,7 @@ func _draw() -> void:
 			draw_circle(ray.pos - global_position, 5, ray.color)
 	debug_rays.clear()
 
-
-# === CRUSH DETECTION ===
-
 # === CRUSH DETECTION (ALL 4 DIRECTIONS) ===
-
 func _get_platform_edges() -> Dictionary:
 	## Returns the TRUE world-space edges of the platform's collision shape,
 	## accounting for CollisionShape2D.scale AND the root node's transform scale.
