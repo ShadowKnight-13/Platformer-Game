@@ -15,7 +15,7 @@
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
-[node name="SpawnPoint" type="Marker2D" parent="Level"]
+[node name="Level#SpawnPoint" type="Marker2D" parent="." unique_id=527699201]
 position = Vector2(0, 400)
 
 [node name="Ground" parent="." unique_id=1131028829 instance=ExtResource("1_mbm6m")]
