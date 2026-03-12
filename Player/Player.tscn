@@ -326,6 +326,7 @@ stream = ExtResource("5_8g4oa")
 
 [node name="dash" type="AudioStreamPlayer2D" parent="SFX" unique_id=1515070445]
 stream = ExtResource("6_6ysni")
+volume_db = -2.0
 
 [node name="swing" type="AudioStreamPlayer2D" parent="SFX" unique_id=1717191298]
 stream = ExtResource("7_vlldt")

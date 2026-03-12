@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5edtnnpvcyie"
-path="res://.godot/imported/sci fi mockup .png-d0e77c11cc2ce16b6869e8cbc38a6a02.ctex"
+uid="uid://5kh5l54kwgba"
+path="res://.godot/imported/pg-labtileset.png-ef9ab8f09fa8a7eeb9d00b522ebf528a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art Assets/Foozle_2DT0001_Science_Fiction_Lab_TilesetDecorTraps/Foozle_2DT0001_Science_Fiction_Labs_Tileset/Mockup/sci fi mockup .png"
-dest_files=["res://.godot/imported/sci fi mockup .png-d0e77c11cc2ce16b6869e8cbc38a6a02.ctex"]
+source_file="res://Art Assets/Lab/pg-labtileset.png"
+dest_files=["res://.godot/imported/pg-labtileset.png-ef9ab8f09fa8a7eeb9d00b522ebf528a.ctex"]
 
 [params]
 

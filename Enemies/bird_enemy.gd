@@ -42,6 +42,8 @@ func _physics_process(delta: float) -> void:
 			_return_update(delta)
 
 	move_and_slide()
+	if velocity.x != 0:
+		$Sprite2D.flip_h = velocity.x > 0
 
 func _update_cooldown(delta: float) -> void:
 	if _dive_cooldown_timer > 0.0:
@@ -61,7 +63,6 @@ func _patrol_update(_delta: float) -> void:
 func _try_start_dive() -> void:
 	if _dive_cooldown_timer > 0.0:
 		return
-
 	if player == null:
 		player = get_tree().get_first_node_in_group("player")
 	if player == null:
@@ -73,6 +74,7 @@ func _try_start_dive() -> void:
 		_dive_direction = to_player.normalized()
 		state = State.DIVE
 		is_diving = true
+		$dive.play()
 
 func _dive_update(_delta: float) -> void:
 	# Mild steering toward the player during dive (optional)

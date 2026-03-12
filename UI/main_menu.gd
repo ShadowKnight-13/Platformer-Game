@@ -57,4 +57,5 @@ func fade_in():
 
 func fade_out():
 	$SceneFade.show()
+	$AudioStreamPlayer2D.play()
 	anim.play("fade_out")
