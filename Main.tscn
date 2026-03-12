@@ -9,8 +9,9 @@
 
 [node name="Main" type="Node2D" unique_id=618264885]
 script = ExtResource("6_main")
+level_scene = ExtResource("1_4h0sv")
 
-[node name="Level" parent="." unique_id=314983792 instance=ExtResource("1_4h0sv")]
+[node name="Level" type="Node2D" parent="." unique_id=314983792]
 
 [node name="Player" parent="." unique_id=1001394227 instance=ExtResource("2_mqxgj")]
 position = Vector2(200, 200)

@@ -2,13 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dh855sqhes1y7" path="res://Art Assets/desert/desert-ruins.png" id="1_4shgm"]
 [ext_resource type="Texture2D" uid="uid://bed85ls462eh" path="res://Art Assets/general/Tileset_8.png" id="2_7gn3o"]
-[ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_tc5f4"]
 [ext_resource type="Texture2D" uid="uid://chdij55euk6o6" path="res://Art Assets/general/Wasteland-Files.png" id="3_fg734"]
 [ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Art Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
-[ext_resource type="Script" path="res://Player/healthManager.gd" id="6_1vagx"]
-[ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="7_7gn3o"]
-[ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="8_fg734"]
 [ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="10_fg734"]
 [ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Art Assets/general/pg-cryoTube.png" id="11_ifivw"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="12_q8pk5"]
@@ -458,10 +454,8 @@ size = Vector2(15, 31)
 
 [node name="DesertCave" type="Node2D" unique_id=1588144092]
 
-[node name="Door" parent="." unique_id=1104411225 instance=ExtResource("13_q8pk5")]
-position = Vector2(5007, -2274)
-level = "uid://3ukpme1xwu7f"
-metadata/_edit_group_ = true
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=484577396]
+position = Vector2(157, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1768396249 groups=["grippable_wall"]]
 texture_filter = 1
@@ -492,13 +486,14 @@ position_smoothing_enabled = true
 
 [node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1190829059]
 scroll_scale = Vector2(0.2, 0.2)
-scroll_offset = Vector2(139, -151)
+scroll_offset = Vector2(2226, -1005)
 repeat_size = Vector2(96, 96)
 repeat_times = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D3" unique_id=388809470]
 z_index = -1
 texture_filter = 1
+position = Vector2(-317, -254)
 texture = ExtResource("4_jpljo")
 offset = Vector2(600, 300)
 
@@ -522,31 +517,6 @@ offset_top = -1173.0
 offset_right = 407.0
 offset_bottom = -1150.0
 text = "Press shift to slide"
-
-[node name="UI" type="CanvasLayer" parent="." unique_id=1233337934]
-
-[node name="Health" type="HBoxContainer" parent="UI" unique_id=1032034620]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("6_1vagx")
-
-[node name="TextureRect" type="TextureRect" parent="UI/Health" unique_id=2043999751]
-layout_mode = 2
-texture = ExtResource("7_7gn3o")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="UI/Health" unique_id=53571383]
-layout_mode = 2
-texture = ExtResource("7_7gn3o")
-stretch_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="UI/Health" unique_id=541381873]
-layout_mode = 2
-texture = ExtResource("7_7gn3o")
-stretch_mode = 2
-
-[node name="PauseMenu" parent="UI" unique_id=1336150361 instance=ExtResource("8_fg734")]
-visible = false
 
 [node name="Spikes" type="Node" parent="." unique_id=1981753528]
 
