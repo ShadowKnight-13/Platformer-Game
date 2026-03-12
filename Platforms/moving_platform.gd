@@ -261,6 +261,15 @@ func _get_platform_edges() -> Dictionary:
 	}
 
 
+func _crush_player(player: Node2D, message: String) -> void:
+	## Kill the player and freeze their velocity so move_and_slide can't push them through.
+	if player.has_method("kill_player"):
+		player.kill_player()
+		print(message)
+	if "velocity" in player:
+		player.velocity = Vector2.ZERO
+
+
 func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var space_state = get_world_2d().direct_space_state
 	var show_debug = _is_debug_visible()
@@ -282,9 +291,7 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 		var ray_end = Vector2(ray_x, edges.top - up_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.UP, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from below)!")
+			_crush_player(player, "Player crushed by platform (from below)!")
 			return
 	
 	# === DOWN CHECK ===
@@ -295,9 +302,7 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 		var ray_end = Vector2(ray_x, edges.bottom + down_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from above)!")
+			_crush_player(player, "Player crushed by platform (from above)!")
 			return
 	
 	# === LEFT CHECK ===
@@ -308,9 +313,7 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 		var ray_end = Vector2(edges.left - left_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from right)!")
+			_crush_player(player, "Player crushed by platform (from right)!")
 			return
 	
 	# === RIGHT CHECK ===
@@ -321,9 +324,7 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 		var ray_end = Vector2(edges.right + right_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from left)!")
+			_crush_player(player, "Player crushed by platform (from left)!")
 			return
 
 

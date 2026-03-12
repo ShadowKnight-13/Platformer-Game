@@ -68,7 +68,12 @@ func player_death():
 		get_tree().reload_current_scene()
 
 func kill_player():
+	if health <= 0:
+		return  # Already dead
 	health = 0
+	velocity = Vector2.ZERO
+	set_physics_process(false)
+	player_death()
 
 func damage_player():
 	health = health - 1
