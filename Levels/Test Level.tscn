@@ -233,8 +233,8 @@ position = Vector2(289, 570)
 [node name="BirdEnemy" parent="." unique_id=548068155 instance=ExtResource("10_mnmnm")]
 position = Vector2(1182, 2)
 
-[node name="Door" parent="." unique_id=1104411225 instance=ExtResource("11_pbvpm")]
-position = Vector2(480, 446)
+[node name="Button" parent="." unique_id=350515242 instance=ExtResource("12_d1skg")]
+position = Vector2(511, 453)
 
-[node name="Button" parent="Door" unique_id=350515242 instance=ExtResource("12_d1skg")]
-position = Vector2(31, 7)
+[node name="Door" parent="." unique_id=1104411225 instance=ExtResource("11_pbvpm")]
+position = Vector2(463, 445)
