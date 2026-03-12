@@ -482,6 +482,7 @@ metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=305231393]
 zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
 
 [node name="Parallax2D3" type="Parallax2D" parent="." unique_id=1190829059]
 scroll_scale = Vector2(0.2, 0.2)

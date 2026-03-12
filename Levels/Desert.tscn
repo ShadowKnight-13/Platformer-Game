@@ -773,6 +773,7 @@ color = Color(0.44705883, 0.29411766, 0.17254902, 1)
 [node name="Player" parent="." unique_id=509081286 instance=ExtResource("3_bt7jf")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2079771188]
+position_smoothing_enabled = true
 
 [node name="CactusTile" type="TileMapLayer" parent="." unique_id=725585068]
 texture_filter = 3
