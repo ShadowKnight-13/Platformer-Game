@@ -21,6 +21,16 @@ extends AnimatableBody2D
 @export var can_crush: bool = true
 @export var crush_distance: float = 20.0
 
+@export_subgroup("Raycast Overrides")
+@export var override_ray_count_up: int = -1
+@export var override_ray_length_up: float = -1.0
+@export var override_ray_count_down: int = -1
+@export var override_ray_length_down: float = -1.0
+@export var override_ray_count_left: int = -1
+@export var override_ray_length_left: float = -1.0
+@export var override_ray_count_right: int = -1
+@export var override_ray_length_right: float = -1.0
+
 # Path following
 @onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var path_2d: Path2D = $Path2D
@@ -264,13 +274,12 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	
 	var edges = _get_platform_edges()
 	
-	var x_positions: Array[float] = _build_ray_positions(edges.left, edges.right, 10.0)
-	var y_positions: Array[float] = _build_ray_positions(edges.top, edges.bottom, 10.0)
-	
 	# === UP CHECK ===
-	for ray_x in x_positions:
+	var up_positions: Array[float] = _get_ray_positions(edges.left, edges.right, override_ray_count_up, 10.0)
+	var up_length: float = override_ray_length_up if override_ray_length_up > 0 else cd
+	for ray_x in up_positions:
 		var ray_start = Vector2(ray_x, edges.top + 4.0)
-		var ray_end = Vector2(ray_x, edges.top - cd)
+		var ray_end = Vector2(ray_x, edges.top - up_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.UP, show_debug):
 			if player.has_method("kill_player"):
@@ -279,9 +288,11 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 			return
 	
 	# === DOWN CHECK ===
-	for ray_x in x_positions:
+	var down_positions: Array[float] = _get_ray_positions(edges.left, edges.right, override_ray_count_down, 10.0)
+	var down_length: float = override_ray_length_down if override_ray_length_down > 0 else cd
+	for ray_x in down_positions:
 		var ray_start = Vector2(ray_x, edges.bottom - 4.0)
-		var ray_end = Vector2(ray_x, edges.bottom + cd)
+		var ray_end = Vector2(ray_x, edges.bottom + down_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
 			if player.has_method("kill_player"):
@@ -290,9 +301,11 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 			return
 	
 	# === LEFT CHECK ===
-	for ray_y in y_positions:
+	var left_positions: Array[float] = _get_ray_positions(edges.top, edges.bottom, override_ray_count_left, 10.0)
+	var left_length: float = override_ray_length_left if override_ray_length_left > 0 else cd
+	for ray_y in left_positions:
 		var ray_start = Vector2(edges.left + 4.0, ray_y)
-		var ray_end = Vector2(edges.left - cd, ray_y)
+		var ray_end = Vector2(edges.left - left_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
 			if player.has_method("kill_player"):
@@ -301,9 +314,11 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 			return
 	
 	# === RIGHT CHECK ===
-	for ray_y in y_positions:
+	var right_positions: Array[float] = _get_ray_positions(edges.top, edges.bottom, override_ray_count_right, 10.0)
+	var right_length: float = override_ray_length_right if override_ray_length_right > 0 else cd
+	for ray_y in right_positions:
 		var ray_start = Vector2(edges.right - 4.0, ray_y)
-		var ray_end = Vector2(edges.right + cd, ray_y)
+		var ray_end = Vector2(edges.right + right_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
 			if player.has_method("kill_player"):
@@ -323,6 +338,23 @@ func _build_ray_positions(edge_min: float, edge_max: float, spacing: float) -> A
 			for i in range(1, fill_count + 1):
 				positions.append(edge_min + actual_spacing * float(i))
 	positions.append(edge_max)
+	return positions
+
+
+func _get_ray_positions(edge_min: float, edge_max: float, override_count: int, auto_spacing: float) -> Array[float]:
+	if override_count == -1:
+		return _build_ray_positions(edge_min, edge_max, auto_spacing)
+	var positions: Array[float] = []
+	if override_count == 0:
+		# Intentionally skip crush detection for this side when count is 0.
+		return positions
+	if override_count == 1:
+		positions.append((edge_min + edge_max) / 2.0)
+		return positions
+	var total_length = edge_max - edge_min
+	var spacing = total_length / float(override_count - 1)
+	for i in range(override_count):
+		positions.append(edge_min + spacing * float(i))
 	return positions
 
 
