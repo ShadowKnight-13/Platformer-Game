@@ -12,10 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="11_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://cr3mqow5eljje" path="res://interactables/button.tscn" id="12_d1skg"]
+[ext_resource type="PackedScene" uid="uid://mx7vlnt8slb7" path="res://interactables/lever.tscn" id="13_nff53"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
-[node name="SpawnPoint" type="Marker2D" parent="Level"]
+[node name="Level#SpawnPoint" type="Marker2D" parent="." unique_id=858511893]
 position = Vector2(0, 400)
 
 [node name="Ground" parent="." unique_id=1131028829 instance=ExtResource("1_mbm6m")]
@@ -238,3 +239,6 @@ position = Vector2(480, 446)
 
 [node name="Button" parent="Door" unique_id=350515242 instance=ExtResource("12_d1skg")]
 position = Vector2(31, 7)
+
+[node name="Lever2" parent="." unique_id=1766548699 instance=ExtResource("13_nff53")]
+position = Vector2(548, 453)
