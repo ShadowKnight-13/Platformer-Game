@@ -220,32 +220,12 @@ func _draw() -> void:
 
 # === CRUSH DETECTION (ALL 4 DIRECTIONS) ===
 func _get_platform_edges() -> Dictionary:
-	## Returns the TRUE world-space edges of the platform's collision shape,
-	## accounting for CollisionShape2D.scale AND the root node's transform scale.
-	var collision_shape = $CollisionShape2D
-	var shape = collision_shape.shape
-	var half_w = 0.0
-	var half_h = 0.0
-	
-	if shape is RectangleShape2D:
-		half_w = shape.size.x / 2.0
-		half_h = shape.size.y / 2.0
-	elif shape is CapsuleShape2D:
-		half_w = shape.radius
-		half_h = shape.height / 2.0
-	
-	# Account for ALL scale: the CollisionShape2D's own scale AND the root node's global scale
-	var root_scale = global_transform.get_scale()
-	var total_scale_x = collision_shape.scale.x * root_scale.x
-	var total_scale_y = collision_shape.scale.y * root_scale.y
-	
-	half_w *= abs(total_scale_x)
-	half_h *= abs(total_scale_y)
-	
-	# The shape's position is also affected by root scale
-	var shape_offset = collision_shape.position * root_scale
-	var center = global_position + shape_offset
-	
+	## Returns the TRUE world-space edges of the platform's collision shape.
+	## _apply_platform_size() bakes the full size into shape.size and resets all
+	## scales to 1.0, so we use platform_size directly to avoid any double-counting.
+	var half_w = platform_size.x / 2.0
+	var half_h = platform_size.y / 2.0
+	var center = global_position + $CollisionShape2D.position
 	return {
 		"center": center,
 		"half_w": half_w,
@@ -283,8 +263,8 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var up_positions: Array[float] = _get_ray_positions(edges.left, edges.right, override_ray_count_up, 10.0)
 	var up_length: float = override_ray_length_up if override_ray_length_up > 0 else cd
 	for ray_x in up_positions:
-		var ray_start = Vector2(ray_x, edges.top + 4.0)
-		var ray_end = Vector2(ray_x, edges.top - up_length)
+		var ray_start = Vector2(ray_x, edges.top - 1.0)
+		var ray_end = Vector2(ray_x, ray_start.y - up_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.UP, show_debug):
 			_crush_player(player, "Player crushed by platform (from below)!")
@@ -294,8 +274,8 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var down_positions: Array[float] = _get_ray_positions(edges.left, edges.right, override_ray_count_down, 10.0)
 	var down_length: float = override_ray_length_down if override_ray_length_down > 0 else cd
 	for ray_x in down_positions:
-		var ray_start = Vector2(ray_x, edges.bottom - 4.0)
-		var ray_end = Vector2(ray_x, edges.bottom + down_length)
+		var ray_start = Vector2(ray_x, edges.bottom + 1.0)
+		var ray_end = Vector2(ray_x, ray_start.y + down_length)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
 			_crush_player(player, "Player crushed by platform (from above)!")
@@ -305,8 +285,8 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var left_positions: Array[float] = _get_ray_positions(edges.top, edges.bottom, override_ray_count_left, 10.0)
 	var left_length: float = override_ray_length_left if override_ray_length_left > 0 else cd
 	for ray_y in left_positions:
-		var ray_start = Vector2(edges.left + 4.0, ray_y)
-		var ray_end = Vector2(edges.left - left_length, ray_y)
+		var ray_start = Vector2(edges.left - 1.0, ray_y)
+		var ray_end = Vector2(ray_start.x - left_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
 			_crush_player(player, "Player crushed by platform (from right)!")
@@ -316,8 +296,8 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var right_positions: Array[float] = _get_ray_positions(edges.top, edges.bottom, override_ray_count_right, 10.0)
 	var right_length: float = override_ray_length_right if override_ray_length_right > 0 else cd
 	for ray_y in right_positions:
-		var ray_start = Vector2(edges.right - 4.0, ray_y)
-		var ray_end = Vector2(edges.right + right_length, ray_y)
+		var ray_start = Vector2(edges.right + 1.0, ray_y)
+		var ray_end = Vector2(ray_start.x + right_length, ray_y)
 		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
 		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
 			_crush_player(player, "Player crushed by platform (from left)!")
@@ -373,18 +353,21 @@ func is_player_crushed(player: Node2D, crush_direction: Vector2, show_debug: boo
 	var ray_start = Vector2.ZERO
 	var check_distance = 0.0
 	
+	# Use a tight confirmation margin — only kill if the player is ACTUALLY pinched
+	var confirmation_margin = 4.0
+	
 	if crush_direction == Vector2.UP:
 		ray_start = Vector2(player.global_position.x, edges.top - 1.0)
-		check_distance = player_height + crush_distance
+		check_distance = player_height + confirmation_margin
 	elif crush_direction == Vector2.DOWN:
 		ray_start = Vector2(player.global_position.x, edges.bottom + 1.0)
-		check_distance = player_height + crush_distance
+		check_distance = player_height + confirmation_margin
 	elif crush_direction == Vector2.LEFT:
 		ray_start = Vector2(edges.left - 1.0, player.global_position.y)
-		check_distance = player_width + crush_distance
+		check_distance = player_width + confirmation_margin
 	elif crush_direction == Vector2.RIGHT:
 		ray_start = Vector2(edges.right + 1.0, player.global_position.y)
-		check_distance = player_width + crush_distance
+		check_distance = player_width + confirmation_margin
 	
 	var ray_end = ray_start + (crush_direction * check_distance)
 	
