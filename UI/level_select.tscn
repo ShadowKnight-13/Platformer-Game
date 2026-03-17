@@ -109,7 +109,7 @@ focus_neighbor_left = NodePath("../Level2Button")
 focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
-text = "(Test Level)"
+text = "(Lab)"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false

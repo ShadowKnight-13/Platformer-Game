@@ -5,12 +5,14 @@ var action_name: String
 var listening := false
 
 func _ready():
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	action_name = name
-	text = _get_current_binding()
+	icon = load(button[_get_current_binding()])
 
 
 func _pressed() -> void:
 	listening = true
+	icon = null
 	text = "Press a key..."
 
 
@@ -19,10 +21,6 @@ func _input(event):
 		return
 
 	if event is InputEventKey and event.pressed:
-		get_viewport().set_input_as_handled()
-		_apply_new_binding(event)
-
-	elif event is InputEventMouseButton and event.pressed:
 		get_viewport().set_input_as_handled()
 		_apply_new_binding(event)
 
@@ -61,8 +59,11 @@ func _apply_new_binding(event: InputEvent):
 	InputMap.action_add_event(action_name, event)
 
 	# Update UI
-	text = _event_to_string(event)
-	print(event)
+	if _event_to_string(event) in button:
+		#text = button[_event_to_string(event)]
+		#text = _event_to_string(event)
+		icon = load(button[_event_to_string(event)])
+		text = ""
 
 
 
@@ -79,8 +80,71 @@ func _get_current_binding() -> String:
 
 func _event_to_string(event: InputEvent) -> String:
 	if event is InputEventKey:
-		print(event)
 		return event.as_text()
-	if event is InputEventMouseButton:
-		return "Mouse %d" % event.button_index
 	return "Unknown"
+
+
+var button = {
+	"Escape": "res://UI/Buttons Pack/KEYBOARD/KEYS/ESC.png",
+	"QuoteLeft": "res://UI/Buttons Pack/KEYBOARD/KEYS/`.png",
+	"1": "res://UI/Buttons Pack/KEYBOARD/KEYS/1.png",
+	"2": "res://UI/Buttons Pack/KEYBOARD/KEYS/2.png",
+	"3": "res://UI/Buttons Pack/KEYBOARD/KEYS/3.png",
+	"4": "res://UI/Buttons Pack/KEYBOARD/KEYS/4.png",
+	"5": "res://UI/Buttons Pack/KEYBOARD/KEYS/5.png",
+	"6": "res://UI/Buttons Pack/KEYBOARD/KEYS/6.png",
+	"7": "res://UI/Buttons Pack/KEYBOARD/KEYS/7.png",
+	"8": "res://UI/Buttons Pack/KEYBOARD/KEYS/8.png",
+	"9": "res://UI/Buttons Pack/KEYBOARD/KEYS/9.png",
+	"0": "res://UI/Buttons Pack/KEYBOARD/KEYS/0.png",
+	"Minus": "res://UI/Buttons Pack/KEYBOARD/KEYS/-.png",
+	"Equal": "res://UI/Buttons Pack/KEYBOARD/KEYS/=.png",
+	"Backspace": "res://UI/Buttons Pack/KEYBOARD/KEYS/BACKSPACE.png",
+	"Tab": "res://UI/Buttons Pack/KEYBOARD/KEYS/TAB.png",
+	"CapsLock": "res://UI/Buttons Pack/KEYBOARD/KEYS/CAPS.png",
+	"Shift": "res://UI/Buttons Pack/KEYBOARD/KEYS/SHIFT.png",
+	"Ctrl": "res://UI/Buttons Pack/KEYBOARD/KEYS/CTRL.png",
+	"Alt": "res://UI/Buttons Pack/KEYBOARD/KEYS/ALT.png",
+	"Space": "res://UI/Buttons Pack/KEYBOARD/KEYS/SPACE.png",
+	"BracketLeft": "res://UI/Buttons Pack/KEYBOARD/KEYS/[.png",
+	"BracketRight": "res://UI/Buttons Pack/KEYBOARD/KEYS/].png",
+	"BackSlash": "res://UI/Buttons Pack/KEYBOARD/KEYS/BACKSLASH.png",
+	"Semicolon": "res://UI/Buttons Pack/KEYBOARD/KEYS/SEMICOLON.png",
+	"Apostrophe": "res://UI/Buttons Pack/KEYBOARD/KEYS/APOSTROPHE.png",
+	"Enter": "res://UI/Buttons Pack/KEYBOARD/KEYS/ENTER.png",
+	"Comma": "res://UI/Buttons Pack/KEYBOARD/KEYS/COMMA.png",
+	"Period": "res://UI/Buttons Pack/KEYBOARD/KEYS/DOT.png",
+	"Slash": "res://UI/Buttons Pack/KEYBOARD/KEYS/FORWARDSLASH.png",
+	"Home": "res://UI/Buttons Pack/KEYBOARD/KEYS/HOME.png",
+	"End": "res://UI/Buttons Pack/KEYBOARD/KEYS/END.png",
+	"Up": "res://UI/Buttons Pack/KEYBOARD/KEYS/ARROWUP.png",
+	"Down": "res://UI/Buttons Pack/KEYBOARD/KEYS/ARROWDOWN.png",
+	"Left": "res://UI/Buttons Pack/KEYBOARD/KEYS/ARROWLEFT.png",
+	"Right": "res://UI/Buttons Pack/KEYBOARD/KEYS/ARROWRIGHT.png",
+	"Q": "res://UI/Buttons Pack/KEYBOARD/KEYS/Q.png",
+	"W": "res://UI/Buttons Pack/KEYBOARD/KEYS/W.png",
+	"E": "res://UI/Buttons Pack/KEYBOARD/KEYS/E.png",
+	"R": "res://UI/Buttons Pack/KEYBOARD/KEYS/R.png",
+	"T": "res://UI/Buttons Pack/KEYBOARD/KEYS/T.png",
+	"Y": "res://UI/Buttons Pack/KEYBOARD/KEYS/Y.png",
+	"U": "res://UI/Buttons Pack/KEYBOARD/KEYS/U.png",
+	"I": "res://UI/Buttons Pack/KEYBOARD/KEYS/I.png",
+	"O": "res://UI/Buttons Pack/KEYBOARD/KEYS/O.png",
+	"P": "res://UI/Buttons Pack/KEYBOARD/KEYS/P.png",
+	"A": "res://UI/Buttons Pack/KEYBOARD/KEYS/A.png",
+	"S": "res://UI/Buttons Pack/KEYBOARD/KEYS/S.png",
+	"D": "res://UI/Buttons Pack/KEYBOARD/KEYS/D.png",
+	"F": "res://UI/Buttons Pack/KEYBOARD/KEYS/ESC.png",
+	"G": "res://UI/Buttons Pack/KEYBOARD/KEYS/G.png",
+	"H": "res://UI/Buttons Pack/KEYBOARD/KEYS/H.png",
+	"J": "res://UI/Buttons Pack/KEYBOARD/KEYS/J.png",
+	"K": "res://UI/Buttons Pack/KEYBOARD/KEYS/K.png",
+	"L": "res://UI/Buttons Pack/KEYBOARD/KEYS/L.png",
+	"Z": "res://UI/Buttons Pack/KEYBOARD/KEYS/Z.png",
+	"X": "res://UI/Buttons Pack/KEYBOARD/KEYS/X.png",
+	"C": "res://UI/Buttons Pack/KEYBOARD/KEYS/C.png",
+	"V": "res://UI/Buttons Pack/KEYBOARD/KEYS/V.png",
+	"B": "res://UI/Buttons Pack/KEYBOARD/KEYS/B.png",
+	"N": "res://UI/Buttons Pack/KEYBOARD/KEYS/N.png",
+	"M": "res://UI/Buttons Pack/KEYBOARD/KEYS/M.png"
+}

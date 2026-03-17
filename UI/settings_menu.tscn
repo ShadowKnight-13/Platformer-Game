@@ -137,6 +137,15 @@ text = "Text Size - "
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="ControllerButtons" type="Label" parent="HBoxContainer/VBoxCenterLeft" unique_id=835282868]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+text = "Buttons - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxCenterLeft" unique_id=295476774]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
@@ -175,7 +184,7 @@ focus_neighbor_bottom = NodePath("../TextSizeDropDown")
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 focus_neighbor_top = NodePath("../FullscreenToggle")
-focus_neighbor_bottom = NodePath("../InputMappingButton")
+focus_neighbor_bottom = NodePath("../ControllerButtonsDropDown")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
 alignment = 1
@@ -188,10 +197,25 @@ popup/item_1/id = 1
 popup/item_2/text = "32 px"
 popup/item_2/id = 2
 
-[node name="InputMappingButton" type="Button" parent="HBoxContainer/VBoxCenterRight" unique_id=1519363938]
+[node name="ControllerButtonsDropDown" type="OptionButton" parent="HBoxContainer/VBoxCenterRight" unique_id=2098594121]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 focus_neighbor_top = NodePath("../TextSizeDropDown")
+focus_neighbor_bottom = NodePath("../InputMappingButton")
+theme_override_fonts/font = ExtResource("2_0adsa")
+theme_override_font_sizes/font_size = 18
+alignment = 1
+selected = 0
+item_count = 2
+popup/item_0/text = "Xbox"
+popup/item_0/id = 0
+popup/item_1/text = "Playstaion"
+popup/item_1/id = 1
+
+[node name="InputMappingButton" type="Button" parent="HBoxContainer/VBoxCenterRight" unique_id=1519363938]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ControllerButtonsDropDown")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
@@ -204,4 +228,5 @@ visible = false
 [connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/ResolutionDropDown" to="." method="_on_resolution_drop_down_item_selected"]
 [connection signal="toggled" from="HBoxContainer/VBoxCenterRight/FullscreenToggle" to="." method="_on_fullscreen_toggle_toggled"]
 [connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/TextSizeDropDown" to="." method="_on_text_size_drop_down_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxCenterRight/ControllerButtonsDropDown" to="." method="_on_controller_buttons_drop_down_item_selected"]
 [connection signal="pressed" from="HBoxContainer/VBoxCenterRight/InputMappingButton" to="." method="_on_input_mapping_button_pressed"]

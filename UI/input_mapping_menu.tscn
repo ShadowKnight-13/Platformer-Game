@@ -202,17 +202,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Left" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=2019493654]
+texture_filter = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="Right" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=379145276]
+texture_filter = 1
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="jump_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=812981172]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxKeyboard/jump")
 focus_neighbor_top = NodePath("../../VBoxKeyboard/move_right")
@@ -220,11 +222,12 @@ focus_neighbor_right = NodePath("../../VBoxKeyboard/jump")
 focus_neighbor_bottom = NodePath("../dash_controller")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_vfpio")
 
 [node name="dash_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=727786444]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxKeyboard/dash")
 focus_neighbor_top = NodePath("../jump_controller")
@@ -232,11 +235,12 @@ focus_neighbor_right = NodePath("../../VBoxKeyboard/dash")
 focus_neighbor_bottom = NodePath("../attack_controller")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_vfpio")
 
 [node name="attack_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=837226604]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxKeyboard/attack")
 focus_neighbor_top = NodePath("../dash_controller")
@@ -244,11 +248,12 @@ focus_neighbor_right = NodePath("../../VBoxKeyboard/attack")
 focus_neighbor_bottom = NodePath("../interact_controller")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_vfpio")
 
 [node name="interact_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=497626113]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxKeyboard/interact")
 focus_neighbor_top = NodePath("../attack_controller")
@@ -256,11 +261,12 @@ focus_neighbor_right = NodePath("../../VBoxKeyboard/interact")
 focus_neighbor_bottom = NodePath("../pause_controller")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_vfpio")
 
 [node name="pause_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=1245113162]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxKeyboard/pause")
 focus_neighbor_top = NodePath("../interact_controller")
@@ -268,7 +274,8 @@ focus_neighbor_right = NodePath("../../VBoxKeyboard/pause")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_vfpio")
 
 [node name="VBoxKeyboard" type="VBoxContainer" parent="HBoxContainer" unique_id=2134368648]
@@ -286,7 +293,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="move_left" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=131823502]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
@@ -294,11 +301,12 @@ focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_bottom = NodePath("../move_right")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="move_right" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1324917157]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_top = NodePath("../move_left")
@@ -306,11 +314,12 @@ focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_bottom = NodePath("../jump")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="jump" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1927697536]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_top = NodePath("../move_right")
@@ -318,11 +327,12 @@ focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
 focus_neighbor_bottom = NodePath("../dash")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="dash" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=191704531]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/dash_controller")
 focus_neighbor_top = NodePath("../jump")
@@ -330,11 +340,12 @@ focus_neighbor_right = NodePath("../../VBoxController/dash_controller")
 focus_neighbor_bottom = NodePath("../attack")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="attack" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=449757348]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/attack_controller")
 focus_neighbor_top = NodePath("../dash")
@@ -342,11 +353,12 @@ focus_neighbor_right = NodePath("../../VBoxController/attack_controller")
 focus_neighbor_bottom = NodePath("../interact")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="interact" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=86676911]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/interact_controller")
 focus_neighbor_top = NodePath("../attack")
@@ -354,11 +366,12 @@ focus_neighbor_right = NodePath("../../VBoxController/interact_controller")
 focus_neighbor_bottom = NodePath("../pause")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="pause" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=322553518]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(20, 40)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxController/pause_controller")
 focus_neighbor_top = NodePath("../interact")
@@ -366,7 +379,8 @@ focus_neighbor_right = NodePath("../../VBoxController/pause_controller")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_fonts/font = ExtResource("2_jiusq")
 theme_override_font_sizes/font_size = 18
-text = "_"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_jiusq")
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_d6ibo")]
