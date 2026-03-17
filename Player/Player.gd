@@ -83,6 +83,38 @@ func heal(amount: int = 1) -> void:
 	health = min(health + amount, 3)
 	emit_signal("health_changed", health)
 
+## === CRUSH DETECTION (Player-side) ===
+## Called right after move_and_slide(). Checks if the player is sandwiched
+## between a crushing AnimatableBody2D and any other solid surface.
+func _check_crush() -> void:
+	if health <= 0:
+		return  # Already dead
+
+	var crushing_platform_collision: KinematicCollision2D = null
+	var other_solid_collision: KinematicCollision2D = null
+
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+
+		if collider is AnimatableBody2D and "can_crush" in collider and collider.can_crush:
+			crushing_platform_collision = collision
+		else:
+			# Any other solid thing (TileMapLayer, StaticBody2D, different platform, etc.)
+			other_solid_collision = collision
+
+	if crushing_platform_collision and other_solid_collision:
+		# Confirm it's a real pinch: normals should oppose each other
+		var platform_normal := crushing_platform_collision.get_normal()
+		var other_normal := other_solid_collision.get_normal()
+
+		# Dot product < 0 means they're pushing from opposite sides
+		# Use a small threshold to allow near-perpendicular crushes too (e.g. ceiling + wall corner)
+		if platform_normal.dot(other_normal) < 0.1:
+			kill_player()
+			if debug_rays_visible:
+				print("CRUSHED! Platform normal: ", platform_normal, " Other normal: ", other_normal)
+
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
 		return false
@@ -468,6 +500,7 @@ func _physics_process(delta):
 	_update_attack_timers(delta)
 	_update_melee_hitbox_position()
 	move_and_slide()
+	_check_crush()  # Player-side crush detection: checks if sandwiched between platform and solid
 	
 	# === STEP-UP MECHANIC ===
 	# Check if we should step up a small obstacle
