@@ -68,21 +68,26 @@ func player_death():
 		get_tree().reload_current_scene()
 
 func kill_player():
+	if health <= 0:
+		return  # Already dead
 	health = 0
+	velocity = Vector2.ZERO
+	set_physics_process(false)
+	player_death()
 
 func damage_player():
 	health = health - 1
 	emit_signal("health_changed", health)
 
 func heal(amount: int = 1) -> void:
-	health = mini(health + amount, 3)
+	health = min(health + amount, 3)
 	emit_signal("health_changed", health)
 
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
 		return false
 	
-	for i in get_slide_collision_count():
+	for i in range(get_slide_collision_count()):
 		var collision := get_slide_collision(i)
 		var collider := collision.get_collider()
 		
@@ -484,10 +489,10 @@ func _physics_process(delta):
 	if not is_on_floor() and is_on_wall() and not is_stuck_to_wall and is_on_grippable_wall():
 		var ledge_data = check_for_ledge()
 		if ledge_data != Vector2.ZERO:
-		# Teleport to ledge position
+			# Teleport to ledge position
 			global_position = ledge_data
 			velocity.y = 0  # Cancel vertical velocity
-		# Release from wall if stuck
+			# Release from wall if stuck
 			is_stuck_to_wall = false
 			wall_stick_time = 0.0
 	
@@ -655,7 +660,7 @@ func check_for_ledge() -> Vector2:
 			# Store debug info
 			if debug_rays_visible:
 				debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
-# Store debug info
+			# Store debug info
 			#debug_rays.append({"type": "line", "start": floor_check_start, "end": floor_check_end, "color": Color.GREEN})
 			
 			var floor_query = PhysicsRayQueryParameters2D.create(floor_check_start, floor_check_end)
