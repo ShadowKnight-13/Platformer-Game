@@ -27,6 +27,12 @@ const STEP_UP_CHECK_DISTANCE: float = 10.0
 # === LEDGE GRAB CONSTANTS ===
 const LEDGE_GRAB_DISTANCE: float = 30.0  # Reduced - how far above player to check for ledge
 
+# === CRUSH DETECTION CONSTANTS ===
+const MIN_CRUSHING_VELOCITY: float = 1.0       # Minimum platform speed to be considered moving
+const MIN_UPWARD_CRUSH_VELOCITY: float = -1.0  # Platform y-velocity must be below this to crush upward
+const CRUSH_PUSH_THRESHOLD: float = 10.0       # Minimum pushing force (platform velocity dot into player) to trigger velocity-based crush
+const CRUSH_VELOCITY_RATIO_THRESHOLD: float = 0.3  # Player's real velocity must be below 30% of platform's to be considered stuck
+
 var wall_stick_time := 0.0
 const WALL_STICK_DURATION := 0.5
 
@@ -88,32 +94,70 @@ func heal(amount: int = 1) -> void:
 ## between a crushing AnimatableBody2D and any other solid surface.
 func _check_crush() -> void:
 	if health <= 0:
-		return  # Already dead
+		return
 
 	var crushing_platform_collision: KinematicCollision2D = null
 	var other_solid_collision: KinematicCollision2D = null
+	var ceiling_collision: KinematicCollision2D = null
+	var floor_crushing_platform: bool = false
 
 	for i in range(get_slide_collision_count()):
 		var collision := get_slide_collision(i)
 		var collider := collision.get_collider()
+		var normal := collision.get_normal()
 
 		if collider is AnimatableBody2D and "can_crush" in collider and collider.can_crush:
 			crushing_platform_collision = collision
+			# Check if this crushing platform is below us (we're standing on it)
+			if normal.y < -0.5:
+				floor_crushing_platform = true
 		else:
-			# Any other solid thing (TileMapLayer, StaticBody2D, different platform, etc.)
 			other_solid_collision = collision
+			# Track ceiling collisions separately
+			if normal.y > 0.5:
+				ceiling_collision = collision
 
+	# Case 1: Classic sandwich — opposing normals between crusher and another solid
 	if crushing_platform_collision and other_solid_collision:
-		# Confirm it's a real pinch: normals should oppose each other
 		var platform_normal := crushing_platform_collision.get_normal()
 		var other_normal := other_solid_collision.get_normal()
-
-		# Dot product < 0 means they're pushing from opposite sides
-		# Use a small threshold to allow near-perpendicular crushes too (e.g. ceiling + wall corner)
 		if platform_normal.dot(other_normal) < 0.1:
+			# Verify the platform is actually moving (not stationary)
+			var platform_vel := crushing_platform_collision.get_collider_velocity()
+			if platform_vel.length() > MIN_CRUSHING_VELOCITY:
+				kill_player()
+				if debug_rays_visible:
+					print("CRUSHED (sandwich)! Platform normal: ", platform_normal, " Other normal: ", other_normal)
+				return
+
+	# Case 2: Standing on crushing platform + hitting ceiling
+	if floor_crushing_platform and ceiling_collision:
+		var platform_vel := crushing_platform_collision.get_collider_velocity()
+		# Platform must be moving upward (pushing player into ceiling)
+		if platform_vel.y < MIN_UPWARD_CRUSH_VELOCITY:
 			kill_player()
 			if debug_rays_visible:
-				print("CRUSHED! Platform normal: ", platform_normal, " Other normal: ", other_normal)
+				print("CRUSHED (ceiling)! Platform pushing up into ceiling")
+			return
+
+	# Case 3: Velocity-based crush detection
+	# If touching a moving crushing platform and our real velocity is much less than expected
+	if crushing_platform_collision:
+		var platform_vel := crushing_platform_collision.get_collider_velocity()
+		var platform_normal := crushing_platform_collision.get_normal()
+		# Platform is actively pushing (velocity opposes its collision normal direction)
+		var pushing_force = -platform_vel.dot(platform_normal)
+		if pushing_force > CRUSH_PUSH_THRESHOLD:
+			# Platform is pushing hard into the player
+			var real_vel := get_real_velocity()
+			# If our actual movement is very small despite being pushed, we're stuck
+			if real_vel.length() < platform_vel.length() * CRUSH_VELOCITY_RATIO_THRESHOLD:
+				# Double check: we need at least one collision to confirm we're blocked
+				if get_slide_collision_count() >= 2 or (other_solid_collision != null):
+					kill_player()
+					if debug_rays_visible:
+						print("CRUSHED (velocity)! Platform pushing but player stuck")
+					return
 
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
@@ -141,6 +185,8 @@ func is_on_grippable_wall() -> bool:
 
 ## === MAIN PHYSICS LOOP ===
 func _physics_process(delta):
+	if health <= 0:
+		return  # Player is dead or being freed; skip all logic this frame
 	var x_input = Input.get_axis("move_left", "move_right")
 	
 	if Input.is_action_just_pressed("interact"):
@@ -538,11 +584,12 @@ func can_stand_up() -> bool:
 	if $CollisionShape2D.scale.y >= 1.0:
 		return true
 	
-	var space_state = get_world_2d().direct_space_state
+	var world_2d = get_world_2d()
+	if world_2d == null:
+		return true  # Can't check; assume safe to stand
+	var space_state = world_2d.direct_space_state
 	var collision_shape = $CollisionShape2D.shape
 	var player_height = collision_shape.size.y
-	
-	# Current height is 0.5 scale; full height is 1.0 scale
 	var height_difference = player_height * 0.5  # The amount we're adding
 	
 	# Check from current top of collision to where new top would be
@@ -592,7 +639,10 @@ func check_for_step(x_input: float) -> float:
 	var step_direction = facing_direction
 	
 	# Create a raycast to check for obstacles ahead
-	var space_state = get_world_2d().direct_space_state
+	var world_2d = get_world_2d()
+	if world_2d == null:
+		return 0.0  # Can't check; skip step detection
+	var space_state = world_2d.direct_space_state
 	
 	# Get the collision shape size
 	var collision_shape = $CollisionShape2D.shape
@@ -646,7 +696,10 @@ func check_for_ledge() -> Vector2:
 	if not is_on_wall():
 		return Vector2.ZERO
 	
-	var space_state = get_world_2d().direct_space_state
+	var world_2d = get_world_2d()
+	if world_2d == null:
+		return Vector2.ZERO  # Can't check; skip ledge detection
+	var space_state = world_2d.direct_space_state
 	var wall_normal = get_wall_normal()
 	
 	# Direction INTO the wall (opposite of normal)
