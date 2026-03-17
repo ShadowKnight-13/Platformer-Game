@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="11_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://cr3mqow5eljje" path="res://interactables/button.tscn" id="12_d1skg"]
+[ext_resource type="PackedScene" uid="uid://mx7vlnt8slb7" path="res://interactables/lever.tscn" id="13_nff53"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 

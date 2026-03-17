@@ -115,7 +115,7 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
-text = "Resolution -"
+text = "Resolution - "
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -179,6 +179,7 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ResolutionDropDown")
 focus_neighbor_bottom = NodePath("../TextSizeDropDown")
+icon_alignment = 1
 
 [node name="TextSizeDropDown" type="OptionButton" parent="HBoxContainer/VBoxCenterRight" unique_id=1671528757]
 custom_minimum_size = Vector2(0, 45)
