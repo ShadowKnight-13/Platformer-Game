@@ -10,19 +10,19 @@ signal released
 
 func _ready() -> void:
 	interactable.interacted.connect(_on_interact)
-	_update_animation()
+	#_update_animation()
 
 func _on_interact() -> void:
 	is_pressed= !is_pressed
-	_update_animation()
+	#_update_animation()
 	
 	if is_pressed:
 		pressed.emit()
 	else:
 		released.emit()
 
-func _update_animation() -> void:
-	if is_pressed:
-		anim_player.play()
-	else:
-		anim_player.play()
+#func _update_animation() -> void:
+	#if is_pressed:
+		#anim_player.play()
+	#else:
+		#anim_player.play()
