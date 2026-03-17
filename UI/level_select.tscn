@@ -63,6 +63,14 @@ theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
 text = "Back to Menu"
 
+[node name="(Test Level)" type="Button" parent="VBoxContainer" unique_id=1487926200]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../LevelButtons/Level1Button")
+focus_neighbor_top = NodePath("../../LevelButtons/Level2Button")
+focus_neighbor_right = NodePath("../../LevelButtons/Level3Button")
+focus_neighbor_bottom = NodePath("../../LevelButtons/Level2Button")
+text = "(Test Level)"
+
 [node name="LevelButtons" type="HBoxContainer" parent="." unique_id=1797442311]
 anchors_preset = 8
 anchor_left = 0.5
@@ -109,12 +117,13 @@ focus_neighbor_left = NodePath("../Level2Button")
 focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
-text = "(Test Level)"
+text = "(Lab)"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/(Test Level)" to="." method="_on_test_level_pressed"]
 [connection signal="pressed" from="LevelButtons/Level1Button" to="." method="_on_level_1_button_pressed"]
 [connection signal="pressed" from="LevelButtons/Level2Button" to="." method="_on_level_2_button_pressed"]
 [connection signal="pressed" from="LevelButtons/Level3Button" to="." method="_on_level_3_button_pressed"]

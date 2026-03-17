@@ -6,6 +6,9 @@ var text_size
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$VBoxContainer/BackButton.grab_focus()
+	$HBoxContainer/VBoxController/Left.texture = load("res://UI/Buttons Pack/XBOX/LEFTSTICK.png")
+	$HBoxContainer/VBoxController/Right.texture = load("res://UI/Buttons Pack/XBOX/LEFTSTICK.png")
+
 	text_size = UiGlobals.text_size
 	set_font_size_recursive(self, text_size)
 	fade_in()

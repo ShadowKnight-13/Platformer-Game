@@ -11,6 +11,7 @@ func _ready() -> void:
 	$HBoxContainer/VBoxCenterRight/TextSizeDropDown.selected = UiGlobals.text_size_slected
 	$HBoxContainer/VBoxCenterRight/ResolutionDropDown.selected = UiGlobals.resolution_slected
 	$HBoxContainer/VBoxCenterRight/FullscreenToggle.button_pressed = UiGlobals.is_fullscreen
+	$HBoxContainer/VBoxCenterRight/ControllerButtonsDropDown.selected = UiGlobals.controller_buttons
 	set_font_size_recursive(self, UiGlobals.text_size)
 	fade_in()
 
@@ -101,3 +102,8 @@ func fade_in():
 func fade_out():
 	$SceneFade.show()
 	anim.play("fade_out")
+
+
+
+func _on_controller_buttons_drop_down_item_selected(index: int) -> void:
+	UiGlobals.controller_buttons = index

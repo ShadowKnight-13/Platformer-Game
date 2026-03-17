@@ -201,33 +201,28 @@ scale = Vector2(3, 2)
 
 [node name="MovingPlatform" parent="." unique_id=1391459897 instance=ExtResource("7_nff53")]
 position = Vector2(-2301, 564)
-scale = Vector2(1.5, 1.5)
 
 [node name="MovingPlatform3" parent="." unique_id=228587934 instance=ExtResource("7_nff53")]
 position = Vector2(-1102, -67)
-scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(-200, 0), Vector2(200, 0)])
+crush_distance = 30.0
 
 [node name="MovingPlatform2" parent="." unique_id=513895650 instance=ExtResource("7_nff53")]
 position = Vector2(-2395, 121)
-scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
 
 [node name="MovingPlatform6" parent="." unique_id=1313703251 instance=ExtResource("7_nff53")]
 position = Vector2(-1609, -252)
-scale = Vector2(1.5, 1.5)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
 
 [node name="MovingPlatform5" parent="." unique_id=1841204608 instance=ExtResource("7_nff53")]
 position = Vector2(-2257, -132)
-scale = Vector2(1.5, 1.5)
 forward_speed = 1000.0
 forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 500)])
 
 [node name="MovingPlatform4" parent="." unique_id=1800692679 instance=ExtResource("7_nff53")]
 position = Vector2(-2063, -268)
-scale = Vector2(1.5, 1.5)
 forward_speed = 750.0
 forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
@@ -237,7 +232,6 @@ override_ray_length_down = 40.0
 
 [node name="MovingPlatform7" parent="." unique_id=130686839 instance=ExtResource("7_nff53")]
 position = Vector2(2657, 142)
-scale = Vector2(1.5, 1.5)
 forward_speed = 750.0
 forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])

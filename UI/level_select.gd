@@ -5,6 +5,10 @@ var text_size
 
 func _ready() -> void:
 	$VBoxContainer/BackButton.grab_focus()
+	#if UiGlobals.is_level2_unlocked == false:
+		#$LevelButtons/Level2Button.disabled = true
+	#if UiGlobals.is_level3_unlocked == false:
+		#LevelButtons/Level3Button.disabled = true
 	text_size = UiGlobals.text_size
 	set_font_size_recursive(self, text_size)
 	fade_in()
@@ -35,13 +39,13 @@ func _on_level_1_button_pressed() -> void:
 func _on_level_2_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/Test Level.tscn")
+	get_tree().change_scene_to_file("res://Levels/Desert.tscn")
 
 
 func _on_level_3_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/Desert.tscn")
+	get_tree().change_scene_to_file("res://Levels/Lab.tscn")
 
 
 func fade_in():
@@ -53,3 +57,9 @@ func fade_in():
 func fade_out():
 	$SceneFade.show()
 	anim.play("fade_out")
+
+
+func _on_test_level_pressed() -> void:
+	fade_out()
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://Levels/Test Level.tscn")
