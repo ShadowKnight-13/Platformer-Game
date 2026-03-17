@@ -21,7 +21,7 @@ const DASH_JUMP_HEIGHT_MULTIPLIER: float = 1.3
 const DASH_JUMP_AIR_CONTROL: float = 0.3
 
 # === STEP-UP / LEDGE CONSTANTS ===
-const STEP_UP_MAX_HEIGHT: float = 70.0
+const STEP_UP_MAX_HEIGHT: float = 30.0
 const STEP_UP_CHECK_DISTANCE: float = 10.0
 
 # === LEDGE GRAB CONSTANTS ===
@@ -89,75 +89,6 @@ func heal(amount: int = 1) -> void:
 	health = min(health + amount, 3)
 	emit_signal("health_changed", health)
 
-## === CRUSH DETECTION (Player-side) ===
-## Called right after move_and_slide(). Checks if the player is sandwiched
-## between a crushing AnimatableBody2D and any other solid surface.
-func _check_crush() -> void:
-	if health <= 0:
-		return
-
-	var crushing_platform_collision: KinematicCollision2D = null
-	var other_solid_collision: KinematicCollision2D = null
-	var ceiling_collision: KinematicCollision2D = null
-	var floor_crushing_platform: bool = false
-
-	for i in range(get_slide_collision_count()):
-		var collision := get_slide_collision(i)
-		var collider := collision.get_collider()
-		var normal := collision.get_normal()
-
-		if collider is AnimatableBody2D and "can_crush" in collider and collider.can_crush:
-			crushing_platform_collision = collision
-			# Check if this crushing platform is below us (we're standing on it)
-			if normal.y < -0.5:
-				floor_crushing_platform = true
-		else:
-			other_solid_collision = collision
-			# Track ceiling collisions separately
-			if normal.y > 0.5:
-				ceiling_collision = collision
-
-	# Case 1: Classic sandwich — opposing normals between crusher and another solid
-	if crushing_platform_collision and other_solid_collision:
-		var platform_normal := crushing_platform_collision.get_normal()
-		var other_normal := other_solid_collision.get_normal()
-		if platform_normal.dot(other_normal) < 0.1:
-			# Verify the platform is actually moving (not stationary)
-			var platform_vel := crushing_platform_collision.get_collider_velocity()
-			if platform_vel.length() > MIN_CRUSHING_VELOCITY:
-				kill_player()
-				if debug_rays_visible:
-					print("CRUSHED (sandwich)! Platform normal: ", platform_normal, " Other normal: ", other_normal)
-				return
-
-	# Case 2: Standing on crushing platform + hitting ceiling
-	if floor_crushing_platform and ceiling_collision:
-		var platform_vel := crushing_platform_collision.get_collider_velocity()
-		# Platform must be moving upward (pushing player into ceiling)
-		if platform_vel.y < MIN_UPWARD_CRUSH_VELOCITY:
-			kill_player()
-			if debug_rays_visible:
-				print("CRUSHED (ceiling)! Platform pushing up into ceiling")
-			return
-
-	# Case 3: Velocity-based crush detection
-	# If touching a moving crushing platform and our real velocity is much less than expected
-	if crushing_platform_collision:
-		var platform_vel := crushing_platform_collision.get_collider_velocity()
-		var platform_normal := crushing_platform_collision.get_normal()
-		# Platform is actively pushing (velocity opposes its collision normal direction)
-		var pushing_force = -platform_vel.dot(platform_normal)
-		if pushing_force > CRUSH_PUSH_THRESHOLD:
-			# Platform is pushing hard into the player
-			var real_vel := get_real_velocity()
-			# If our actual movement is very small despite being pushed, we're stuck
-			if real_vel.length() < platform_vel.length() * CRUSH_VELOCITY_RATIO_THRESHOLD:
-				# Double check: we need at least one collision to confirm we're blocked
-				if get_slide_collision_count() >= 2 or (other_solid_collision != null):
-					kill_player()
-					if debug_rays_visible:
-						print("CRUSHED (velocity)! Platform pushing but player stuck")
-					return
 
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
@@ -546,7 +477,6 @@ func _physics_process(delta):
 	_update_attack_timers(delta)
 	_update_melee_hitbox_position()
 	move_and_slide()
-	_check_crush()  # Player-side crush detection: checks if sandwiched between platform and solid
 	
 	# === STEP-UP MECHANIC ===
 	# Check if we should step up a small obstacle

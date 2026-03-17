@@ -156,4 +156,3 @@ func start_waiting(reached_end: bool) -> void:
 
 func update_platform_position() -> void:
 	global_position = start_position + path_follow.position
-
