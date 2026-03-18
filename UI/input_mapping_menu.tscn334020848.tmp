@@ -1,0 +1,390 @@
+[gd_scene format=3 uid="uid://bwooxehbe8s8d"]
+
+[ext_resource type="Script" uid="uid://b72aib5qfpy8n" path="res://UI/input_mapping_menu.gd" id="1_ufp61"]
+[ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_jiusq"]
+[ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="2_n8kdd"]
+[ext_resource type="Script" uid="uid://tix5jrmndks0" path="res://UI/remap_button_Keyboard.gd" id="3_jiusq"]
+[ext_resource type="Script" uid="uid://cw65xpjnop1sj" path="res://UI/remap_button_Gamepad.gd" id="3_vfpio"]
+[ext_resource type="Texture2D" uid="uid://bd4lycbt7v2uv" path="res://UI/Buttons/button.png" id="4_2g3e8"]
+[ext_resource type="Texture2D" uid="uid://bbvyij4ga3dni" path="res://UI/Buttons/buttonpress.png" id="5_b6obd"]
+[ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="5_d6ibo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pykpk"]
+texture = ExtResource("4_2g3e8")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mgwgh"]
+texture = ExtResource("5_b6obd")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jhyh7"]
+texture = ExtResource("4_2g3e8")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wvo8s"]
+texture = ExtResource("4_2g3e8")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[node name="InputMappingMenu" type="CanvasLayer" unique_id=1678311426]
+script = ExtResource("1_ufp61")
+
+[node name="Background" type="Parallax2D" parent="." unique_id=1854520842]
+scroll_scale = Vector2(0.2, 0.2)
+scroll_offset = Vector2(139, -151)
+repeat_size = Vector2(30, 30)
+repeat_times = 50
+
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=393827153]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("2_n8kdd")
+offset = Vector2(600, 300)
+
+[node name="VBoxTop" type="VBoxContainer" parent="." unique_id=144004282]
+custom_minimum_size = Vector2(250, 250)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.5
+offset_right = 148.5
+offset_bottom = 250.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxTop" unique_id=1172843658]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Input Mapping
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=279474624]
+custom_minimum_size = Vector2(200, 250)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -57.0
+offset_top = -40.0
+offset_right = 57.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="BackButton" type="Button" parent="VBoxContainer" unique_id=224216354]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HBoxContainer/VBoxController/pause_controller")
+focus_neighbor_top = NodePath("../../HBoxContainer/VBoxController/pause_controller")
+focus_neighbor_right = NodePath("../../HBoxContainer/VBoxKeyboard/pause")
+focus_neighbor_bottom = NodePath("../../HBoxContainer/VBoxKeyboard/move_left")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_pykpk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mgwgh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jhyh7")
+theme_override_styles/focus = SubResource("StyleBoxTexture_wvo8s")
+text = "Back to Menu"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=838220434]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxLabel" type="VBoxContainer" parent="HBoxContainer" unique_id=718398368]
+custom_minimum_size = Vector2(150, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Moves" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=527214302]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Actions"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Left" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1716111473]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Left - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Right" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1564678556]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Right - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=920629578]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Jump - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SlideDash" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=1799870044]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Slide Dash - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Attack" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=815960535]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Attack - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Interact" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=121473571]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Interact - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Label" parent="HBoxContainer/VBoxLabel" unique_id=341662725]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Pause - "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VBoxController" type="VBoxContainer" parent="HBoxContainer" unique_id=1036427059]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Controller" type="Label" parent="HBoxContainer/VBoxController" unique_id=42527753]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Controller"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Left" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=2019493654]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Right" type="TextureRect" parent="HBoxContainer/VBoxController" unique_id=379145276]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="jump_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=812981172]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxKeyboard/jump")
+focus_neighbor_top = NodePath("../../VBoxKeyboard/move_right")
+focus_neighbor_right = NodePath("../../VBoxKeyboard/jump")
+focus_neighbor_bottom = NodePath("../dash_controller")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_vfpio")
+
+[node name="dash_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=727786444]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxKeyboard/dash")
+focus_neighbor_top = NodePath("../jump_controller")
+focus_neighbor_right = NodePath("../../VBoxKeyboard/dash")
+focus_neighbor_bottom = NodePath("../attack_controller")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_vfpio")
+
+[node name="attack_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=837226604]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxKeyboard/attack")
+focus_neighbor_top = NodePath("../dash_controller")
+focus_neighbor_right = NodePath("../../VBoxKeyboard/attack")
+focus_neighbor_bottom = NodePath("../interact_controller")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_vfpio")
+
+[node name="interact_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=497626113]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxKeyboard/interact")
+focus_neighbor_top = NodePath("../attack_controller")
+focus_neighbor_right = NodePath("../../VBoxKeyboard/interact")
+focus_neighbor_bottom = NodePath("../pause_controller")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_vfpio")
+
+[node name="pause_controller" type="Button" parent="HBoxContainer/VBoxController" unique_id=1245113162]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxKeyboard/pause")
+focus_neighbor_top = NodePath("../interact_controller")
+focus_neighbor_right = NodePath("../../VBoxKeyboard/pause")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_vfpio")
+
+[node name="VBoxKeyboard" type="VBoxContainer" parent="HBoxContainer" unique_id=2134368648]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="Keyboard" type="Label" parent="HBoxContainer/VBoxKeyboard" unique_id=1183959434]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+text = "Keyboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="move_left" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=131823502]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
+focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_bottom = NodePath("../move_right")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="move_right" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1324917157]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_top = NodePath("../move_left")
+focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_bottom = NodePath("../jump")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="jump" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=1927697536]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_top = NodePath("../move_right")
+focus_neighbor_right = NodePath("../../VBoxController/jump_controller")
+focus_neighbor_bottom = NodePath("../dash")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="dash" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=191704531]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/dash_controller")
+focus_neighbor_top = NodePath("../jump")
+focus_neighbor_right = NodePath("../../VBoxController/dash_controller")
+focus_neighbor_bottom = NodePath("../attack")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="attack" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=449757348]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/attack_controller")
+focus_neighbor_top = NodePath("../dash")
+focus_neighbor_right = NodePath("../../VBoxController/attack_controller")
+focus_neighbor_bottom = NodePath("../interact")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="interact" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=86676911]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/interact_controller")
+focus_neighbor_top = NodePath("../attack")
+focus_neighbor_right = NodePath("../../VBoxController/interact_controller")
+focus_neighbor_bottom = NodePath("../pause")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="pause" type="Button" parent="HBoxContainer/VBoxKeyboard" unique_id=322553518]
+custom_minimum_size = Vector2(20, 40)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../VBoxController/pause_controller")
+focus_neighbor_top = NodePath("../interact")
+focus_neighbor_right = NodePath("../../VBoxController/pause_controller")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
+theme_override_fonts/font = ExtResource("2_jiusq")
+theme_override_font_sizes/font_size = 18
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_jiusq")
+
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_d6ibo")]
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxKeyboard/move_left" to="." method="_on_left_key_pressed"]
