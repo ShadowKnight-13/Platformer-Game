@@ -13,6 +13,7 @@ scroll_scale = Vector2(0.2, 0.2)
 scroll_offset = Vector2(139, -151)
 repeat_size = Vector2(30, 30)
 repeat_times = 50
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=276410975]
 z_index = -1
