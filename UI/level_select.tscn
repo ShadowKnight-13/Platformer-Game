@@ -56,75 +56,120 @@ alignment = 1
 
 [node name="BackButton" type="Button" parent="VBoxContainer" unique_id=2095783192]
 layout_mode = 2
-focus_neighbor_left = NodePath("../../LevelButtons/Level1Button")
-focus_neighbor_top = NodePath("../../LevelButtons/Level2Button")
-focus_neighbor_right = NodePath("../../LevelButtons/Level3Button")
-focus_neighbor_bottom = NodePath("../../LevelButtons/Level2Button")
+focus_neighbor_left = NodePath("../../VBoxContainer2/LevelButtons/Level1Button")
+focus_neighbor_top = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
+focus_neighbor_right = NodePath("../../VBoxContainer2/LevelButtons/Level3Button")
+focus_neighbor_bottom = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
 theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
 text = "Back to Menu"
 
 [node name="(Test Level)" type="Button" parent="VBoxContainer" unique_id=1487926200]
 layout_mode = 2
-focus_neighbor_left = NodePath("../../LevelButtons/Level1Button")
-focus_neighbor_top = NodePath("../../LevelButtons/Level2Button")
-focus_neighbor_right = NodePath("../../LevelButtons/Level3Button")
-focus_neighbor_bottom = NodePath("../../LevelButtons/Level2Button")
+focus_neighbor_left = NodePath("../../VBoxContainer2/LevelButtons/Level1Button")
+focus_neighbor_top = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
+focus_neighbor_right = NodePath("../../VBoxContainer2/LevelButtons/Level3Button")
+focus_neighbor_bottom = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
 text = "(Test Level)"
 
-[node name="LevelButtons" type="HBoxContainer" parent="." unique_id=1797442311]
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
+visible = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=844076799]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -488.0
+offset_top = -113.5
+offset_right = 488.0
+offset_bottom = 113.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Level1Button" type="Button" parent="LevelButtons" unique_id=1273198279]
+[node name="LevelButtons" type="HBoxContainer" parent="VBoxContainer2" unique_id=1797442311]
+layout_mode = 2
+
+[node name="Level1Button" type="Button" parent="VBoxContainer2/LevelButtons" unique_id=1273198279]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level3Button")
-focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level2Button")
-focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 text = "(Cave)"
 
-[node name="MarginContainer2" type="MarginContainer" parent="LevelButtons" unique_id=1518642549]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1518642549]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
-[node name="Level2Button" type="Button" parent="LevelButtons" unique_id=1585735188]
+[node name="Level2Button" type="Button" parent="VBoxContainer2/LevelButtons" unique_id=1585735188]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level1Button")
-focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level3Button")
-focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 text = "(Desert)"
 
-[node name="MarginContainer" type="MarginContainer" parent="LevelButtons" unique_id=1992822629]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1992822629]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
-[node name="Level3Button" type="Button" parent="LevelButtons" unique_id=521516383]
+[node name="Level3Button" type="Button" parent="VBoxContainer2/LevelButtons" unique_id=521516383]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level2Button")
-focus_neighbor_top = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
-focus_neighbor_bottom = NodePath("../../VBoxContainer/BackButton")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 text = "(Lab)"
 
-[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
-visible = false
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2" unique_id=1608469142]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="LevelLabels" type="HBoxContainer" parent="VBoxContainer2" unique_id=531268229]
+layout_mode = 2
+
+[node name="CaveLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=101238221]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_q0b5w")
+theme_override_font_sizes/font_size = 18
+text = "The Cave"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2/LevelLabels" unique_id=135856366]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="DesertLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=1337280666]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_q0b5w")
+theme_override_font_sizes/font_size = 18
+text = "The Desert"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/LevelLabels" unique_id=2100952893]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="LabLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=1019505577]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_q0b5w")
+theme_override_font_sizes/font_size = 18
+text = "The Lab"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/(Test Level)" to="." method="_on_test_level_pressed"]
-[connection signal="pressed" from="LevelButtons/Level1Button" to="." method="_on_level_1_button_pressed"]
-[connection signal="pressed" from="LevelButtons/Level2Button" to="." method="_on_level_2_button_pressed"]
-[connection signal="pressed" from="LevelButtons/Level3Button" to="." method="_on_level_3_button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/LevelButtons/Level1Button" to="." method="_on_level_1_button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/LevelButtons/Level2Button" to="." method="_on_level_2_button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/LevelButtons/Level3Button" to="." method="_on_level_3_button_pressed"]
