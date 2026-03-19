@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="3_bt7jf"]
 [ext_resource type="Texture2D" uid="uid://ecwg1plwlg87" path="res://Art Assets/desert/pg-desert-back2.png" id="3_gsuv8"]
 [ext_resource type="Texture2D" uid="uid://c4r0yer25rg1k" path="res://Art Assets/desert/pg-cactus.png" id="4_bt7jf"]
+[ext_resource type="PackedScene" uid="uid://citgclclme0n" path="res://interactables/dum_door.tscn" id="6_irpm5"]
 [ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="7_2ne6n"]
 [ext_resource type="Texture2D" uid="uid://dh855sqhes1y7" path="res://Art Assets/desert/desert-ruins.png" id="9_irpm5"]
 
@@ -883,6 +884,9 @@ offset_top = 363.0
 offset_right = 682.0
 offset_bottom = 1308.0
 color = Color(0.44705883, 0.29411766, 0.17254902, 1)
+
+[node name="Dum Door" parent="." unique_id=129931857 instance=ExtResource("6_irpm5")]
+position = Vector2(-386, 56)
 
 [node name="Player" parent="." unique_id=509081286 instance=ExtResource("3_bt7jf")]
 
