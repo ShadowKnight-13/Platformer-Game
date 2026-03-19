@@ -20,3 +20,7 @@ func get_spawn_health() -> int:
 
 func has_checkpoint() -> bool:
 	return last_position != Vector2.INF
+
+func clear_checkpoint() -> void:
+	last_position = Vector2.INF
+	last_health = 3

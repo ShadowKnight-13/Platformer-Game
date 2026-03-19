@@ -69,9 +69,18 @@ var debug_rays_visible := false
 signal health_changed
 
 func player_death():
-	if health == 0:
-		queue_free()
-		get_tree().reload_current_scene()
+	# When health reaches 0, ask Main to respawn instead of reloading the scene.
+	if health > 0:
+		return
+
+	var main := get_tree().get_first_node_in_group("GameMain")
+	if main and main.has_method("respawn_player"):
+		main.call("respawn_player")
+		return
+
+	# Fallback: if Main can't be found for some reason, keep old behavior.
+	queue_free()
+	get_tree().reload_current_scene()
 
 func kill_player():
 	if health <= 0:
@@ -82,8 +91,41 @@ func kill_player():
 	player_death()
 
 func damage_player():
-	health = health - 1
+	health = max(health - 1, 0)
 	emit_signal("health_changed", health)
+
+func reset_for_respawn() -> void:
+	# Reset movement/combat state so respawns don't inherit dash/crouch collisions.
+	velocity = Vector2.ZERO
+	set_physics_process(true)
+
+	# Wall/ledge related state.
+	wall_stick_time = 0.0
+	wall_jump_lock = 0.0
+	is_stuck_to_wall = false
+	is_wall_jumping = false
+
+	# Jump/dash state.
+	is_jumping = false
+	is_dash_jumping = false
+	skip_gravity_this_frame = false
+	is_dashing = false
+	dash_time_remaining = 0.0
+	dash_cooldown_remaining = 0.0
+	dash_direction = 1.0
+	is_air_dive = false
+	air_dash_horizontal_timer = 0.0
+	is_crouching = false
+
+	# Collision shape back to full height.
+	$CollisionShape2D.scale.y = 1.0
+	$CollisionShape2D.position.y = 0
+
+	# Combat state.
+	is_attacking = false
+	if melee_hitbox:
+		melee_hitbox.monitoring = false
+		melee_hitbox.monitorable = false
 
 func heal(amount: int = 1) -> void:
 	health = min(health + amount, 3)
@@ -117,7 +159,8 @@ func is_on_grippable_wall() -> bool:
 ## === MAIN PHYSICS LOOP ===
 func _physics_process(delta):
 	if health <= 0:
-		return  # Player is dead or being freed; skip all logic this frame
+		player_death()
+		return
 	var x_input = Input.get_axis("move_left", "move_right")
 	
 	if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("interact_controller"):

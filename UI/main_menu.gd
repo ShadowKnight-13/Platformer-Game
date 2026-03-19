@@ -18,7 +18,12 @@ func _process(_delta: float) -> void:
 func _on_start_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/DesertCave.tscn")
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+	var main := tree.get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", "res://Levels/DesertCave.tscn")
 
 
 func _on_settings_button_pressed() -> void:
