@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://hvnm4q2nmwac" path="res://Art Assets/desertCave/pg-cryoTubeOld.png" id="3_fn1r1"]
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="10_80kg0"]
-[ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="10_fg734"]
+[ext_resource type="PackedScene" path="res://Obstacles/spike2.tscn" id="10_fg734"]
 [ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Art Assets/general/pg-cryoTube.png" id="11_ifivw"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="12_q8pk5"]
 

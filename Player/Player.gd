@@ -440,7 +440,10 @@ func _physics_process(delta):
 		# Only cut normal jumps, not dash jumps
 		if Input.is_action_just_released("jump") or Input.is_action_just_released("jump_controller") and is_jumping and velocity.y < 0:
 			if not is_dash_jumping:
-				velocity.y *= JUMP_CUT_MULTIPLIER
+				if velocity.y < 0:
+					velocity.y *= JUMP_CUT_MULTIPLIER 
+				else:
+					pass
 		
 		# Horizontal movement (removed to keep output cleaner - doesn't affect velocity.y)
 		if wall_jump_lock > 0.0:
