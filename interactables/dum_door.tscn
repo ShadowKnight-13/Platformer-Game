@@ -3,4 +3,5 @@
 [ext_resource type="Texture2D" uid="uid://cuy4b11u46p0b" path="res://Art Assets/general/pg-door.png" id="1_nyq1d"]
 
 [node name="Dum Door" type="Sprite2D" unique_id=129931857]
+texture_filter = 1
 texture = ExtResource("1_nyq1d")
