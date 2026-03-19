@@ -4,38 +4,128 @@ extends Node2D
 @export var default_spawn_position: Vector2 = Vector2(200, 200)
 @export var default_spawn_health: int = 3
 
-func _ready() -> void:
-	var level_instance: Node = null
-	if level_scene:
-		var level_placeholder: Node = $Level
-		level_instance = level_scene.instantiate()
-		level_instance.name = "Level"
-		add_child(level_instance)
-		level_placeholder.queue_free()
+var current_level_instance: Node = null
+@onready var _level_container: Node = $Level
+@onready var _wrapper_player: Node2D = $Player
+var _active_level_resolved_path: String = ""
 
-	var player: Node2D = $Player
-	var spawn_pos: Vector2
-	var spawn_health: int
+func _ready() -> void:
+	add_to_group("GameMain")
+
+	# Start with whatever `Main_*.tscn` wrapper provided as `level_scene`.
+	if level_scene and level_scene.resource_path != "":
+		load_level(level_scene.resource_path)
+	else:
+		# Still ensure the wrapper player has correct initial health/state.
+		respawn_player()
+
+func load_level(level_ref: String) -> void:
+	var resolved_path := _resolve_level_ref_to_path(level_ref)
+	if resolved_path == "":
+		push_error("Main.load_level: Could not resolve level_ref: %s" % level_ref)
+		return
+
+	# Checkpoints are stored globally in the CheckpointManager autoload.
+	# When switching levels, clear the previous level's checkpoint so spawning
+	# uses the new level's SpawnPoint unless the player reaches a checkpoint there.
+	if resolved_path != _active_level_resolved_path:
+		CheckpointManager.clear_checkpoint()
+		_active_level_resolved_path = resolved_path
+
+	var packed_scene: PackedScene = load(resolved_path)
+	if packed_scene == null:
+		push_error("Main.load_level: Failed to load PackedScene: %s" % resolved_path)
+		return
+
+	_clear_current_level()
+
+	current_level_instance = packed_scene.instantiate()
+	current_level_instance.name = "Level"
+
+	# Remove level-local Player instances to avoid duplicates with the wrapper player.
+	_remove_player_nodes_recursive(current_level_instance)
+
+	_level_container.add_child(current_level_instance)
+	respawn_player()
+
+func respawn_player() -> void:
+	var spawn_pos: Vector2 = default_spawn_position
+	var spawn_health: int = default_spawn_health
 
 	if CheckpointManager.has_checkpoint():
 		spawn_pos = CheckpointManager.get_spawn_position()
 		spawn_health = CheckpointManager.get_spawn_health()
 	else:
-		# Prefer a per-level SpawnPoint marker if it exists
-		if level_instance:
-			var spawn_point := level_instance.get_node_or_null("SpawnPoint")
-			if spawn_point and spawn_point is Node2D:
-				spawn_pos = spawn_point.global_position
-			else:
-				spawn_pos = default_spawn_position
-		else:
-			spawn_pos = default_spawn_position
+		# Prefer a per-level SpawnPoint marker if it exists.
+		var spawn_node := _find_spawn_point_node(current_level_instance)
+		if spawn_node:
+			spawn_pos = spawn_node.global_position
 
+		# If no spawn node exists, keep defaults.
 		spawn_health = default_spawn_health
 
-	player.global_position = spawn_pos
-	player.health = spawn_health
-	player.emit_signal("health_changed", player.health)
+	_wrapper_player.global_position = spawn_pos
+	_wrapper_player.health = spawn_health
+
+	# Reset internal movement/dash/crouch/collision state for consistent respawns.
+	if _wrapper_player.has_method("reset_for_respawn"):
+		_wrapper_player.call("reset_for_respawn")
+	else:
+		# Minimal fallback in case the method isn't present.
+		_wrapper_player.velocity = Vector2.ZERO
+		_wrapper_player.set_physics_process(true)
+
+	_wrapper_player.emit_signal("health_changed", _wrapper_player.health)
+
+func _clear_current_level() -> void:
+	if current_level_instance and is_instance_valid(current_level_instance):
+		current_level_instance.queue_free()
+	current_level_instance = null
+
+	# Clear any stray children under the container (defensive).
+	for child in _level_container.get_children():
+		child.queue_free()
+
+func _resolve_level_ref_to_path(level_ref: String) -> String:
+	if level_ref == "":
+		return ""
+
+	# door.tscn currently stores `uid://...` in its exported `level`.
+	if level_ref.begins_with("uid://"):
+		var uid_id := ResourceUID.text_to_id(level_ref)
+		if ResourceUID.has_id(uid_id):
+			return ResourceUID.get_id_path(uid_id)
+		return ""
+
+	# Most of the time we pass `res://...`.
+	if level_ref.begins_with("res://"):
+		return level_ref
+
+	return ""
+
+func _remove_player_nodes_recursive(root: Node) -> void:
+	for child in root.get_children():
+		if child.name == "Player":
+			# The level scene is currently not in the main tree yet, so free immediately.
+			child.free()
+		else:
+			_remove_player_nodes_recursive(child)
+
+func _find_spawn_point_node(root: Node) -> Node2D:
+	if root == null:
+		return null
+
+	if root is Node2D:
+		# Some levels use names like `Level#SpawnPoint`, so we match by suffix.
+		if root.name == "SpawnPoint" or root.name.ends_with("SpawnPoint"):
+			return root
+
+	for child in root.get_children():
+		var result := _find_spawn_point_node(child)
+		if result:
+			return result
+
+	return null
 
 func _process(delta: float) -> void:
 	pass

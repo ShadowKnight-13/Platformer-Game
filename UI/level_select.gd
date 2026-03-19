@@ -33,19 +33,34 @@ func set_font_size_recursive(node: Node, size: int) -> void:
 func _on_level_1_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/DesertCave.tscn")
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+	var main := tree.get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", "res://Levels/DesertCave.tscn")
 
 
 func _on_level_2_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/Desert.tscn")
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+	var main := tree.get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", "res://Levels/Desert.tscn")
 
 
 func _on_level_3_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Levels/Lab.tscn")
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+	var main := tree.get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", "res://Levels/Lab.tscn")
 
 
 func fade_in():
@@ -63,4 +78,9 @@ func fade_out():
 func _on_test_level_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file("res://Main_TestLevel.tscn")
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+	var main := tree.get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", "res://Levels/Test Level.tscn")
