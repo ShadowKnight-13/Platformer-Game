@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bd4lycbt7v2uv" path="res://UI/Buttons/button.png" id="5_8ctay"]
 [ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="5_f40uw"]
 [ext_resource type="Texture2D" uid="uid://bbvyij4ga3dni" path="res://UI/Buttons/buttonpress.png" id="6_ev3b6"]
-[ext_resource type="AudioStream" uid="uid://to6venu6unl" path="res://sounds/select.wav" id="8_k0a0m"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ev3b6"]
 texture = ExtResource("5_8ctay")
@@ -141,7 +140,7 @@ repeat_times = 9
 z_index = -2
 offset_left = 28.0
 offset_top = -405.0
-offset_right = 828.0
+offset_right = 1228.0
 offset_bottom = -105.0
 color = Color(0.9098039, 0.5411765, 0.21176471, 1)
 
@@ -252,9 +251,6 @@ text = "Quit"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_f40uw")]
 visible = false
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=31455682]
-stream = ExtResource("8_k0a0m")
 
 [connection signal="pressed" from="VBoxBottom/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxBottom/LevelSelect" to="." method="_on_level_select_pressed"]
