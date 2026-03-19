@@ -120,7 +120,7 @@ func _physics_process(delta):
 		return  # Player is dead or being freed; skip all logic this frame
 	var x_input = Input.get_axis("move_left", "move_right")
 	
-	if Input.is_action_just_pressed("interact"):
+	if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("interact_controller"):
 		if interaction_area and interaction_area.has_method("trigger_interact"):
 			interaction_area.trigger_interact()
 	# Reset gravity skip flag at start of frame
@@ -131,7 +131,7 @@ func _physics_process(delta):
 		dash_cooldown_remaining -= delta
 	
 	# Melee attack input
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("attack_controller"):
 		_try_attack()
 	# === RESET JUMP FLAGS ON LANDING ===
 
@@ -180,7 +180,7 @@ func _physics_process(delta):
 	
 	# Ground jump
 	if is_on_floor():
-		if Input.is_action_just_pressed("jump") and not is_dashing:
+		if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and not is_dashing:
 			velocity.y = JUMP_HEIGHT
 			is_jumping = true
 			is_dash_jumping = false  # Normal jumps are NOT dash jumps
@@ -190,7 +190,7 @@ func _physics_process(delta):
 	if is_dashing:
 		
 		# === CHECK FOR DASH JUMP FIRST - BEFORE applying dash movement ===
-		if Input.is_action_just_pressed("jump") and is_on_floor():
+		if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and is_on_floor():
 			# Jump from dash - POWERFUL combined momentum!
 			is_dashing = false
 			is_air_dive = false
@@ -210,7 +210,7 @@ func _physics_process(delta):
 			is_dash_jumping = true  # Mark as dash jump
 			skip_gravity_this_frame = true  # Don't apply gravity this frame!
 			
-		elif Input.is_action_just_pressed("jump") and is_air_dive:
+		elif Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and is_air_dive:
 			# Can't jump during air dive (optional)
 			pass
 		else:
@@ -259,7 +259,7 @@ func _physics_process(delta):
 					velocity.y += GRAVITY_NORMAL
 	
 	# === INITIATE DASH/DIVE ===
-	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_remaining <= 0:
+	if Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("dash_controller") and not is_dashing and dash_cooldown_remaining <= 0:
 		# Check if we're on a GRIPPABLE wall FIRST (highest priority)
 		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
 		if is_stuck_to_wall and is_on_grippable_wall() and not is_on_floor():
@@ -364,7 +364,7 @@ func _physics_process(delta):
 				velocity.y = GRAVITY_WALL_SLIDE
 	
 			# Handle wall jump
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller"):
 				velocity.y = JUMP_HEIGHT
 				velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
 				wall_jump_lock = WALL_JUMP_LOCK_TIME
@@ -395,7 +395,7 @@ func _physics_process(delta):
 		
 		# === VARIABLE JUMP HEIGHT ===
 		# Only cut normal jumps, not dash jumps
-		if Input.is_action_just_released("jump") and is_jumping and velocity.y < 0:
+		if Input.is_action_just_released("jump") or Input.is_action_just_released("jump_controller") and is_jumping and velocity.y < 0:
 			if not is_dash_jumping:
 				velocity.y *= JUMP_CUT_MULTIPLIER
 		

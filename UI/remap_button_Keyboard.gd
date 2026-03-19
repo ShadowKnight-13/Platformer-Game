@@ -4,6 +4,7 @@ extends Button
 var action_name: String
 var listening := false
 
+
 func _ready():
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	action_name = name
@@ -57,6 +58,11 @@ func _apply_new_binding(event: InputEvent):
 
 	# Add new binding
 	InputMap.action_add_event(action_name, event)
+	
+	if action_name == "move_left":
+		InputMap.action_add_event(action_name, make_left_stick_left())
+	if action_name == "move_right":
+		InputMap.action_add_event(action_name, make_left_stick_right())
 
 	# Update UI
 	if _event_to_string(event) in button:
@@ -148,3 +154,15 @@ var button = {
 	"N": "res://UI/Buttons Pack/KEYBOARD/KEYS/N.png",
 	"M": "res://UI/Buttons Pack/KEYBOARD/KEYS/M.png"
 }
+
+func make_left_stick_left() -> InputEventJoypadMotion:
+	var ev := InputEventJoypadMotion.new()
+	ev.axis = JOY_AXIS_LEFT_X
+	ev.axis_value = -1.0
+	return ev
+	
+func make_left_stick_right() -> InputEventJoypadMotion:
+	var ev := InputEventJoypadMotion.new()
+	ev.axis = JOY_AXIS_LEFT_X
+	ev.axis_value = 1.0
+	return ev

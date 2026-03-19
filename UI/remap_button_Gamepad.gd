@@ -63,6 +63,7 @@ func _apply_new_binding(event):
 
 	# Add new binding
 	InputMap.action_add_event(action_name, event)
+	print(event)
 
 	# Update UI
 	if UiGlobals.controller_buttons == 0:

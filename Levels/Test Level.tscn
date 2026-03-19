@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="11_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://cr3mqow5eljje" path="res://interactables/button.tscn" id="12_d1skg"]
-[ext_resource type="PackedScene" uid="uid://mx7vlnt8slb7" path="res://interactables/lever.tscn" id="13_nff53"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -206,7 +205,6 @@ position = Vector2(-2301, 564)
 [node name="MovingPlatform3" parent="." unique_id=228587934 instance=ExtResource("7_nff53")]
 position = Vector2(-1102, -67)
 path_points = Array[Vector2]([Vector2(-200, 0), Vector2(200, 0)])
-crush_distance = 30.0
 
 [node name="MovingPlatform2" parent="." unique_id=513895650 instance=ExtResource("7_nff53")]
 position = Vector2(-2395, 121)
@@ -224,12 +222,10 @@ path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 500)])
 
 [node name="MovingPlatform4" parent="." unique_id=1800692679 instance=ExtResource("7_nff53")]
 position = Vector2(-2063, -268)
-forward_speed = 750.0
+forward_speed = 475.0
 forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
-platform_size = Vector2(64, 128)
-crush_distance = 40.0
-override_ray_length_down = 40.0
+platform_size = Vector2(256, 128)
 
 [node name="MovingPlatform7" parent="." unique_id=130686839 instance=ExtResource("7_nff53")]
 position = Vector2(2657, 142)
@@ -237,8 +233,6 @@ forward_speed = 750.0
 forward_wait_time = 3.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
 platform_size = Vector2(64, 128)
-crush_distance = 40.0
-override_ray_length_down = 40.0
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("8_j0rrd")]
 
