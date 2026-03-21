@@ -113,10 +113,10 @@ metadata/_edit_lock_ = true
 
 [node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=2073100516]
 z_index = -1
-scroll_scale = Vector2(0.2, 0.2)
-scroll_offset = Vector2(-200, 0)
+scroll_offset = Vector2(0, -15)
 repeat_size = Vector2(250, 0)
-repeat_times = 6
+autoscroll = Vector2(-30, 0)
+repeat_times = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=964306029]
 texture = ExtResource("3_4cwpn")
@@ -147,6 +147,7 @@ color = Color(0.9098039, 0.5411765, 0.21176471, 1)
 [node name="Parallax2D3" type="Parallax2D" parent="Background" unique_id=1341565766]
 scroll_scale = Vector2(0.35, 0.35)
 repeat_size = Vector2(382, 0)
+autoscroll = Vector2(-30, 0)
 repeat_times = 6
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D3" unique_id=1280848469]

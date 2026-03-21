@@ -105,6 +105,5 @@ func fade_out():
 	anim.play("fade_out")
 
 
-
 func _on_controller_buttons_drop_down_item_selected(index: int) -> void:
 	UiGlobals.controller_buttons = index
