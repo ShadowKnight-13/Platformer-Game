@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cuj0i5swcjry7"]
+
+[ext_resource type="AudioStream" uid="uid://cpa3mg2ej6wcs" path="res://sounds/Music/H3LIX_PROTOC0L Title Scene.mp3" id="1_w1pjb"]
+[ext_resource type="Script" uid="uid://taghv3rh2rus" path="res://UI/menu_music.gd" id="2_pbgmv"]
+
+[node name="Menu music" type="AudioStreamPlayer2D" unique_id=576911829]
+stream = ExtResource("1_w1pjb")
+script = ExtResource("2_pbgmv")
+
+[node name="Black" type="ColorRect" parent="." unique_id=456498151]
+custom_minimum_size = Vector2(2000, 2000)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -385.0
+offset_top = -514.0
+offset_right = 1615.0
+offset_bottom = 1486.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
