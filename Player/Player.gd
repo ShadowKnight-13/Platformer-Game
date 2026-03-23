@@ -536,6 +536,7 @@ func _physics_process(delta):
 	if step_height > 0:
 		# Instantly move the player up by the step height (pixel-perfect style)
 		position.y -= step_height
+		$AnimationPlayer.play("Getup")
 	
 	# === LEDGE GRAB MECHANIC ===
 	# Check for ledge grab when in the air and touching a wall
@@ -836,14 +837,12 @@ func _try_attack() -> void:
 	is_attacking = true
 	_attack_timer = attack_duration
 	_attack_cooldown_timer = attack_cooldown
-
+	$AnimationPlayer.play("Attack")
 	print("Attack started")
 
 	melee_hitbox.monitoring = true
 	melee_hitbox.monitorable = true
 
-	if $AnimationPlayer.has_animation("Attack"):
-		$AnimationPlayer.play("Attack")
 
 
 func _update_attack_timers(delta: float) -> void:
