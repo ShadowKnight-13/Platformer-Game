@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dukusakiwsqgp" path="res://Art Assets/desert/pg-bird.png" id="1_bird"]
 [ext_resource type="Script" uid="uid://b6ruxwrdgfv7n" path="res://Enemies/bird_enemy.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://co6g4fodax814" path="res://Enemies/DeathEffect.tscn" id="2_x7yd2"]
 [ext_resource type="AudioStream" uid="uid://beix0cffkpqn0" path="res://sounds/enemySounds/flap.wav" id="3_fwj7y"]
 [ext_resource type="AudioStream" uid="uid://d3gib2grqiwhr" path="res://sounds/enemySounds/birdDive.wav" id="4_x7yd2"]
 
@@ -74,6 +75,7 @@ _data = {
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("2_script")
+death_effect_scene = ExtResource("2_x7yd2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=596321683]
 texture_filter = 1
