@@ -5,6 +5,7 @@
 
 [node name="Menu music" type="AudioStreamPlayer2D" unique_id=576911829]
 stream = ExtResource("1_w1pjb")
+parameters/looping = true
 script = ExtResource("2_pbgmv")
 
 [node name="Black" type="ColorRect" parent="." unique_id=456498151]

@@ -1,8 +1,5 @@
-[gd_scene format=4]
+[gd_scene format=3 uid="uid://dk6bixavss4hf"]
 
-[ext_resource type="PackedScene" path="res://Main.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://Levels/Test Level.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://cnfkdbtgnblwv" path="res://Main.tscn" id="1"]
 
-[node name="Main" instance=ExtResource("1")]
-level_scene = ExtResource("2")
-
+[node name="Main" unique_id=81167874 instance=ExtResource("1")]
