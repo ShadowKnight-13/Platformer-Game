@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="10_mnmnm"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="11_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://cr3mqow5eljje" path="res://interactables/button.tscn" id="12_d1skg"]
+[ext_resource type="PackedScene" uid="uid://dcddsq0pxyt8a" path="res://Enemies/Dog.tscn" id="13_nff53"]
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -256,3 +257,6 @@ position = Vector2(511, 453)
 
 [node name="Door" parent="." unique_id=1104411225 instance=ExtResource("11_pbvpm")]
 position = Vector2(463, 445)
+
+[node name="Dog" parent="." unique_id=1361111546 instance=ExtResource("13_nff53")]
+position = Vector2(1455, 563)

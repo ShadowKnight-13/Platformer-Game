@@ -14,4 +14,3 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	queue_free()
-
