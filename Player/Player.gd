@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 const SPEED = 300.0
 const JUMP_HEIGHT: float = -500.0
@@ -49,6 +50,7 @@ var was_on_floor_last_frame := false
 var skip_gravity_this_frame := false
 var needs_collision_restore := false
 var facing_direction := 1.0  # Track which way player is facing (1 = right, -1 = left)
+var stepped_up := false
 
 ## === DASH / CROUCH STATE ===
 var is_dashing := false
@@ -163,6 +165,8 @@ func update_animations(x_input: float) -> void:
 		if is_crouching:
 			# Using "Dash" as a placeholder for crouch as seen in your source
 			$AnimationPlayer.play("Dash") 
+		elif stepped_up:
+			$AnimationPlayer.play("Getup")
 		elif x_input != 0:
 			$AnimationPlayer.play("Run")
 		else:
@@ -174,8 +178,12 @@ func update_animations(x_input: float) -> void:
 func _handle_horizontal_flip(x_input: float) -> void:
 	if x_input < 0:
 		$Sprite2D.flip_h = true
+		$Hit.position.x = -30
+		$Hit.flip_h = true
 	elif x_input > 0:
 		$Sprite2D.flip_h = false
+		$Hit.position.x = 30
+		$Hit.flip_h = false
 
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
@@ -200,6 +208,9 @@ func is_on_grippable_wall() -> bool:
 	
 	# No grippable walls found
 	return false
+
+func _ready() -> void:
+	$Hit.visible = false
 
 ## === MAIN PHYSICS LOOP ===
 func _physics_process(delta):
@@ -546,7 +557,7 @@ func _physics_process(delta):
 	if step_height > 0:
 		# Instantly move the player up by the step height (pixel-perfect style)
 		position.y -= step_height
-		$AnimationPlayer.play("Getup")
+		stepped_up = true
 	
 	# === LEDGE GRAB MECHANIC ===
 	# Check for ledge grab when in the air and touching a wall
@@ -878,3 +889,8 @@ func _on_melee_hitbox_body_entered(body: Node2D) -> void:
 
 	if body.has_method("take_damage"):
 		body.take_damage(1)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "Getup":
+		stepped_up = false
+	
