@@ -1,6 +1,5 @@
 extends AudioStreamPlayer2D
 
-var current_scene_name := ""
 var scene
 var scene_name
 
@@ -11,8 +10,11 @@ func _ready() -> void:
 	play(0)
 	scene = get_tree().current_scene
 	scene_name = scene.name
-	if !scene_name == "MainMenu" or !scene_name == "LevelSelect" or !scene_name == "SettingsMenu" or !scene_name == "InputMappingMenu":
+	if scene_name == "MainMenu" or scene_name == "LevelSelect" or scene_name == "SettingsMenu" or scene_name == "InputMappingMenu":
+		return
+	else:
 		$Black.hide()
+		stop()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -58,6 +58,7 @@ var dash_time_remaining := 0.0
 var dash_cooldown_remaining := 0.0
 var dash_direction := 1.0
 var is_air_dive := false
+var air_dash_used := false
 var air_dash_horizontal_timer := 0.0
 var is_crouching := false
 
@@ -116,6 +117,7 @@ func reset_for_respawn() -> void:
 	dash_cooldown_remaining = 0.0
 	dash_direction = 1.0
 	is_air_dive = false
+	air_dash_used = false
 	air_dash_horizontal_timer = 0.0
 	is_crouching = false
 
@@ -218,6 +220,9 @@ func _physics_process(delta):
 		player_death()
 		return
 	var x_input = Input.get_axis("move_left", "move_right")
+	var jump_pressed := Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller")
+	var jump_released := Input.is_action_just_released("jump") or Input.is_action_just_released("jump_controller")
+	var dash_pressed := Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("dash_controller")
 	
 	if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("interact_controller"):
 		if interaction_area and interaction_area.has_method("trigger_interact"):
@@ -227,7 +232,7 @@ func _physics_process(delta):
 	
 	# Update dash cooldown
 	if dash_cooldown_remaining > 0:
-		dash_cooldown_remaining -= delta
+		dash_cooldown_remaining = max(dash_cooldown_remaining - delta, 0.0)
 	
 	# Melee attack input
 	if Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("attack_controller"):
@@ -237,6 +242,7 @@ func _physics_process(delta):
 	if is_on_floor() and not was_on_floor_last_frame:
 		is_jumping = false
 		is_dash_jumping = false
+		air_dash_used = false
 	# Clamp horizontal velocity to normal speed on landing
 	if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
 		velocity.x = sign(velocity.x) * SPEED
@@ -258,6 +264,7 @@ func _physics_process(delta):
 	if is_on_floor() and is_jumping:
 		is_jumping = false
 		is_dash_jumping = false
+		air_dash_used = false
 		
 		# Clamp horizontal velocity to normal speed on landing
 		if abs(velocity.x) > SPEED * 1.1:  # Allow small buffer
@@ -279,7 +286,7 @@ func _physics_process(delta):
 	
 	# Ground jump
 	if is_on_floor():
-		if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and not is_dashing:
+		if jump_pressed and not is_dashing:
 			velocity.y = JUMP_HEIGHT
 			is_jumping = true
 			is_dash_jumping = false  # Normal jumps are NOT dash jumps
@@ -289,7 +296,7 @@ func _physics_process(delta):
 	if is_dashing:
 		
 		# === CHECK FOR DASH JUMP FIRST - BEFORE applying dash movement ===
-		if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and is_on_floor():
+		if jump_pressed and is_on_floor():
 			# Jump from dash - POWERFUL combined momentum!
 			is_dashing = false
 			is_air_dive = false
@@ -309,7 +316,7 @@ func _physics_process(delta):
 			is_dash_jumping = true  # Mark as dash jump
 			skip_gravity_this_frame = true  # Don't apply gravity this frame!
 			
-		elif Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller") and is_air_dive:
+		elif jump_pressed and is_air_dive:
 			# Can't jump during air dive (optional)
 			pass
 		else:
@@ -358,7 +365,7 @@ func _physics_process(delta):
 					velocity.y += GRAVITY_NORMAL
 	
 	# === INITIATE DASH/DIVE ===
-	if Input.is_action_just_pressed("dash") or Input.is_action_just_pressed("dash_controller") and not is_dashing and dash_cooldown_remaining <= 0:
+	if dash_pressed and not is_dashing and dash_cooldown_remaining <= 0:
 		# Check if we're on a GRIPPABLE wall FIRST (highest priority)
 		# UPDATED: Use is_on_grippable_wall() instead of is_on_wall()
 		if is_stuck_to_wall and is_on_grippable_wall() and not is_on_floor():
@@ -381,6 +388,7 @@ func _physics_process(delta):
 			# Set velocities for horizontal dash away from wall
 			velocity.x = dash_direction * DASH_SPEED
 			velocity.y = 0  # Start horizontal
+			air_dash_used = true
 			
 			
 		elif is_on_floor():
@@ -405,25 +413,30 @@ func _physics_process(delta):
 					velocity.y = 10  # Small downward nudge to stay grounded
 		else:
 			# Air dive - no horizontal movement required
-			is_dashing = true
-			is_air_dive = true
-			air_dash_horizontal_timer = 0.0  # Reset horizontal phase timer
-			dash_time_remaining = DASH_DURATION
-			
-			# Determine dive direction (use input, or facing direction if no input)
-			if abs(x_input) > 0.1:
-				dash_direction = sign(x_input)
+			if air_dash_used:
+				# Only one air dash per airtime.
+				pass
 			else:
-				# Dive in facing direction if no input
-				dash_direction = facing_direction
-			
-			# Reduce collision height
-			$CollisionShape2D.scale.y = 0.5
-			$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
-			
-			# Set dive velocities - start horizontal
-			velocity.x = dash_direction * DASH_SPEED
-			velocity.y = 0  # Start perfectly horizontal
+				is_dashing = true
+				is_air_dive = true
+				air_dash_horizontal_timer = 0.0  # Reset horizontal phase timer
+				dash_time_remaining = DASH_DURATION
+				air_dash_used = true
+				
+				# Determine dive direction (use input, or facing direction if no input)
+				if abs(x_input) > 0.1:
+					dash_direction = sign(x_input)
+				else:
+					# Dive in facing direction if no input
+					dash_direction = facing_direction
+				
+				# Reduce collision height
+				$CollisionShape2D.scale.y = 0.5
+				$CollisionShape2D.position.y = $CollisionShape2D.shape.size.y * 0.25
+				
+				# Set dive velocities - start horizontal
+				velocity.x = dash_direction * DASH_SPEED
+				velocity.y = 0  # Start perfectly horizontal
 	
 	# Skip normal movement logic if dashing
 	if not is_dashing:
@@ -463,7 +476,7 @@ func _physics_process(delta):
 				velocity.y = GRAVITY_WALL_SLIDE
 	
 			# Handle wall jump
-			if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("jump_controller"):
+			if jump_pressed:
 				velocity.y = JUMP_HEIGHT
 				velocity.x = wall_normal.x * WALL_JUMP_PUSH_FORCE
 				wall_jump_lock = WALL_JUMP_LOCK_TIME
@@ -494,7 +507,7 @@ func _physics_process(delta):
 		
 		# === VARIABLE JUMP HEIGHT ===
 		# Only cut normal jumps, not dash jumps
-		if Input.is_action_just_released("jump") or Input.is_action_just_released("jump_controller") and is_jumping and velocity.y < 0:
+		if jump_released and is_jumping and velocity.y < 0:
 			if not is_dash_jumping:
 				if velocity.y < 0:
 					velocity.y *= JUMP_CUT_MULTIPLIER 
