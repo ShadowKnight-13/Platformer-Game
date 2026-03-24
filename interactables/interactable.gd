@@ -2,7 +2,7 @@ extends Area2D
 
 signal interacted
 
-@export var interaction_text: String = "Heal"
+var interaction_text: String = "Interacted"
 
 func interact():
 	print("Object says: ", interaction_text)

@@ -21,8 +21,6 @@ func _on_interact() -> void:
 	else:
 		released.emit()
 
-#func _update_animation() -> void:
-	#if is_pressed:
-		#anim_player.play()
-	#else:
-		#anim_player.play()
+func _update_animation() -> void:
+	if is_pressed:
+		anim_player.play("presssed")
