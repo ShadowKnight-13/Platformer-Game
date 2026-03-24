@@ -483,6 +483,8 @@ func _physics_process(delta):
 				is_wall_jumping = true
 				is_jumping = true
 				is_dash_jumping = false  # Wall jumps are NOT dash jumps
+				# Refresh one air dash after a successful wall jump.
+				air_dash_used = false
 				skip_gravity_this_frame = true  # Don't apply gravity on jump frame
 				wall_stick_time = 0.0
 				is_stuck_to_wall = false  # Release from wall
