@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://dcddsq0pxyt8a"]
+
+[ext_resource type="Script" uid="uid://cdt62btdgadxt" path="res://Enemies/dog.gd" id="1_w30k1"]
+[ext_resource type="Texture2D" uid="uid://dqtkbokgu75mc" path="res://Art Assets/Lab/pg-dog.png" id="2_y4tpp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5pw88"]
+size = Vector2(27, 21)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0b7qh"]
+radius = 12.0
+height = 46.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4tpp"]
+radius = 26.0
+height = 218.0
+
+[sub_resource type="Animation" id="Animation_y4tpp"]
+resource_name = "Idle"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5pw88"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0b7qh"]
+resource_name = "Run"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2w7mt"]
+_data = {
+&"Idle": SubResource("Animation_y4tpp"),
+&"RESET": SubResource("Animation_5pw88"),
+&"Run": SubResource("Animation_0b7qh")
+}
+
+[node name="Dog" type="CharacterBody2D" unique_id=1361111546]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1_w30k1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1068850090]
+texture_filter = 1
+texture = ExtResource("2_y4tpp")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1855597955]
+position = Vector2(-2.5, 5.5)
+shape = SubResource("RectangleShape2D_5pw88")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1098144168]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=125738412]
+position = Vector2(-2, 2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_0b7qh")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1204961653]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1205591535]
+position = Vector2(0, -15)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_y4tpp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=939443389]
+libraries/ = SubResource("AnimationLibrary_2w7mt")
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

@@ -34,6 +34,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 grippable_wall=""
+player=""
 
 [input]
 
