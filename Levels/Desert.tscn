@@ -928,3 +928,18 @@ platform_size = Vector2(94.5, 94.5)
 can_crush_up = false
 can_crush_right = false
 can_crush_left = false
+
+[node name="MovingPlatform2" parent="." unique_id=262294389 instance=ExtResource("11_tswv6")]
+position = Vector2(3136, 457)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, -78)])
+platform_size = Vector2(32, 78)
+
+[node name="MovingPlatform3" parent="." unique_id=64402127 instance=ExtResource("11_tswv6")]
+position = Vector2(3136, 793)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, -64)])
+platform_size = Vector2(32, 78)
+
+[node name="MovingPlatform4" parent="." unique_id=1286131379 instance=ExtResource("11_tswv6")]
+position = Vector2(3479, 576)
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(80, 0)])
+platform_size = Vector2(80, 32)
