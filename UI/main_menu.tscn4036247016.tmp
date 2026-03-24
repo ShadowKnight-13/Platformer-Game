@@ -1,0 +1,259 @@
+[gd_scene format=3 uid="uid://bn1tg0fvxq70r"]
+
+[ext_resource type="Script" uid="uid://danig46umrffy" path="res://UI/main_menu.gd" id="1_p8ccj"]
+[ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_tk8dj"]
+[ext_resource type="Texture2D" uid="uid://dma1ewuvokqe7" path="res://Art Assets/desert/pg-desertBack1.png" id="3_4cwpn"]
+[ext_resource type="Texture2D" uid="uid://ecwg1plwlg87" path="res://Art Assets/desert/pg-desert-back2.png" id="4_f40uw"]
+[ext_resource type="Texture2D" uid="uid://bd4lycbt7v2uv" path="res://UI/Buttons/button.png" id="5_8ctay"]
+[ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="5_f40uw"]
+[ext_resource type="Texture2D" uid="uid://bbvyij4ga3dni" path="res://UI/Buttons/buttonpress.png" id="6_ev3b6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ev3b6"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k0a0m"]
+texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2mudq"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cafmx"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tcix6"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bpm4f"]
+texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t2nhh"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_saki1"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mmlvu"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7137b"]
+texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cwv5u"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c2iqt"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aorne"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_voib7"]
+texture = ExtResource("6_ev3b6")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27vi8"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xmcc3"]
+texture = ExtResource("5_8ctay")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[node name="MainMenu" type="CanvasLayer" unique_id=325596706]
+script = ExtResource("1_p8ccj")
+
+[node name="Background" type="Node2D" parent="." unique_id=1639727320]
+position = Vector2(206, 167)
+metadata/_edit_lock_ = true
+
+[node name="Buildings" type="Parallax2D" parent="Background" unique_id=2073100516]
+z_index = -1
+scroll_offset = Vector2(0, -15)
+repeat_size = Vector2(250, 0)
+autoscroll = Vector2(-30, 0)
+repeat_times = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Buildings" unique_id=964306029]
+texture = ExtResource("3_4cwpn")
+centered = false
+offset = Vector2(600, 200)
+
+[node name="ColorRect" type="ColorRect" parent="Background/Buildings" unique_id=2138483252]
+offset_left = 540.0
+offset_top = 264.0
+offset_right = 847.0
+offset_bottom = 507.0
+color = Color(0.6901961, 0.35686275, 0.17254902, 1)
+
+[node name="Sky" type="Parallax2D" parent="Background" unique_id=469372635]
+scroll_scale = Vector2(2, 1)
+scroll_offset = Vector2(-67, 885)
+repeat_size = Vector2(100, 100)
+repeat_times = 9
+
+[node name="ColorRect2" type="ColorRect" parent="Background/Sky" unique_id=1358904147]
+z_index = -2
+offset_left = 28.0
+offset_top = -405.0
+offset_right = 1228.0
+offset_bottom = -105.0
+color = Color(0.9098039, 0.5411765, 0.21176471, 1)
+
+[node name="Ground" type="Parallax2D" parent="Background" unique_id=1341565766]
+scroll_scale = Vector2(0.35, 0.35)
+repeat_size = Vector2(382, 0)
+autoscroll = Vector2(-30, 0)
+repeat_times = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Ground" unique_id=1280848469]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("4_f40uw")
+offset = Vector2(600, 300)
+
+[node name="ColorRect" type="ColorRect" parent="Background/Ground" unique_id=2028895837]
+z_index = -1
+offset_left = 396.0
+offset_top = 363.0
+offset_right = 799.0
+offset_bottom = 613.0
+color = Color(0.44705883, 0.29411766, 0.17254902, 1)
+
+[node name="VBoxTop" type="VBoxContainer" parent="." unique_id=1807492908]
+custom_minimum_size = Vector2(250, 250)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.5
+offset_right = 90.5
+offset_bottom = 40.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxTop" unique_id=1993293699]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 40
+text = "H3lix Protoc0l"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxBottom" type="VBoxContainer" parent="." unique_id=13864549]
+custom_minimum_size = Vector2(200, 500)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -101.0
+offset_right = 40.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxBottom" unique_id=1333207031]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../LevelSelect")
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ev3b6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0a0m")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2mudq")
+theme_override_styles/focus = SubResource("StyleBoxTexture_cafmx")
+text = "Start"
+
+[node name="LevelSelect" type="Button" parent="VBoxBottom" unique_id=1159944614]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_tcix6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bpm4f")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t2nhh")
+theme_override_styles/focus = SubResource("StyleBoxTexture_saki1")
+text = "Level Select"
+
+[node name="SettingsButton" type="Button" parent="VBoxBottom" unique_id=1447438172]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+focus_neighbor_top = NodePath("../LevelSelect")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_mmlvu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_7137b")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cwv5u")
+theme_override_styles/focus = SubResource("StyleBoxTexture_c2iqt")
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="VBoxBottom" unique_id=749203038]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../StartButton")
+theme_override_fonts/font = ExtResource("2_tk8dj")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_aorne")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_voib7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_27vi8")
+theme_override_styles/focus = SubResource("StyleBoxTexture_xmcc3")
+text = "Quit"
+
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("5_f40uw")]
+visible = false
+
+[connection signal="pressed" from="VBoxBottom/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxBottom/LevelSelect" to="." method="_on_level_select_pressed"]
+[connection signal="pressed" from="VBoxBottom/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxBottom/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -131,6 +131,51 @@ func heal(amount: int = 1) -> void:
 	health = min(health + amount, 3)
 	emit_signal("health_changed", health)
 
+func update_animations(x_input: float) -> void:
+	# 1. ACTION PRIORITY (Non-interruptible states)
+	# These return early so movement logic doesn't overwrite them.
+	if is_attacking:
+		$AnimationPlayer.play("Attack") 
+		return
+		
+	if is_dashing:
+		$AnimationPlayer.play("Dash")
+		# Maintain sprite direction during dash
+		$Sprite2D.flip_h = dash_direction < 0
+		return
+
+	# 2. AIRBORNE STATES
+	if not is_on_floor():
+		if is_stuck_to_wall:
+			$AnimationPlayer.play("Wall_slide")
+			# Flip based on which wall we are sticking to
+			var wall_normal = get_wall_normal()
+			$Sprite2D.flip_h = (wall_normal.x > 0) 
+		elif velocity.y < 0:
+			$AnimationPlayer.play("Jump")
+			_handle_horizontal_flip(x_input)
+		else:
+			$AnimationPlayer.play("Fall")
+			_handle_horizontal_flip(x_input)
+			
+	# 3. GROUND STATES
+	else:
+		if is_crouching:
+			# Using "Dash" as a placeholder for crouch as seen in your source
+			$AnimationPlayer.play("Dash") 
+		elif x_input != 0:
+			$AnimationPlayer.play("Run")
+		else:
+			$AnimationPlayer.play("Idle")
+		
+		_handle_horizontal_flip(x_input)
+
+# Helper to keep the code clean
+func _handle_horizontal_flip(x_input: float) -> void:
+	if x_input < 0:
+		$Sprite2D.flip_h = true
+	elif x_input > 0:
+		$Sprite2D.flip_h = false
 
 func is_on_grippable_wall() -> bool:
 	if not is_on_wall():
@@ -478,42 +523,7 @@ func _physics_process(delta):
 			else:
 				velocity.x = move_toward(velocity.x, 0, FRICTION)
 		
-		# === ANIMATION HANDLING ===
-		if is_wall_sliding:
-			$AnimationPlayer.play("Wall_slide")
-			
-			if on_left_wall:
-				$Sprite2D.flip_h = true
-			elif on_right_wall:
-				$Sprite2D.flip_h = false
-				
-		elif not is_on_floor():
-			if velocity.y < 0:
-				$AnimationPlayer.play("Jump")
-			else:
-				$AnimationPlayer.play("Fall")
-			
-			if x_input < 0:
-				$Sprite2D.flip_h = true
-			elif x_input > 0:
-				$Sprite2D.flip_h = false
-				
-		elif is_crouching:
-			$AnimationPlayer.play("Dash")
-			if x_input < 0:
-				$Sprite2D.flip_h = true
-			elif x_input > 0:
-				$Sprite2D.flip_h = false
-		else:
-			if x_input != 0:
-				$AnimationPlayer.play("Run")
-			else:
-				$AnimationPlayer.play("Idle")
-			
-			if x_input < 0:
-				$Sprite2D.flip_h = true
-			elif x_input > 0:
-				$Sprite2D.flip_h = false
+		update_animations(x_input)
 	else:
 		# === DASHING/DIVING ANIMATION ===
 		$AnimationPlayer.play("Dash")
@@ -536,6 +546,7 @@ func _physics_process(delta):
 	if step_height > 0:
 		# Instantly move the player up by the step height (pixel-perfect style)
 		position.y -= step_height
+		$AnimationPlayer.play("Getup")
 	
 	# === LEDGE GRAB MECHANIC ===
 	# Check for ledge grab when in the air and touching a wall
@@ -836,14 +847,12 @@ func _try_attack() -> void:
 	is_attacking = true
 	_attack_timer = attack_duration
 	_attack_cooldown_timer = attack_cooldown
-
+	$AnimationPlayer.play("Attack")
 	print("Attack started")
 
 	melee_hitbox.monitoring = true
 	melee_hitbox.monitorable = true
 
-	if $AnimationPlayer.has_animation("Attack"):
-		$AnimationPlayer.play("Attack")
 
 
 func _update_attack_timers(delta: float) -> void:

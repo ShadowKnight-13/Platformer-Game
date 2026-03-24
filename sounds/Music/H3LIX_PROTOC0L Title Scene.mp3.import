@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cpa3mg2ej6wcs"
+path="res://.godot/imported/H3LIX_PROTOC0L Title Scene.mp3-0de8b9592a5b9b3610e44c6e1c9bed18.mp3str"
+
+[deps]
+
+source_file="res://sounds/Music/H3LIX_PROTOC0L Title Scene.mp3"
+dest_files=["res://.godot/imported/H3LIX_PROTOC0L Title Scene.mp3-0de8b9592a5b9b3610e44c6e1c9bed18.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

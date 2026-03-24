@@ -20,6 +20,10 @@ extends AnimatableBody2D
 @export_group("Crush Settings")
 @export var can_crush: bool = true
 @export var crush_distance: float = 20.0
+@export var can_crush_up: bool = true
+@export var can_crush_down: bool = true
+@export var can_crush_right: bool = true
+@export var can_crush_left: bool = true
 
 # Path following
 @onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
@@ -268,48 +272,52 @@ func check_for_crush(effective_crush_distance: float = -1.0) -> void:
 	var y_positions: Array[float] = _build_ray_positions(edges.top, edges.bottom, 10.0)
 	
 	# === UP CHECK ===
-	for ray_x in x_positions:
-		var ray_start = Vector2(ray_x, edges.top + 4.0)
-		var ray_end = Vector2(ray_x, edges.top - cd)
-		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
-		if player and is_player_crushed(player, Vector2.UP, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from below)!")
-			return
+	if can_crush_up:
+		for ray_x in x_positions:
+			var ray_start = Vector2(ray_x, edges.top + 4.0)
+			var ray_end = Vector2(ray_x, edges.top - cd)
+			var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
+			if player and is_player_crushed(player, Vector2.UP, show_debug):
+				if player.has_method("kill_player"):
+					player.kill_player()
+					print("Player crushed by platform (from below)!")
+				return
 	
 	# === DOWN CHECK ===
-	for ray_x in x_positions:
-		var ray_start = Vector2(ray_x, edges.bottom - 4.0)
-		var ray_end = Vector2(ray_x, edges.bottom + cd)
-		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
-		if player and is_player_crushed(player, Vector2.DOWN, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from above)!")
-			return
+	if can_crush_down:
+		for ray_x in x_positions:
+			var ray_start = Vector2(ray_x, edges.bottom - 4.0)
+			var ray_end = Vector2(ray_x, edges.bottom + cd)
+			var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
+			if player and is_player_crushed(player, Vector2.DOWN, show_debug):
+				if player.has_method("kill_player"):
+					player.kill_player()
+					print("Player crushed by platform (from above)!")
+				return
 	
 	# === LEFT CHECK ===
-	for ray_y in y_positions:
-		var ray_start = Vector2(edges.left + 4.0, ray_y)
-		var ray_end = Vector2(edges.left - cd, ray_y)
-		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
-		if player and is_player_crushed(player, Vector2.LEFT, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from right)!")
-			return
+	if can_crush_left:
+		for ray_y in y_positions:
+			var ray_start = Vector2(edges.left + 4.0, ray_y)
+			var ray_end = Vector2(edges.left - cd, ray_y)
+			var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
+			if player and is_player_crushed(player, Vector2.LEFT, show_debug):
+				if player.has_method("kill_player"):
+					player.kill_player()
+					print("Player crushed by platform (from right)!")
+				return
 	
 	# === RIGHT CHECK ===
-	for ray_y in y_positions:
-		var ray_start = Vector2(edges.right - 4.0, ray_y)
-		var ray_end = Vector2(edges.right + cd, ray_y)
-		var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
-		if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
-			if player.has_method("kill_player"):
-				player.kill_player()
-				print("Player crushed by platform (from left)!")
-			return
+	if can_crush_right:
+		for ray_y in y_positions:
+			var ray_start = Vector2(edges.right - 4.0, ray_y)
+			var ray_end = Vector2(edges.right + cd, ray_y)
+			var player = _cast_for_player(space_state, ray_start, ray_end, show_debug, Color.MAGENTA)
+			if player and is_player_crushed(player, Vector2.RIGHT, show_debug):
+				if player.has_method("kill_player"):
+					player.kill_player()
+					print("Player crushed by platform (from left)!")
+				return
 
 
 func _build_ray_positions(edge_min: float, edge_max: float, spacing: float) -> Array[float]:

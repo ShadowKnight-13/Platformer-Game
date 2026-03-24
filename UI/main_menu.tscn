@@ -111,32 +111,32 @@ script = ExtResource("1_p8ccj")
 position = Vector2(206, 167)
 metadata/_edit_lock_ = true
 
-[node name="Parallax2D" type="Parallax2D" parent="Background" unique_id=2073100516]
+[node name="Buildings" type="Parallax2D" parent="Background" unique_id=2073100516]
 z_index = -1
-scroll_scale = Vector2(0.2, 0.2)
-scroll_offset = Vector2(-200, 0)
+scroll_offset = Vector2(0, -15)
 repeat_size = Vector2(250, 0)
-repeat_times = 6
+autoscroll = Vector2(-30, 0)
+repeat_times = 8
 
-[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=964306029]
+[node name="Sprite2D" type="Sprite2D" parent="Background/Buildings" unique_id=964306029]
 texture = ExtResource("3_4cwpn")
 centered = false
 offset = Vector2(600, 200)
 
-[node name="ColorRect" type="ColorRect" parent="Background/Parallax2D" unique_id=2138483252]
+[node name="ColorRect" type="ColorRect" parent="Background/Buildings" unique_id=2138483252]
 offset_left = 540.0
 offset_top = 264.0
 offset_right = 847.0
 offset_bottom = 507.0
 color = Color(0.6901961, 0.35686275, 0.17254902, 1)
 
-[node name="Parallax2D2" type="Parallax2D" parent="Background" unique_id=469372635]
+[node name="Sky" type="Parallax2D" parent="Background" unique_id=469372635]
 scroll_scale = Vector2(2, 1)
 scroll_offset = Vector2(-67, 885)
 repeat_size = Vector2(100, 100)
 repeat_times = 9
 
-[node name="ColorRect2" type="ColorRect" parent="Background/Parallax2D2" unique_id=1358904147]
+[node name="ColorRect2" type="ColorRect" parent="Background/Sky" unique_id=1358904147]
 z_index = -2
 offset_left = 28.0
 offset_top = -405.0
@@ -144,18 +144,19 @@ offset_right = 1228.0
 offset_bottom = -105.0
 color = Color(0.9098039, 0.5411765, 0.21176471, 1)
 
-[node name="Parallax2D3" type="Parallax2D" parent="Background" unique_id=1341565766]
+[node name="Ground" type="Parallax2D" parent="Background" unique_id=1341565766]
 scroll_scale = Vector2(0.35, 0.35)
 repeat_size = Vector2(382, 0)
+autoscroll = Vector2(-30, 0)
 repeat_times = 6
 
-[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D3" unique_id=1280848469]
+[node name="Sprite2D" type="Sprite2D" parent="Background/Ground" unique_id=1280848469]
 z_index = -1
 texture_filter = 1
 texture = ExtResource("4_f40uw")
 offset = Vector2(600, 300)
 
-[node name="ColorRect" type="ColorRect" parent="Background/Parallax2D3" unique_id=2028895837]
+[node name="ColorRect" type="ColorRect" parent="Background/Ground" unique_id=2028895837]
 z_index = -1
 offset_left = 396.0
 offset_top = 363.0
