@@ -9,6 +9,8 @@ func _ready() -> void:
 	text_size = UiGlobals.text_size
 	set_font_size_recursive(self, text_size)
 	fade_in()
+	if has_node("/root/Music"):
+		get_node("/root/Music").call("play", "title", 1.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

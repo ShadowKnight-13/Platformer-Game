@@ -78,7 +78,7 @@ func player_death():
 
 	var main := get_tree().get_first_node_in_group("GameMain")
 	if main and main.has_method("respawn_player"):
-		main.call("respawn_player")
+		main.call("respawn_player", true)
 		return
 
 	# Fallback: if Main can't be found for some reason, keep old behavior.
@@ -213,6 +213,9 @@ func is_on_grippable_wall() -> bool:
 
 func _ready() -> void:
 	$Hit.visible = false
+	# Support enemies that use Area2D hurtboxes (e.g. DogEnemy Hurtbox).
+	if melee_hitbox and not melee_hitbox.area_entered.is_connected(_on_melee_hitbox_area_entered):
+		melee_hitbox.area_entered.connect(_on_melee_hitbox_area_entered)
 
 ## === MAIN PHYSICS LOOP ===
 func _physics_process(delta):
@@ -904,6 +907,25 @@ func _on_melee_hitbox_body_entered(body: Node2D) -> void:
 
 	if body.has_method("take_damage"):
 		body.take_damage(1)
+
+func _on_melee_hitbox_area_entered(area: Area2D) -> void:
+	if not is_attacking:
+		return
+
+	# Common pattern: enemy has an Area2D Hurtbox as a child.
+	# Try the area itself, then parent, then owner.
+	if area.has_method("take_damage"):
+		area.call("take_damage", 1)
+		return
+
+	var parent := area.get_parent()
+	if parent and parent.has_method("take_damage"):
+		parent.call("take_damage", 1)
+		return
+
+	var owner_node := area.owner
+	if owner_node and owner_node.has_method("take_damage"):
+		owner_node.call("take_damage", 1)
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Getup":

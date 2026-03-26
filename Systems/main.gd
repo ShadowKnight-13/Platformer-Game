@@ -25,6 +25,17 @@ func load_level(level_ref: String) -> void:
 		push_error("Main.load_level: Could not resolve level_ref: %s" % level_ref)
 		return
 
+	# Switch music based on the level being loaded.
+	if has_node("/root/Music"):
+		var music := get_node("/root/Music")
+		var track_id := ""
+		if resolved_path == "res://Levels/DesertCave.tscn" or resolved_path == "res://Levels/Desert.tscn":
+			track_id = "protocol2"
+		elif resolved_path == "res://Levels/Lab.tscn":
+			track_id = "protocol"
+		if track_id != "":
+			music.call("play", track_id, 1.0)
+
 	# Checkpoints are stored globally in the CheckpointManager autoload.
 	# When switching levels, clear the previous level's checkpoint so spawning
 	# uses the new level's SpawnPoint unless the player reaches a checkpoint there.
@@ -48,13 +59,13 @@ func load_level(level_ref: String) -> void:
 	_level_container.add_child(current_level_instance)
 	respawn_player()
 
-func respawn_player() -> void:
+func respawn_player(full_health: bool = false) -> void:
 	var spawn_pos: Vector2 = default_spawn_position
 	var spawn_health: int = default_spawn_health
 
 	if CheckpointManager.has_checkpoint():
 		spawn_pos = CheckpointManager.get_spawn_position()
-		spawn_health = CheckpointManager.get_spawn_health()
+		spawn_health = default_spawn_health if full_health else CheckpointManager.get_spawn_health()
 	else:
 		# Prefer a per-level SpawnPoint marker if it exists.
 		var spawn_node := _find_spawn_point_node(current_level_instance)
