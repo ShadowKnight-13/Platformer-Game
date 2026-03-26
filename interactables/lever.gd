@@ -6,7 +6,7 @@ enum LinkMode {
 	BOTH
 }
 
-@onready var intractable: Area2D = $interactable
+@onready var interactable: Area2D = $interactable
 @onready var anim_player: AnimationPlayer = $"Lever Animator/AnimationPlayer"
 
 @export var source_id: String = ""
@@ -23,14 +23,14 @@ var is_on: bool = false
 signal toggled(on:bool)
 
 func _ready() -> void:
-	intractable.interacted.connect(_on_interact)
+	interactable.interacted.connect(_on_interact)
 	_update_animation()
 
 func _on_interact() -> void:
 	is_on = !is_on
 	_update_animation()
 	toggled.emit(is_on)
-	_brodcast_state()
+	_broadcast_state()
 
 func _update_animation() -> void:
 	anim_player.play("on" if is_on else "off")
@@ -56,7 +56,7 @@ func _collect_targets() -> Array:
 				
 	if Link_mode == LinkMode.CHANNEL or Link_mode == LinkMode.BOTH:
 		for n in get_tree().get_nodes_in_group("puzzle_target"):
-			if n.has_varable("puzzle_id") and n.puzzle_id == puzzle_id:
+			if n.has_variable("puzzle_id") and n.puzzle_id == puzzle_id:
 				if not seen.has(n):
 					seen[n] = true
 					result.append(n)

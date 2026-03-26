@@ -14,7 +14,7 @@ var _source_states: Dictionary = {} # source_id -> bool
 var _is_active: bool = false
 
 func on_switch_state(source_id: String, is_on: bool) -> void:
-	var was_on := _source_states.get(source_id, false)
+	var was_on: bool = bool(_source_states.get(source_id, false))
 	_source_states[source_id] = is_on
 	
 	match logic_mode:
@@ -41,5 +41,5 @@ func _compute_all() -> bool:
 			return false
 	return true
 
-func apply_active_state(active: bool) -> void:
+func apply_active_state(_active: bool) -> void:
 	pass
