@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d1ukcet8d5m8a" path="res://Art Assets/desert/pg-cactusBot.png" id="1_5m8x6"]
 [ext_resource type="Script" uid="uid://xw0mrm0vuduw" path="res://Enemies/cactus_enemy.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://co6g4fodax814" path="res://Enemies/DeathEffect.tscn" id="2_xrfii"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 height = 32.0
@@ -10,6 +11,7 @@ height = 32.0
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("2_script")
+death_effect_scene = ExtResource("2_xrfii")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1433602609]
 texture_filter = 1

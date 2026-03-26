@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dcddsq0pxyt8a"]
 
 [ext_resource type="Script" uid="uid://cnjnq55rji5nk" path="res://Enemies/DogEnemy.gd" id="1_kwbjr"]
+[ext_resource type="PackedScene" uid="uid://co6g4fodax814" path="res://Enemies/DeathEffect.tscn" id="2_8atms"]
 [ext_resource type="Texture2D" uid="uid://dqtkbokgu75mc" path="res://Art Assets/Lab/pg-dog.png" id="2_y4tpp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pw88"]
@@ -74,6 +75,7 @@ _data = {
 collision_layer = 4
 collision_mask = 15
 script = ExtResource("1_kwbjr")
+death_effect_scene = ExtResource("2_8atms")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1068850090]
 texture_filter = 1

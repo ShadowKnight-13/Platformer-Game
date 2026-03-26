@@ -27,6 +27,23 @@ func _on_interact() -> void:
 		push_warning("Door has no target_scene_path set")
 		_is_transitioning = false
 		return
+
+	var main := get_tree().get_first_node_in_group("GameMain")
+	if main and main.has_method("load_level"):
+		main.call("load_level", level)
+		return
+
+	# Fallback: if Main isn't present (e.g. you started by running a level scene directly),
+	# switch to the Main wrapper so the HUD/single-player flow remains consistent.
+	var tree := get_tree()
+	tree.change_scene_to_file("res://Main.tscn")
+	await tree.process_frame
+
+	var main_after := tree.get_first_node_in_group("GameMain")
+	if main_after and main_after.has_method("load_level"):
+		main_after.call("load_level", level)
+	else:
+		push_error("Door fallback: Main not found after switching to Main.tscn")
 		
 	if anim_player and anim_player.has_animation(door_open_animation):
 		anim_player.play(door_open_animation)
