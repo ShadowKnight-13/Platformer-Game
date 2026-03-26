@@ -10,6 +10,7 @@
 [node name="Main" type="Node2D" unique_id=618264885]
 script = ExtResource("6_main")
 level_scene = ExtResource("1_4h0sv")
+default_spawn_position = Vector2(0, 0)
 
 [node name="Level" type="Node2D" parent="." unique_id=314983792]
 

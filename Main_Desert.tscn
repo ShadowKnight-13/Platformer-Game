@@ -5,3 +5,4 @@
 
 [node name="Main" unique_id=1974916134 instance=ExtResource("1")]
 level_scene = ExtResource("2")
+default_spawn_position = Vector2(0, 0)

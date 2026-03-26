@@ -129,4 +129,3 @@ func _find_spawn_point_node(root: Node) -> Node2D:
 
 func _process(delta: float) -> void:
 	pass
-

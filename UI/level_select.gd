@@ -34,33 +34,21 @@ func _on_level_1_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
-	tree.change_scene_to_file("res://Main.tscn")
-	await tree.process_frame
-	var main := tree.get_first_node_in_group("GameMain")
-	if main and main.has_method("load_level"):
-		main.call("load_level", "res://Levels/DesertCave.tscn")
+	tree.change_scene_to_file("res://Main_DesertCave.tscn")
 
 
 func _on_level_2_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
-	tree.change_scene_to_file("res://Main.tscn")
-	await tree.process_frame
-	var main := tree.get_first_node_in_group("GameMain")
-	if main and main.has_method("load_level"):
-		main.call("load_level", "res://Levels/Desert.tscn")
+	tree.change_scene_to_file("res://Main_Desert.tscn")
 
 
 func _on_level_3_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
-	tree.change_scene_to_file("res://Main.tscn")
-	await tree.process_frame
-	var main := tree.get_first_node_in_group("GameMain")
-	if main and main.has_method("load_level"):
-		main.call("load_level", "res://Levels/Lab.tscn")
+	tree.change_scene_to_file("res://Main_Lab.tscn")
 
 
 func fade_in():
@@ -79,8 +67,4 @@ func _on_test_level_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
-	tree.change_scene_to_file("res://Main.tscn")
-	await tree.process_frame
-	var main := tree.get_first_node_in_group("GameMain")
-	if main and main.has_method("load_level"):
-		main.call("load_level", "res://Levels/Test Level.tscn")
+	tree.change_scene_to_file("res://Main_TestLevel.tscn")
