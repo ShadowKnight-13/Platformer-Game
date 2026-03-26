@@ -79,6 +79,11 @@ func _follow_update(_delta: float) -> void:
 		var dir = sign(player.global_position.x - global_position.x)
 		velocity.x = move_toward(velocity.x, dir * follow_speed, acceleration)
 
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	# Optional helper: acquire target when player enters detection radius.
+	if body != null and body.is_in_group("player"):
+		player = body as CharacterBody2D
+
 # Use your existing damage logic from the BaseEnemy/Player interaction
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and body.has_method("damage_player"):

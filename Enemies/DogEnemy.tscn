@@ -72,7 +72,7 @@ _data = {
 }
 
 [node name="Dog" type="CharacterBody2D" unique_id=1361111546]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_kwbjr")
 death_effect_scene = ExtResource("2_8atms")
@@ -87,6 +87,8 @@ position = Vector2(-2.5, 5.5)
 shape = SubResource("RectangleShape2D_5pw88")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1098144168]
+collision_layer = 8
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=125738412]
 position = Vector2(-2, 2)
@@ -95,6 +97,7 @@ shape = SubResource("CapsuleShape2D_0b7qh")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1204961653]
 collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1205591535]
 position = Vector2(0, -11)
@@ -104,4 +107,5 @@ shape = SubResource("CapsuleShape2D_y4tpp")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=939443389]
 libraries/ = SubResource("AnimationLibrary_2w7mt")
 
-[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
