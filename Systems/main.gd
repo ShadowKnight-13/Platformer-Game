@@ -19,6 +19,15 @@ func _ready() -> void:
 		# Still ensure the wrapper player has correct initial health/state.
 		respawn_player()
 
+
+func set_font_size_recursive(node: Node, size: int) -> void:
+	if node is Control:
+		node.add_theme_font_size_override("font_size", size)
+	
+	for child in node.get_children():
+		set_font_size_recursive(child, size)
+
+
 func load_level(level_ref: String) -> void:
 	var resolved_path := _resolve_level_ref_to_path(level_ref)
 	if resolved_path == "":
@@ -58,6 +67,7 @@ func load_level(level_ref: String) -> void:
 
 	_level_container.add_child(current_level_instance)
 	respawn_player()
+	set_font_size_recursive(self, UiGlobals.text_size)
 
 func respawn_player(full_health: bool = false) -> void:
 	var spawn_pos: Vector2 = default_spawn_position

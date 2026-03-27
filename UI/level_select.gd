@@ -70,3 +70,9 @@ func _on_test_level_pressed() -> void:
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
 	tree.change_scene_to_file("res://Main_TestLevel.tscn")
+
+
+
+
+func _on_texture_button_pressed() -> void:
+	print("worked")
