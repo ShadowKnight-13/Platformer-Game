@@ -322,8 +322,8 @@ _data = {
 &"Wall_slide": SubResource("Animation_tdg3f")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8g4oa"]
-size = Vector2(52, 13)
+[sub_resource type="CircleShape2D" id="CircleShape2D_j23h2"]
+radius = 30.0
 
 [node name="Player" type="CharacterBody2D" unique_id=509081286 groups=["player"]]
 collision_layer = 3
@@ -366,7 +366,7 @@ monitorable = false
 script = ExtResource("4_ddoul")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHitbox" unique_id=493722756]
-shape = SubResource("RectangleShape2D_8g4oa")
+shape = SubResource("CircleShape2D_j23h2")
 
 [node name="FloorRaycast" type="RayCast2D" parent="." unique_id=312045678]
 
