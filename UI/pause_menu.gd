@@ -2,6 +2,7 @@ extends VBoxContainer
 
 var is_paused = false
 var text_size
+@onready var anim = $SceneFade/Fade
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,6 +32,8 @@ func _on_resume_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
+	fade_out()
+	await get_tree().create_timer(1.0).timeout
 	get_tree().paused = not get_tree().paused
 	is_paused = false
 	get_tree().change_scene_to_file("res://UI/main_menu.tscn")
@@ -41,3 +44,15 @@ func set_font_size_recursive(node: Node, size: int):
 	
 	for child in node.get_children():
 		set_font_size_recursive(child, size)
+
+
+func fade_in():
+	$SceneFade.show()
+	anim.play("fade_in")
+	await get_tree().create_timer(1.0).timeout
+	$SceneFade.hide()
+
+func fade_out():
+	$SceneFade.show()
+	$SceneFade/AudioStreamPlayer2D.play()
+	anim.play("fade_out")
