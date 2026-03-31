@@ -31,6 +31,33 @@ expand_margin_top = 10.0
 expand_margin_bottom = 10.0
 modulate_color = Color(0, 0.54509807, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mn6w0"]
+bg_color = Color(0.0885599, 0.08855992, 0.08855986, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.38170323, 0.3817033, 0.38170302, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqcb0"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ngv6"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
 [node name="SettingsMenu" type="CanvasLayer" unique_id=60479775]
 script = ExtResource("1_77no7")
 
@@ -38,11 +65,12 @@ script = ExtResource("1_77no7")
 scroll_scale = Vector2(0.2, 0.2)
 scroll_offset = Vector2(139, -151)
 repeat_size = Vector2(30, 30)
+autoscroll = Vector2(-30, 0)
 repeat_times = 50
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=387177850]
-modulate = Color(0.49803922, 0.49803922, 0.49803922, 1)
+modulate = Color(0.60784316, 0.60784316, 0.60784316, 1)
 z_index = -1
 texture_filter = 1
 texture = ExtResource("2_80a2v")
@@ -164,6 +192,11 @@ focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_bottom = NodePath("../FullscreenToggle")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jqcb0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ngv6")
 alignment = 1
 selected = 0
 item_count = 4
@@ -181,6 +214,11 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ResolutionDropDown")
 focus_neighbor_bottom = NodePath("../TextSizeDropDown")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ngv6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_8ngv6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ngv6")
 icon_alignment = 1
 
 [node name="TextSizeDropDown" type="OptionButton" parent="HBoxContainer/VBoxCenterRight" unique_id=1671528757]
@@ -190,6 +228,10 @@ focus_neighbor_top = NodePath("../FullscreenToggle")
 focus_neighbor_bottom = NodePath("../ControllerButtonsDropDown")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jqcb0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ngv6")
 alignment = 1
 selected = 0
 item_count = 3
@@ -207,6 +249,12 @@ focus_neighbor_top = NodePath("../TextSizeDropDown")
 focus_neighbor_bottom = NodePath("../InputMappingButton")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jqcb0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ngv6")
 alignment = 1
 selected = 0
 item_count = 2
@@ -222,6 +270,9 @@ focus_neighbor_top = NodePath("../ControllerButtonsDropDown")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_fonts/font = ExtResource("2_0adsa")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_mn6w0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jqcb0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8ngv6")
 text = "Input Mapping"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_0adsa")]

@@ -171,3 +171,7 @@ attack_controller={
 
 2d_physics/layer_1="Player"
 2d_physics/layer_2="World"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

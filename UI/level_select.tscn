@@ -4,9 +4,35 @@
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="2_miaug"]
 [ext_resource type="FontFile" uid="uid://vupmgxjiy4k" path="res://UI/karmatic-arcade/ka1.ttf" id="2_q0b5w"]
 [ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="3_q0b5w"]
+[ext_resource type="Texture2D" uid="uid://bd4lycbt7v2uv" path="res://UI/Buttons/button.png" id="4_pi8co"]
 [ext_resource type="Texture2D" uid="uid://c1v67ff6qup2i" path="res://UI/LevelImages/DesertImage.png" id="5_mtlrr"]
+[ext_resource type="Texture2D" uid="uid://bbvyij4ga3dni" path="res://UI/Buttons/buttonpress.png" id="5_qldn0"]
 [ext_resource type="Texture2D" uid="uid://bf27nf5xss3do" path="res://UI/LevelImages/CaveImage.png" id="5_uafa6"]
 [ext_resource type="Texture2D" uid="uid://dv458e8rgt645" path="res://UI/LevelImages/Screenshot 2026-03-31 080754 (2).png" id="7_r21oy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cd8ej"]
+texture = ExtResource("4_pi8co")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.47843137, 0.023529412, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cod72"]
+texture = ExtResource("5_qldn0")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62ssf"]
+texture = ExtResource("4_pi8co")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lffff"]
+texture = ExtResource("4_pi8co")
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0, 0.54509807, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtlrr"]
 bg_color = Color(0, 0, 0, 1)
@@ -14,7 +40,26 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.09112144, 0.09112146, 0.09112144, 1)
+border_color = Color(0.39607844, 0.39607844, 0.39607844, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pi8co"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cd8ej"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_miaug"]
 bg_color = Color(0, 0, 0, 1)
@@ -22,7 +67,53 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+border_color = Color(0.39607844, 0.39607844, 0.39607844, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qldn0"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cod72"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxlbo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.39435276, 0.3943528, 0.39435264, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r21oy"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62ssf"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.54509807, 0, 1)
+border_blend = true
 
 [node name="LevelSelect" type="CanvasLayer" unique_id=669125434]
 script = ExtResource("1_miaug")
@@ -31,11 +122,12 @@ script = ExtResource("1_miaug")
 scroll_scale = Vector2(0.2, 0.2)
 scroll_offset = Vector2(139, -151)
 repeat_size = Vector2(30, 30)
+autoscroll = Vector2(-30, 0)
 repeat_times = 50
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=883411006]
-modulate = Color(0.49803922, 0.49803922, 0.49803922, 1)
+modulate = Color(0.60662574, 0.60662585, 0.60662574, 1)
 z_index = -1
 texture_filter = 1
 texture = ExtResource("2_miaug")
@@ -74,7 +166,8 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer" unique_id=2095783192]
+[node name="BackButton" type="Button" parent="VBoxContainer" unique_id=894098656]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 focus_neighbor_left = NodePath("../../VBoxContainer2/LevelButtons/Level1Button")
 focus_neighbor_top = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
@@ -82,16 +175,11 @@ focus_neighbor_right = NodePath("../../VBoxContainer2/LevelButtons/Level3Button"
 focus_neighbor_bottom = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
 theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_cd8ej")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cod72")
+theme_override_styles/hover = SubResource("StyleBoxTexture_62ssf")
+theme_override_styles/focus = SubResource("StyleBoxTexture_lffff")
 text = "Back to Menu"
-
-[node name="(Test Level)" type="Button" parent="VBoxContainer" unique_id=1487926200]
-layout_mode = 2
-focus_neighbor_left = NodePath("../../VBoxContainer2/LevelButtons/Level1Button")
-focus_neighbor_top = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
-focus_neighbor_right = NodePath("../../VBoxContainer2/LevelButtons/Level3Button")
-focus_neighbor_bottom = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
-theme_override_fonts/font = ExtResource("2_q0b5w")
-text = "Test Level"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false
@@ -120,6 +208,8 @@ focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level2Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_mtlrr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pi8co")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cd8ej")
 icon = ExtResource("5_uafa6")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1518642549]
@@ -134,6 +224,8 @@ focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level3Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_miaug")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qldn0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_cod72")
 icon = ExtResource("5_mtlrr")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1992822629]
@@ -147,7 +239,9 @@ focus_neighbor_left = NodePath("../Level2Button")
 focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
-theme_override_styles/normal = SubResource("StyleBoxFlat_miaug")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nxlbo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r21oy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_62ssf")
 icon = ExtResource("7_r21oy")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2" unique_id=1608469142]
@@ -158,7 +252,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CaveLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=101238221]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(308, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
@@ -171,7 +265,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="DesertLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=1337280666]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(308, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
@@ -184,7 +278,7 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="LabLabel" type="Label" parent="VBoxContainer2/LevelLabels" unique_id=1019505577]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(308, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_q0b5w")
 theme_override_font_sizes/font_size = 18
@@ -193,7 +287,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/(Test Level)" to="." method="_on_test_level_pressed"]
 [connection signal="pressed" from="VBoxContainer2/LevelButtons/Level1Button" to="." method="_on_level_1_button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/LevelButtons/Level2Button" to="." method="_on_level_2_button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/LevelButtons/Level3Button" to="." method="_on_level_3_button_pressed"]
