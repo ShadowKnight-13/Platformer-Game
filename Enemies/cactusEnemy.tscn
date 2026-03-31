@@ -5,7 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://co6g4fodax814" path="res://Enemies/DeathEffect.tscn" id="2_xrfii"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-height = 32.0
+radius = 11.0
+height = 34.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xrfii"]
+radius = 13.0
+height = 36.0
 
 [node name="CactusEnemy" type="CharacterBody2D" unique_id=1867671195]
 collision_layer = 8
@@ -18,13 +23,17 @@ texture_filter = 1
 texture = ExtResource("1_5m8x6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1658371155]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_body")
+debug_color = Color(0.99310964, 0, 0.24909496, 0.41960785)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2105335936]
+position = Vector2(0, 2)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=60018469]
-shape = SubResource("CapsuleShape2D_body")
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_xrfii")
 
 [node name="GroundAhead" type="RayCast2D" parent="." unique_id=318055814]
 position = Vector2(-20, 14)
