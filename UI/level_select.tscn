@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1rop0p3awjri" path="res://UI/scene_fade.tscn" id="3_q0b5w"]
 [ext_resource type="Texture2D" uid="uid://c1v67ff6qup2i" path="res://UI/LevelImages/DesertImage.png" id="5_mtlrr"]
 [ext_resource type="Texture2D" uid="uid://bf27nf5xss3do" path="res://UI/LevelImages/CaveImage.png" id="5_uafa6"]
+[ext_resource type="Texture2D" uid="uid://dv458e8rgt645" path="res://UI/LevelImages/Screenshot 2026-03-31 080754 (2).png" id="7_r21oy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtlrr"]
 bg_color = Color(0, 0, 0, 1)
@@ -89,7 +90,8 @@ focus_neighbor_left = NodePath("../../VBoxContainer2/LevelButtons/Level1Button")
 focus_neighbor_top = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
 focus_neighbor_right = NodePath("../../VBoxContainer2/LevelButtons/Level3Button")
 focus_neighbor_bottom = NodePath("../../VBoxContainer2/LevelButtons/Level2Button")
-text = "(Test Level)"
+theme_override_fonts/font = ExtResource("2_q0b5w")
+text = "Test Level"
 
 [node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false
@@ -146,7 +148,7 @@ focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_miaug")
-text = "(Lab)"
+icon = ExtResource("7_r21oy")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2" unique_id=1608469142]
 custom_minimum_size = Vector2(30, 30)
