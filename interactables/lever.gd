@@ -15,6 +15,9 @@ enum LinkMode {
 @export var target_paths: Array[NodePath] = []
 
 
+
+
+
 var is_on: bool = false
 
 signal toggled(on:bool)
@@ -53,10 +56,9 @@ func _collect_targets() -> Array:
 				
 	if Link_mode == LinkMode.CHANNEL or Link_mode == LinkMode.BOTH:
 		for n in get_tree().get_nodes_in_group("puzzle_target"):
-			if not n.has_method("on_switch_state"):
-				continue
-			if "puzzle_id" in n and n.puzzle_id == puzzle_id and not seen.has(n):
-				seen[n] = true
-				result.append(n)
+			if n.has_variable("puzzle_id") and n.puzzle_id == puzzle_id:
+				if not seen.has(n):
+					seen[n] = true
+					result.append(n)
 					
 	return result

@@ -7,8 +7,6 @@ extends AnimatableBody2D
 @export var move_mode: MoveMode = MoveMode.PING_PONG
 @export var forward_wait_time: float = 1.0  # Wait time when reaching the end point
 @export var return_wait_time: float = 1.0   # Wait time when returning to the start point
-@export var inactive_speed: float = 0.0
-@export var active_speed: float = 120.0
 
 # Simple path definition - edit these in inspector!
 @export_group("Path Points")
@@ -55,8 +53,6 @@ func _ready() -> void:
 	path_follow.progress = 0.0
 	path_follow.rotates = false
 	path_follow.loop = false
-	forward_speed = inactive_speed
-	return_speed = inactive_speed
 	
 	# Apply the exported size to the collision shape (and sprite if you have one)
 	_apply_platform_size()
@@ -430,8 +426,3 @@ func _cast_for_player(space_state: PhysicsDirectSpaceState2D, ray_start: Vector2
 	if result and result.collider.is_in_group("player"):
 		return result.collider
 	return null
-
-func set_platform_active(active: bool) -> void:
-	var s: float = active_speed if active else inactive_speed
-	forward_speed = s
-	return_speed = s
