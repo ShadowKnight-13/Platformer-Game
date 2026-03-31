@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b8islm02x7ndd" path="res://Art Assets/desertCave/pg-caveBack.png" id="4_jpljo"]
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="10_80kg0"]
 [ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="10_fg734"]
-[ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Art Assets/general/pg-cryoTube.png" id="11_ifivw"]
+[ext_resource type="PackedScene" uid="uid://dhtv0mxqg1iet" path="res://interactables/cryo_tube.tscn" id="10_ifivw"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="12_q8pk5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifivw"]
@@ -655,16 +655,11 @@ offset_bottom = 21.0
 rotation = -1.5707964
 flip_v = true
 
-[node name="Tube" type="Sprite2D" parent="." unique_id=1856189104]
-z_index = -1
-z_as_relative = false
-texture_filter = 1
-position = Vector2(-53, -1608)
-texture = ExtResource("11_ifivw")
-hframes = 23
-
 [node name="Checkpoint" parent="." unique_id=1568768071 instance=ExtResource("12_q8pk5")]
 position = Vector2(306, -1328)
+
+[node name="cryo tube" parent="." unique_id=1901358707 instance=ExtResource("10_ifivw")]
+position = Vector2(-55, -1608)
 
 [editable path="Spikes/HurtObject"]
 [editable path="Spikes/HurtObject5"]

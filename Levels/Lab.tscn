@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://csihx44hbawue" path="res://Art Assets/Foozle_2DT0001_Science_Fiction_Lab_TilesetDecorTraps/Foozle_2DT0001_Science_Fiction_Labs_Tileset/Traps/Individual_PNGs/laser_spikes_deactivate/tile000.png" id="7_277wj"]
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="8_277wj"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="10_5jx4f"]
+[ext_resource type="PackedScene" uid="uid://dhtv0mxqg1iet" path="res://interactables/cryo_tube.tscn" id="12_rhgge"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r5g60"]
 texture = ExtResource("2_r5g60")
@@ -976,6 +977,9 @@ position = Vector2(7600, -1105)
 
 [node name="Dog4" parent="Enemies" unique_id=1758802029 instance=ExtResource("5_powp6")]
 position = Vector2(7787, -1232)
+
+[node name="cryo tube" parent="." unique_id=1901358707 instance=ExtResource("12_rhgge")]
+position = Vector2(6206, -1352)
 
 [node name="Area2D" parent="." unique_id=1568768071 instance=ExtResource("10_5jx4f")]
 position = Vector2(5171, -512)

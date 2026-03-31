@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cok5t5gtfnc12"]
+
+[ext_resource type="Script" uid="uid://cytf20gf51ayk" path="res://Systems/receiver.gd" id="1_f0wvf"]
+[ext_resource type="Script" uid="uid://bjocve5wyhjqe" path="res://Systems/puzzle.gd" id="2_878ku"]
+
+[node name="Receiver" type="Node2D" unique_id=1812169739]
+script = ExtResource("1_f0wvf")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=144635752]
+script = ExtResource("2_878ku")
