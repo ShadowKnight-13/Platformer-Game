@@ -220,7 +220,7 @@ text = "The Lab"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SceneFade" parent="VBoxContainer2" unique_id=1828207428 instance=ExtResource("3_q0b5w")]
+[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
 visible = false
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
