@@ -52,69 +52,6 @@ border_width_bottom = 5
 border_color = Color(0, 0.54509807, 0, 1)
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cd8ej"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.54509807, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_miaug"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.39607844, 0.39607844, 0.39607844, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qldn0"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.54509807, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cod72"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.54509807, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxlbo"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.39435276, 0.3943528, 0.39435264, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r21oy"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.54509807, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62ssf"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.54509807, 0, 1)
-border_blend = true
-
 [node name="LevelSelect" type="CanvasLayer" unique_id=669125434]
 script = ExtResource("1_miaug")
 
@@ -181,9 +118,6 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_62ssf")
 theme_override_styles/focus = SubResource("StyleBoxTexture_lffff")
 text = "Back to Menu"
 
-[node name="SceneFade" parent="." unique_id=1828207428 instance=ExtResource("3_q0b5w")]
-visible = false
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=844076799]
 anchors_preset = 8
 anchor_left = 0.5
@@ -209,7 +143,7 @@ focus_neighbor_right = NodePath("../Level2Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
 theme_override_styles/normal = SubResource("StyleBoxFlat_mtlrr")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pi8co")
-theme_override_styles/focus = SubResource("StyleBoxFlat_cd8ej")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pi8co")
 icon = ExtResource("5_uafa6")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1518642549]
@@ -223,9 +157,9 @@ focus_neighbor_left = NodePath("../Level1Button")
 focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level3Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
-theme_override_styles/normal = SubResource("StyleBoxFlat_miaug")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qldn0")
-theme_override_styles/focus = SubResource("StyleBoxFlat_cod72")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mtlrr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pi8co")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pi8co")
 icon = ExtResource("5_mtlrr")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/LevelButtons" unique_id=1992822629]
@@ -239,9 +173,9 @@ focus_neighbor_left = NodePath("../Level2Button")
 focus_neighbor_top = NodePath("../../../VBoxContainer/BackButton")
 focus_neighbor_right = NodePath("../Level1Button")
 focus_neighbor_bottom = NodePath("../../../VBoxContainer/BackButton")
-theme_override_styles/normal = SubResource("StyleBoxFlat_nxlbo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r21oy")
-theme_override_styles/focus = SubResource("StyleBoxFlat_62ssf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mtlrr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pi8co")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pi8co")
 icon = ExtResource("7_r21oy")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2" unique_id=1608469142]
@@ -285,6 +219,9 @@ theme_override_font_sizes/font_size = 18
 text = "The Lab"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SceneFade" parent="VBoxContainer2" unique_id=1828207428 instance=ExtResource("3_q0b5w")]
+visible = false
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="VBoxContainer2/LevelButtons/Level1Button" to="." method="_on_level_1_button_pressed"]
