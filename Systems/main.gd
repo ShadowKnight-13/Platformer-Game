@@ -8,6 +8,7 @@ var current_level_instance: Node = null
 @onready var _level_container: Node = $Level
 @onready var _wrapper_player: Node2D = $Player
 var _active_level_resolved_path: String = ""
+var _current_level_path: String = ""
 
 func _ready() -> void:
 	add_to_group("GameMain")
@@ -33,6 +34,8 @@ func load_level(level_ref: String) -> void:
 	if resolved_path == "":
 		push_error("Main.load_level: Could not resolve level_ref: %s" % level_ref)
 		return
+
+	_current_level_path = resolved_path
 
 	# Switch music based on the level being loaded.
 	if has_node("/root/Music"):
@@ -68,6 +71,28 @@ func load_level(level_ref: String) -> void:
 	_level_container.add_child(current_level_instance)
 	respawn_player()
 	set_font_size_recursive(self, UiGlobals.text_size)
+
+func reset_current_level_on_death() -> void:
+	# Recreate the current level instance so enemies/hazards reset,
+	# but keep checkpoint data so respawn still uses it.
+	if _current_level_path == "":
+		respawn_player(true)
+		return
+
+	var packed_scene: PackedScene = load(_current_level_path)
+	if packed_scene == null:
+		push_error("Main.reset_current_level_on_death: Failed to load PackedScene: %s" % _current_level_path)
+		respawn_player(true)
+		return
+
+	_clear_current_level()
+
+	current_level_instance = packed_scene.instantiate()
+	current_level_instance.name = "Level"
+	_remove_player_nodes_recursive(current_level_instance)
+	_level_container.add_child(current_level_instance)
+
+	respawn_player(true)
 
 func respawn_player(full_health: bool = false) -> void:
 	var spawn_pos: Vector2 = default_spawn_position

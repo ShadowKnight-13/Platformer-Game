@@ -77,8 +77,8 @@ func player_death():
 		return
 
 	var main := get_tree().get_first_node_in_group("GameMain")
-	if main and main.has_method("respawn_player"):
-		main.call("respawn_player", true)
+	if main and main.has_method("reset_current_level_on_death"):
+		main.call("reset_current_level_on_death")
 		return
 
 	# Fallback: if Main can't be found for some reason, keep old behavior.
