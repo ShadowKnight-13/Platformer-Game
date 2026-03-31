@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://mx7vlnt8slb7" path="res://interactables/lever.tscn" id="14_516vd"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="15_5m88x"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="15_516vd"]
+[ext_resource type="PackedScene" uid="uid://cok5t5gtfnc12" path="res://Systems/receiver.tscn" id="15_v10ob"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifivw"]
 texture = ExtResource("9_irpm5")
@@ -903,24 +904,35 @@ color = Color(0.44705883, 0.29411766, 0.17254902, 1)
 [node name="Dum Door" parent="." unique_id=129931857 instance=ExtResource("6_irpm5")]
 position = Vector2(-386, 56)
 
-[node name="Interactables" type="Node" parent="." unique_id=114461560]
-
-[node name="Button" parent="Interactables" unique_id=350515242 instance=ExtResource("13_rurp3")]
+[node name="Button" parent="." unique_id=350515242 instance=ExtResource("13_rurp3")]
 position = Vector2(2952, 812)
 scale = Vector2(2, 2)
-target_paths = Array[NodePath]([NodePath("../../MovingPlatforms/MovingPlatform2")])
+source_id = "But to P2"
+puzzle_id = "Interact 1"
+Link_mode = 1
+target_paths = Array[NodePath]([NodePath("../MovingPlatforms/MovingPlatform2")])
 
-[node name="Button3" parent="Interactables" unique_id=1542487836 instance=ExtResource("13_rurp3")]
+[node name="Button2" parent="." unique_id=1512843243 instance=ExtResource("13_rurp3")]
+position = Vector2(3673, 540)
+scale = Vector2(2, 2)
+source_id = "But2 to P4"
+puzzle_id = "Interact 2"
+Link_mode = 1
+target_paths = Array[NodePath]([NodePath("../MovingPlatforms/MovingPlatform4")])
+
+[node name="Button3" parent="." unique_id=1542487836 instance=ExtResource("13_rurp3")]
 position = Vector2(2807, 1004)
 scale = Vector2(2, 2)
 
-[node name="Button2" parent="Interactables" unique_id=1512843243 instance=ExtResource("13_rurp3")]
-position = Vector2(3673, 540)
-scale = Vector2(2, 2)
+[node name="Interactables" type="Node" parent="." unique_id=114461560]
 
 [node name="Lever" parent="Interactables" unique_id=1247505503 instance=ExtResource("14_516vd")]
 position = Vector2(3600, 812)
 scale = Vector2(2, 2)
+source_id = "Le1 to P3"
+puzzle_id = "True 1"
+Link_mode = 1
+target_paths = Array[NodePath]([NodePath("../../MovingPlatforms/MovingPlatform3")])
 
 [node name="Lever2" parent="Interactables" unique_id=1592935730 instance=ExtResource("14_516vd")]
 position = Vector2(3472, 812)
@@ -976,6 +988,12 @@ can_crush_left = false
 position = Vector2(3136, 457)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, -78)])
 platform_size = Vector2(32, 78)
+puzzle_controlled = true
+
+[node name="Receiver 1" parent="MovingPlatforms/MovingPlatform2" unique_id=1812169739 instance=ExtResource("15_v10ob")]
+puzzle_id = "Interact 1"
+logic_mode = 2
+parent_method = &"set_platform_active"
 
 [node name="MovingPlatform5" parent="MovingPlatforms" unique_id=1520105747 instance=ExtResource("11_tswv6")]
 position = Vector2(3280, 937)
@@ -986,11 +1004,25 @@ platform_size = Vector2(32, 78)
 position = Vector2(3479, 576)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(80, 0)])
 platform_size = Vector2(80, 32)
+puzzle_controlled = true
+
+[node name="Receiver 2" parent="MovingPlatforms/MovingPlatform4" unique_id=174661076 instance=ExtResource("15_v10ob")]
+puzzle_id = "Interact 2"
+logic_mode = 2
+parent_method = &"set_platform_active"
 
 [node name="MovingPlatform3" parent="MovingPlatforms" unique_id=64402127 instance=ExtResource("11_tswv6")]
 position = Vector2(3136, 793)
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, -64)])
 platform_size = Vector2(32, 78)
+puzzle_controlled = true
+
+[node name="Receiver 3" parent="MovingPlatforms/MovingPlatform3" unique_id=421562154 instance=ExtResource("15_v10ob")]
+position = Vector2(464, 19)
+scale = Vector2(2, 2)
+puzzle_id = "True 1"
+logic_mode = 2
+parent_method = &"set_platform_active"
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("15_5m88x")]
 

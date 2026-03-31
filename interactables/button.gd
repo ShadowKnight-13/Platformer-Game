@@ -25,13 +25,14 @@ func _ready() -> void:
 	_update_animation()
 
 func _on_interact() -> void:
-	is_pressed= !is_pressed
+	is_pressed = !is_pressed
 	_update_animation()
 
 	if is_pressed:
 		pressed.emit()
 	else:
 		released.emit()
+
 	_broadcast_state()
 
 func _update_animation() -> void:
@@ -56,10 +57,9 @@ func _collect_targets() -> Array:
 			if n and not seen.has(n):
 				seen[n] = true
 				result.append(n)
-	if Link_mode == LinkMode.CHANNEL or Link_mode == LinkMode.BOTH:
-		for n in get_tree().get_nodes_in_group("puzzle_target"):
-			if n.has_variable("puzzle_id") and n.puzzle_id == puzzle_id:
-				if not seen.has(n):
-					seen[n] = true
-					result.append(n)
+	for n in get_tree().get_nodes_in_group("puzzle_target"):
+		if not n.has_method("on_switch_state"):
+			continue
+		if "puzzle_id" in n and n.puzzle_id == puzzle_id:
+			result.append(n)
 	return result

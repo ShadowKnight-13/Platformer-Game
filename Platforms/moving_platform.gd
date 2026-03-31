@@ -7,6 +7,10 @@ extends AnimatableBody2D
 @export var move_mode: MoveMode = MoveMode.PING_PONG
 @export var forward_wait_time: float = 1.0  # Wait time when reaching the end point
 @export var return_wait_time: float = 1.0   # Wait time when returning to the start point
+@export var inactive_speed: float = 0.0
+@export var active_speed: float = 120.0
+var _base_forward: float
+var _base_return: float
 
 # Simple path definition - edit these in inspector!
 @export_group("Path Points")
@@ -24,6 +28,9 @@ extends AnimatableBody2D
 @export var can_crush_down: bool = true
 @export var can_crush_right: bool = true
 @export var can_crush_left: bool = true
+
+@export_group("puzzle")
+@export var puzzle_controlled: bool = false
 
 # Path following
 @onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
@@ -53,7 +60,13 @@ func _ready() -> void:
 	path_follow.progress = 0.0
 	path_follow.rotates = false
 	path_follow.loop = false
-	
+	_base_forward = forward_speed
+	_base_return = return_speed
+	if puzzle_controlled:
+		# Start stopped until a puzzle receiver calls set_platform_active(true)
+		forward_speed = inactive_speed
+		return_speed = inactive_speed
+	# else: keep whatever forward_speed/return_speed you set in the Inspector
 	# Apply the exported size to the collision shape (and sprite if you have one)
 	_apply_platform_size()
 
@@ -426,3 +439,9 @@ func _cast_for_player(space_state: PhysicsDirectSpaceState2D, ray_start: Vector2
 	if result and result.collider.is_in_group("player"):
 		return result.collider
 	return null
+func set_platform_active(active: bool) -> void:
+	if not puzzle_controlled:
+		return
+	var s: float = active_speed if active else inactive_speed
+	forward_speed = s
+	return_speed = s
