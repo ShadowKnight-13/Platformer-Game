@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="5_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://bpfia33vcllfh" path="res://Platforms/slippery_platform.tscn" id="6_d1skg"]
 [ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://Platforms/moving_platform.tscn" id="7_nff53"]
+[ext_resource type="PackedScene" uid="uid://dhtv0mxqg1iet" path="res://interactables/cryo_tube.tscn" id="8_hbiw0"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="8_j0rrd"]
 [ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="9_hklbw"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="9_mxnmf"]
@@ -13,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="11_pbvpm"]
 [ext_resource type="PackedScene" uid="uid://cr3mqow5eljje" path="res://interactables/button.tscn" id="12_d1skg"]
 [ext_resource type="PackedScene" uid="uid://dcddsq0pxyt8a" path="res://Enemies/DogEnemy.tscn" id="13_nff53"]
-
 
 [node name="Level" type="Node2D" unique_id=1001620118]
 
@@ -237,6 +237,9 @@ path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 400)])
 platform_size = Vector2(64, 128)
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("8_j0rrd")]
+
+[node name="cryo tube" parent="." unique_id=1901358707 instance=ExtResource("8_hbiw0")]
+position = Vector2(-124, 531)
 
 [node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("9_mxnmf")]
 position = Vector2(1677, 215)
