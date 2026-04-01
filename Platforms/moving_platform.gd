@@ -8,7 +8,7 @@ extends AnimatableBody2D
 @export var forward_wait_time: float = 1.0  # Wait time when reaching the end point
 @export var return_wait_time: float = 1.0   # Wait time when returning to the start point
 @export var inactive_speed: float = 0.0
-@export var active_speed: float = 120.0
+@export var active_speed: float = 100.0
 var _base_forward: float
 var _base_return: float
 
