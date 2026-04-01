@@ -1,18 +1,9 @@
-[gd_scene format=3 uid="uid://cde7es5ucygj3"]
+[gd_scene load_steps=8 format=3 uid="uid://cde7es5ucygj3"]
 
 [ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Assets/general/pg-cryoTube.png" id="2_4bbs1"]
+[ext_resource type="Script" path="res://interactables/collectible_pickup.gd" id="3_pickup"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cg3p"]
-
-[sub_resource type="GDScript" id="GDScript_npbb8"]
-script/source = "extends CollisionShape2D
-
-var collectables = 0
-func on_body_entered() -> void:
-	collectables = collectables + 1
-	
-	pass
-"
 
 [sub_resource type="Animation" id="Animation_47sf6"]
 resource_name = "Activate"
@@ -86,16 +77,16 @@ _data = {
 &"RESET": SubResource("Animation_8kxm6")
 }
 
-[node name="collectables" type="Area2D" unique_id=1628419132]
+[node name="collectables" type="Area2D"]
+script = ExtResource("3_pickup")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1872160201]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_5cg3p")
-script = SubResource("GDScript_npbb8")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1700205138]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_4bbs1")
 hframes = 24
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1117089016]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries/ = SubResource("AnimationLibrary_14sgv")

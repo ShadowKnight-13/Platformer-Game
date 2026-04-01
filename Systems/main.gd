@@ -54,6 +54,7 @@ func load_level(level_ref: String) -> void:
 	if resolved_path != _active_level_resolved_path:
 		CheckpointManager.clear_checkpoint()
 		_active_level_resolved_path = resolved_path
+	# CollectibleManager (people saved count) is run-wide across levels; call CollectibleManager.reset_run() if you want a reset.
 
 	var packed_scene: PackedScene = load(resolved_path)
 	if packed_scene == null:

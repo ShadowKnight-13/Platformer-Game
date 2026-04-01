@@ -24,6 +24,8 @@ config/icon="res://icon.svg"
 CheckpointManager="*uid://cfgpsnj1k67qt"
 UiGlobals="*uid://8vvtn6oqu5ow"
 Music="*res://Audio/Music.gd"
+CollectibleManager="*res://Systems/collectible_manager.gd"
+CryoState="*res://Systems/cryo_state.gd"
 
 [display]
 
