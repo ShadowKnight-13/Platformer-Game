@@ -5,6 +5,7 @@ var text_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	RenderingServer.set_default_clear_color(Color(0.0, 0.0, 0.0))
 	$VBoxBottom/StartButton.grab_focus()
 	text_size = UiGlobals.text_size
 	set_font_size_recursive(self, text_size)
@@ -21,11 +22,7 @@ func _on_start_button_pressed() -> void:
 	fade_out()
 	await get_tree().create_timer(1.0).timeout
 	var tree := get_tree()
-	tree.change_scene_to_file("res://Main.tscn")
-	await tree.process_frame
-	var main := tree.get_first_node_in_group("GameMain")
-	if main and main.has_method("load_level"):
-		main.call("load_level", "res://Levels/DesertCave.tscn")
+	tree.change_scene_to_file("res://Main_DesertCave.tscn")
 
 
 func _on_settings_button_pressed() -> void:
