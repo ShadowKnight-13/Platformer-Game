@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b00ako06f8moj" path="res://interactables/door.gd" id="1_1ts7s"]
 [ext_resource type="Texture2D" uid="uid://iq7smoo1wlrm" path="res://Art Assets/general/pg-doorSpriteSheet.png" id="2_1ts7s"]
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="3_tw3hr"]
+[ext_resource type="AudioStream" uid="uid://wkdqsdipwpj1" path="res://sounds/pg-DoorOpen.wav" id="4_72qb0"]
 
 [sub_resource type="Animation" id="Animation_72qb0"]
 length = 0.001
@@ -21,7 +22,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_tw3hr"]
 resource_name = "open"
-length = 0.50000626
+length = 0.001
 step = 0.0625
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,6 +35,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../open")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_16soh"]
@@ -71,3 +86,7 @@ shape = SubResource("RectangleShape2D_v6xrn")
 visible = false
 collision_layer = 1
 collision_mask = 1
+
+[node name="open" type="AudioStreamPlayer2D" parent="." unique_id=44911280]
+stream = ExtResource("4_72qb0")
+volume_db = 2.0
