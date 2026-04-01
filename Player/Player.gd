@@ -724,7 +724,7 @@ func check_for_ledge() -> Vector2:
 	
 	# Get collision shape info
 	var collision_shape = $CollisionShape2D.shape
-	var player_width = collision_shape.size.x / 2.0
+	var dplayer_width = collision_shape.size.x / 2.0
 	var player_height = collision_shape.size.y / 2.0
 	
 	# Start checking from the BOTTOM of the player (feet level)

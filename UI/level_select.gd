@@ -15,7 +15,7 @@ func _ready() -> void:
 	if has_node("/root/Music"):
 		get_node("/root/Music").call("play", "title", 1.0)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _on_back_button_pressed() -> void:
