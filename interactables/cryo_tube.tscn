@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://d3vssiqvoj0y4" path="res://Art Assets/general/pg-cryoTube.png" id="1_83a5a"]
 [ext_resource type="Script" uid="uid://ltoeo5vevyj4" path="res://interactables/cryo_tube.gd" id="1_lt34d"]
 [ext_resource type="PackedScene" uid="uid://cr5e6jv3056dx" path="res://interactables/interactable.tscn" id="3_lx0mh"]
+[ext_resource type="AudioStream" uid="uid://dh81vqb88lp2w" path="res://sounds/collectibleSounds/glassBreak.wav" id="4_lx0mh"]
+[ext_resource type="AudioStream" uid="uid://cqsmesdxavuvw" path="res://sounds/collectibleSounds/personFall.wav" id="5_km4n0"]
+[ext_resource type="AudioStream" uid="uid://5dmxgohgfw6g" path="res://sounds/collectibleSounds/land.wav" id="6_ve3du"]
 
 [sub_resource type="Animation" id="Animation_lx0mh"]
 length = 0.001
@@ -21,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_t6mai"]
 resource_name = "release"
-length = 1.150005
+length = 4.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -30,10 +33,52 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.45, 0.55, 0.67444706, 0.8442217, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.7954079, 1.8500001, 1.9000001, 1.9500002, 2.1000001, 2.45, 2.9, 3.2, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../break")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../land")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../fall")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_km4n0"]
@@ -57,6 +102,7 @@ script = ExtResource("1_lt34d")
 libraries/ = SubResource("AnimationLibrary_km4n0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=684270848]
+texture_filter = 1
 texture = ExtResource("1_83a5a")
 hframes = 24
 
@@ -67,3 +113,12 @@ shape = SubResource("CapsuleShape2D_83a5a")
 [node name="interactable" parent="." unique_id=1520141937 instance=ExtResource("3_lx0mh")]
 collision_layer = 1
 collision_mask = 1
+
+[node name="break" type="AudioStreamPlayer2D" parent="." unique_id=1630187818]
+stream = ExtResource("4_lx0mh")
+
+[node name="fall" type="AudioStreamPlayer2D" parent="." unique_id=659880971]
+stream = ExtResource("5_km4n0")
+
+[node name="land" type="AudioStreamPlayer2D" parent="." unique_id=112199637]
+stream = ExtResource("6_ve3du")
