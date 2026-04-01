@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="20_pa1h7"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="21_pqel0"]
 [ext_resource type="PackedScene" uid="uid://dhtv0mxqg1iet" path="res://interactables/cryo_tube.tscn" id="22_5d3c1"]
+[ext_resource type="Texture2D" uid="uid://bc5oc454b6se1" path="res://Art Assets/desert/pg-elevatorSideways.png" id="24_m5ebx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifivw"]
 texture = ExtResource("9_irpm5")
@@ -1518,7 +1519,7 @@ puzzle_controlled = true
 visible = false
 
 [node name="Sprite2D" parent="MovingPlatforms/MovingPlatform6" index="2" unique_id=1211350987]
-texture = ExtResource("14_vsjx5")
+texture = ExtResource("24_m5ebx")
 
 [node name="Receiver 6" parent="MovingPlatforms/MovingPlatform6" unique_id=17129513 instance=ExtResource("15_v10ob")]
 position = Vector2(-1.0332031, -2.5431519)

@@ -9,13 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://delb6uqb8a4oj" path="res://Platforms/moving_platform.tscn" id="3_kq6gl"]
 [ext_resource type="PackedScene" uid="uid://dcddsq0pxyt8a" path="res://Enemies/DogEnemy.tscn" id="5_powp6"]
 [ext_resource type="Texture2D" uid="uid://dvsu1aqpc8h3n" path="res://Art Assets/Lab/pg-lab-movingPlatform.png" id="5_rf65u"]
-[ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="6_6odxl"]
+[ext_resource type="PackedScene" path="res://Obstacles/spike2.tscn" id="6_6odxl"]
 [ext_resource type="Texture2D" uid="uid://csihx44hbawue" path="res://Art Assets/Foozle_2DT0001_Science_Fiction_Lab_TilesetDecorTraps/Foozle_2DT0001_Science_Fiction_Labs_Tileset/Traps/Individual_PNGs/laser_spikes_deactivate/tile000.png" id="7_277wj"]
 [ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="8_277wj"]
 [ext_resource type="Texture2D" uid="uid://byjhdfy6w4v83" path="res://Art Assets/desert/pg-elevator.png" id="8_rhgge"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="10_5jx4f"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="14_xquew"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="15_1g7w2"]
+[ext_resource type="PackedScene" uid="uid://drxxs2laxnkrd" path="res://interactables/door.tscn" id="17_0newg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xquew"]
 texture = ExtResource("1_hlk6t")
@@ -459,7 +460,7 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_r5g60")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u3sju"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vr5ob"]
 texture = ExtResource("1_hlk6t")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -747,7 +748,7 @@ terrain_set_0/mode = 0
 terrain_set_1/mode = 0
 terrain_set_1/terrain_0/name = "Terrain 0"
 terrain_set_1/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
-sources/1 = SubResource("TileSetAtlasSource_u3sju")
+sources/1 = SubResource("TileSetAtlasSource_vr5ob")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rhgge"]
 size = Vector2(21.333344, 26)
@@ -808,7 +809,7 @@ size = Vector2(15, 30)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r1ssc"]
 load_path = "res://.godot/imported/tile000.png-45a78913a5550e4ed5e9973967917840.ctex"
 
-[node name="Node2D" type="Node2D" unique_id=1325060532]
+[node name="Node2D2" type="Node2D" unique_id=1325060532]
 
 [node name="Background" type="TileMapLayer" parent="." unique_id=1418279122]
 texture_filter = 1
@@ -1570,13 +1571,6 @@ position = Vector2(5171, -512)
 [node name="Area2D2" parent="." unique_id=545976209 instance=ExtResource("10_5jx4f")]
 position = Vector2(8680, -1760)
 
-[node name="Label" type="Label" parent="." unique_id=1751253956]
-offset_left = 12162.0
-offset_top = -3200.0
-offset_right = 12202.0
-offset_bottom = -3177.0
-text = "insert end of level"
-
 [node name="MedKit" parent="." unique_id=983136869 instance=ExtResource("14_xquew")]
 position = Vector2(2960, -502)
 
@@ -1584,6 +1578,10 @@ position = Vector2(2960, -502)
 position = Vector2(7841, -1237)
 
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("15_1g7w2")]
+
+[node name="Door" parent="." unique_id=1104411225 instance=ExtResource("17_0newg")]
+position = Vector2(12175, -3154)
+level = "uid://jloercdapbj1"
 
 [editable path="MovingPlatforms/MovingPlatform"]
 [editable path="MovingPlatforms/MovingPlatform2"]
