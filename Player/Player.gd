@@ -95,6 +95,7 @@ func kill_player():
 
 func damage_player():
 	health = max(health - 1, 0)
+	$SFX/hurt.play()
 	emit_signal("health_changed", health)
 
 func reset_for_respawn() -> void:
