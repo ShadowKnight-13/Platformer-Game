@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="10_5jx4f"]
 [ext_resource type="PackedScene" uid="uid://c3b5baf8x6k11" path="res://interactables/med_kit.tscn" id="14_xquew"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="15_1g7w2"]
+[ext_resource type="PackedScene" uid="uid://dhtv0mxqg1iet" path="res://interactables/cryo_tube.tscn" id="17_0newg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xquew"]
 texture = ExtResource("1_hlk6t")
@@ -818,7 +819,7 @@ tile_set = SubResource("TileSet_1g7w2")
 [node name="Decor" type="TileMapLayer" parent="." unique_id=1405526609]
 modulate = Color(0.58009833, 0.58009833, 0.58009833, 1)
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAVAN3/AAABAAIAAAAmAAEAAAAAAAIAAAAoAAEAAAABAAIAAADbAPL/AAABAAIAAADXAPL/AAAAAAIAAACCAbr/AAACAAIAAACDAbr/AAABAAEAAAANAcn/AAAAAAEAAAClAPL/AAABAAAAAADrAN//AAABAAAAAAAQAcn/AAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAVAN3/AAABAAIAAAAmAAEAAAAAAAIAAAAoAAEAAAABAAIAAADbAPL/AAABAAIAAADXAPL/AAAAAAIAAACCAbr/AAACAAIAAACDAbr/AAABAAEAAAANAcn/AAAAAAEAAAClAPL/AAABAAAAAADrAN//AAABAAAAAAAQAcn/AAAAAAAAAAAYAan/AAACAAEAAAAeAan/AAACAAIAAAAfAan/AAAAAAIAAAA=")
 tile_set = SubResource("TileSet_vr5ob")
 
 [node name="SlipperyWall" type="TileMapLayer" parent="." unique_id=1123763200]
@@ -848,6 +849,12 @@ offset = Vector2(600, 300)
 [node name="Dum Door" parent="." unique_id=129931857 instance=ExtResource("2_kq6gl")]
 modulate = Color(0.509142, 0.509142, 0.509142, 1)
 position = Vector2(-1, 8)
+
+[node name="cryo tube" parent="." unique_id=1901358707 instance=ExtResource("17_0newg")]
+position = Vector2(6210, -1352)
+
+[node name="cryo tube2" parent="." unique_id=61726846 instance=ExtResource("17_0newg")]
+position = Vector2(9056, -2792)
 
 [node name="Player" parent="." unique_id=509081286 instance=ExtResource("2_hlk6t")]
 position = Vector2(82, 22)
