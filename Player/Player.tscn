@@ -374,6 +374,7 @@ shape = SubResource("CircleShape2D_j23h2")
 
 [node name="jump" type="AudioStreamPlayer2D" parent="SFX" unique_id=1667126380]
 stream = ExtResource("5_8g4oa")
+volume_db = 1.0
 
 [node name="dash" type="AudioStreamPlayer2D" parent="SFX" unique_id=1515070445]
 stream = ExtResource("6_6ysni")

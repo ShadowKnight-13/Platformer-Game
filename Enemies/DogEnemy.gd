@@ -59,6 +59,7 @@ func _idle_update(_delta: float) -> void:
 		_enter_charge_state()
 
 func _enter_charge_state() -> void:
+	$bark.play()
 	state = State.CHARGE
 	_charge_timer = charge_duration
 	if has_node("ChargeSound"): # Optional sound trigger like your example's $dive.play()

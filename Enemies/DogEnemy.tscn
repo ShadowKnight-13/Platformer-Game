@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cnjnq55rji5nk" path="res://Enemies/DogEnemy.gd" id="1_kwbjr"]
 [ext_resource type="PackedScene" uid="uid://co6g4fodax814" path="res://Enemies/DeathEffect.tscn" id="2_8atms"]
 [ext_resource type="Texture2D" uid="uid://dqtkbokgu75mc" path="res://Art Assets/Lab/pg-dog.png" id="2_y4tpp"]
+[ext_resource type="AudioStream" uid="uid://dcoq6cwrn73j7" path="res://sounds/enemySounds/pg-dog.wav" id="4_b3puo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pw88"]
 size = Vector2(27, 21)
@@ -106,6 +107,10 @@ shape = SubResource("CapsuleShape2D_y4tpp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=939443389]
 libraries/ = SubResource("AnimationLibrary_2w7mt")
+
+[node name="bark" type="AudioStreamPlayer2D" parent="." unique_id=172626822]
+stream = ExtResource("4_b3puo")
+volume_db = -2.5
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurt_box_body_entered"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

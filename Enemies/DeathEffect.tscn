@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ig82na6q14u0" path="res://Enemies/death_effect.gd" id="1_0is5c"]
 [ext_resource type="Texture2D" uid="uid://cmnneinr5peu2" path="res://Art Assets/general/pg-effect1.png" id="1_v8ut1"]
+[ext_resource type="AudioStream" uid="uid://c0x1tmixoago8" path="res://sounds/death.wav" id="3_r3hra"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0is5c"]
 atlas = ExtResource("1_v8ut1")
@@ -67,3 +68,7 @@ sprite_frames = SubResource("SpriteFrames_se7ej")
 animation = &"Death"
 frame = 5
 frame_progress = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1573798822]
+stream = ExtResource("3_r3hra")
+autoplay = true
