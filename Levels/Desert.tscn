@@ -1452,7 +1452,7 @@ parent_method = &"set_platform_active"
 
 [node name="MovingPlatform5" parent="MovingPlatforms" unique_id=1520105747 instance=ExtResource("11_tswv6")]
 position = Vector2(3280, 937)
-return_wait_time = 1000.0
+forward_wait_time = 1000.0
 path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 78)])
 platform_size = Vector2(32, 78)
 puzzle_controlled = true
