@@ -1301,6 +1301,12 @@ target_paths = Array[NodePath]([NodePath("../MovingPlatforms/MovingPlatform8")])
 position = Vector2(12198, 4302)
 level = "uid://ctne55fncn5ph"
 
+[node name="Button11" parent="." unique_id=753674940 instance=ExtResource("13_rurp3")]
+position = Vector2(8518, -2106)
+source_id = "9"
+puzzle_id = "9"
+target_paths = Array[NodePath]([NodePath("../MovingPlatforms/MovingPlatform9")])
+
 [node name="Interactables" type="Node" parent="." unique_id=114461560]
 
 [node name="MedKit2" parent="Interactables" unique_id=1244888235 instance=ExtResource("21_pqel0")]
@@ -1379,12 +1385,8 @@ position = Vector2(9563, -1951)
 [node name="BirdEnemy7" parent="Enemies" unique_id=670929303 instance=ExtResource("20_pa1h7")]
 position = Vector2(8303, -2342)
 
-[node name="Dog2" parent="Enemies" unique_id=1711129168 instance=ExtResource("12_5h8t8")]
-position = Vector2(9580, -2336)
-sight_range = 100.0
-
 [node name="CactusEnemy10" parent="Enemies" unique_id=1953308321 instance=ExtResource("7_2ne6n")]
-position = Vector2(8834, -2144)
+position = Vector2(9521, -2341)
 
 [node name="MovingPlatforms" type="Node" parent="." unique_id=1657721316]
 
@@ -1544,6 +1546,26 @@ puzzle_id = "10"
 logic_mode = 2
 parent_method = &"set_platform_active"
 
+[node name="MovingPlatform9" parent="MovingPlatforms" unique_id=2103434968 instance=ExtResource("11_tswv6")]
+position = Vector2(8446, -2084)
+forward_wait_time = 3.0
+return_wait_time = 3.0
+active_speed = 300.0
+path_points = Array[Vector2]([Vector2(0, 0), Vector2(0, 2068)])
+platform_size = Vector2(80, 32)
+puzzle_controlled = true
+
+[node name="ColorRect" parent="MovingPlatforms/MovingPlatform9" index="0" unique_id=1972437753]
+visible = false
+
+[node name="Sprite2D" parent="MovingPlatforms/MovingPlatform9" index="2" unique_id=1211350987]
+texture = ExtResource("17_6lvcn")
+
+[node name="Receiver 9" parent="MovingPlatforms/MovingPlatform9" unique_id=1496347503 instance=ExtResource("15_v10ob")]
+puzzle_id = "9"
+logic_mode = 2
+parent_method = &"set_platform_active"
+
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("15_5m88x")]
 
 [node name="Checkpoint 1" parent="." unique_id=1568768071 instance=ExtResource("15_516vd")]
@@ -1577,3 +1599,4 @@ position = Vector2(10125, -72)
 [editable path="MovingPlatforms/MovingPlatform3"]
 [editable path="MovingPlatforms/MovingPlatform6"]
 [editable path="MovingPlatforms/MovingPlatform7"]
+[editable path="MovingPlatforms/MovingPlatform9"]
