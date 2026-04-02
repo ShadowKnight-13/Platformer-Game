@@ -290,6 +290,7 @@ func _physics_process(delta):
 	
 	# Ground jump
 	if is_on_floor():
+		air_dash_used = false
 		if jump_pressed and not is_dashing:
 			velocity.y = JUMP_HEIGHT
 			is_jumping = true
