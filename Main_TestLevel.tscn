@@ -3,3 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://cnfkdbtgnblwv" path="res://Main.tscn" id="1"]
 
 [node name="Main" unique_id=81167874 instance=ExtResource("1")]
+
+[node name="CollectiblesCounter" parent="UI" parent_id_path=PackedInt32Array(470067946) index="1" unique_id=1628419133]
+layout_mode = 3
