@@ -1546,6 +1546,12 @@ puzzle_id = "10"
 logic_mode = 2
 parent_method = &"set_platform_active"
 
+[node name="TextureRect" type="TextureRect" parent="MovingPlatforms/MovingPlatform7" unique_id=1888295440]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("14_vsjx5")
+
 [node name="MovingPlatform9" parent="MovingPlatforms" unique_id=2103434968 instance=ExtResource("11_tswv6")]
 position = Vector2(8446, -2084)
 forward_wait_time = 3.0

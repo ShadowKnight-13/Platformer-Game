@@ -386,5 +386,8 @@ stream = ExtResource("7_vlldt")
 [node name="hurt" type="AudioStreamPlayer2D" parent="SFX" unique_id=1400812050]
 stream = ExtResource("8_s1rgi")
 
+[node name="Cyote_Timer" type="Timer" parent="." unique_id=508443012]
+unique_name_in_owner = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="MeleeHitbox" to="." method="_on_melee_hitbox_body_entered"]

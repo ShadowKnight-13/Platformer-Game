@@ -10,6 +10,9 @@ const GRAVITY_NORMAL: float = 19
 const GRAVITY_WALL_SLIDE: float = 100.5
 const WALL_JUMP_PUSH_FORCE: float = 600.0
 
+# === COYOTE TIME ===
+const COYOTE_TIME: float = 0.15  # seconds after leaving a platform where jump is still allowed
+
 # === DASH / CROUCH CONSTANTS ===
 const DASH_SPEED: float = 700.0
 const CROUCH_SPEED: float = 150.0
@@ -52,6 +55,9 @@ var needs_collision_restore := false
 var facing_direction := 1.0  # Track which way player is facing (1 = right, -1 = left)
 var stepped_up := false
 
+## === COYOTE TIME STATE ===
+var coyote_timer: float = 0.0
+
 ## === DASH / CROUCH STATE ===
 var is_dashing := false
 var dash_time_remaining := 0.0
@@ -92,6 +98,7 @@ func kill_player():
 	velocity = Vector2.ZERO
 	set_physics_process(false)
 	player_death()
+	coyote_timer = 0.0
 
 func damage_player():
 	health = max(health - 1, 0)
@@ -234,6 +241,14 @@ func _physics_process(delta):
 	# Reset gravity skip flag at start of frame
 	skip_gravity_this_frame = false
 	
+	# === COYOTE TIME ===
+	if is_on_floor():
+		coyote_timer = COYOTE_TIME
+	elif is_jumping:
+		coyote_timer = 0.0  # No coyote time if the player jumped intentionally
+	else:
+		coyote_timer = max(coyote_timer - delta, 0.0)
+	
 	# Update dash cooldown
 	if dash_cooldown_remaining > 0:
 		dash_cooldown_remaining = max(dash_cooldown_remaining - delta, 0.0)
@@ -289,13 +304,16 @@ func _physics_process(delta):
 	
 	
 	# Ground jump
+	# Ground jump (with coyote time)
 	if is_on_floor():
 		air_dash_used = false
-		if jump_pressed and not is_dashing:
-			velocity.y = JUMP_HEIGHT
-			is_jumping = true
-			is_dash_jumping = false  # Normal jumps are NOT dash jumps
-			skip_gravity_this_frame = true  # Don't apply gravity on jump frame
+
+	if (is_on_floor() or coyote_timer > 0.0) and jump_pressed and not is_dashing:
+		velocity.y = JUMP_HEIGHT
+		is_jumping = true
+		is_dash_jumping = false
+		skip_gravity_this_frame = true
+		coyote_timer = 0.0  # Consume coyote time so they can't double-jump
 	
 	# === DASH/DIVE LOGIC ===
 	if is_dashing:
