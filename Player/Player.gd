@@ -135,9 +135,16 @@ func reset_for_respawn() -> void:
 
 	# Combat state.
 	is_attacking = false
+	_attack_timer = 0.0
+	_attack_cooldown_timer = 0.0
 	if melee_hitbox:
 		melee_hitbox.monitoring = false
 		melee_hitbox.monitorable = false
+	
+	# --- FIX: Reset the animation player and attack visual ---
+	$AnimationPlayer.stop()
+	$AnimationPlayer.play("Idle")
+	$Hit.visible = false
 
 func heal(amount: int = 1) -> void:
 	health = min(health + amount, 3)

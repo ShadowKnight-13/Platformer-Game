@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://c4gxvtbqe0x2p" path="res://Levels/Test Level.tscn" id="1_4h0sv"]
 [ext_resource type="PackedScene" uid="uid://dgrq8cggm37yk" path="res://Player/Player.tscn" id="2_mqxgj"]
-[ext_resource type="Script" path="res://Player/healthManager.gd" id="3_cm0pq"]
+[ext_resource type="Script" uid="uid://bscivubcrm4kt" path="res://Player/healthManager.gd" id="3_cm0pq"]
 [ext_resource type="Texture2D" uid="uid://b86oo4ai3bhyo" path="res://Art Assets/hearts/heart_32x32.png" id="4_fos0i"]
 [ext_resource type="PackedScene" uid="uid://cq8n1nsit3vwx" path="res://UI/pause_menu.tscn" id="5_fos0i"]
 [ext_resource type="Script" uid="uid://dditj0drorscr" path="res://Systems/main.gd" id="6_main"]
-[ext_resource type="Script" path="res://UI/collectibles_hud.gd" id="7_coll"]
+[ext_resource type="Script" uid="uid://dcri4j14qlsqv" path="res://UI/collectibles_hud.gd" id="7_coll"]
 
 [node name="Main" type="Node2D" unique_id=618264885]
 script = ExtResource("6_main")
@@ -44,12 +44,9 @@ texture = ExtResource("4_fos0i")
 stretch_mode = 2
 
 [node name="CollectiblesCounter" type="HBoxContainer" parent="UI" unique_id=1628419133]
-layout_mode = 0
 anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
 offset_left = -160.0
 offset_top = 8.0
 offset_right = -12.0
