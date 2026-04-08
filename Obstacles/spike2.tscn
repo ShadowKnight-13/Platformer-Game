@@ -15,7 +15,8 @@ size = Vector2(15, 14)
 
 [node name="HurtObject" type="StaticBody2D" unique_id=1262544450]
 material = SubResource("CanvasItemMaterial_arctj")
-collision_mask = 3
+collision_layer = 9
+collision_mask = 11
 physics_material_override = SubResource("PhysicsMaterial_v3bmc")
 script = ExtResource("1_ag3oq")
 

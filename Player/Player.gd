@@ -11,13 +11,13 @@ const GRAVITY_WALL_SLIDE: float = 100.5
 const WALL_JUMP_PUSH_FORCE: float = 600.0
 
 # === COYOTE TIME ===
-const COYOTE_TIME: float = 0.15  # seconds after leaving a platform where jump is still allowed
+const COYOTE_TIME: float = 0.2  # seconds after leaving a platform where jump is still allowed 
 
 # === DASH / CROUCH CONSTANTS ===
 const DASH_SPEED: float = 700.0
 const CROUCH_SPEED: float = 150.0
 const DASH_DURATION: float = 0.3
-const DASH_COOLDOWN: float = 0.8
+const DASH_COOLDOWN: float = 0.4
 const DIVE_VERTICAL_BOOST: float = 200.0
 const AIR_DASH_HORIZONTAL_TIME: float = 0.15
 const DASH_JUMP_SPEED_MULTIPLIER: float = 1.2

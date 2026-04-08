@@ -7,7 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://d3gib2grqiwhr" path="res://sounds/enemySounds/birdDive.wav" id="4_x7yd2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(24, 16)
+resource_local_to_scene = true
+size = Vector2(26, 16)
 
 [sub_resource type="Animation" id="Animation_pg6xs"]
 length = 0.001
@@ -73,7 +74,7 @@ _data = {
 
 [node name="BirdEnemy" type="CharacterBody2D" unique_id=2104987286]
 collision_layer = 8
-collision_mask = 2
+collision_mask = 10
 script = ExtResource("2_script")
 death_effect_scene = ExtResource("2_x7yd2")
 
@@ -87,10 +88,12 @@ shape = SubResource("RectangleShape2D_body")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=350542874]
 collision_layer = 0
+collision_mask = 129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=683429926]
-scale = Vector2(1, 1.5)
+scale = Vector2(1.1, 1.65)
 shape = SubResource("RectangleShape2D_body")
+debug_color = Color(2.4065375e-06, 0.6219052, 0.5552852, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1799249072]
 libraries/ = SubResource("AnimationLibrary_fwj7y")

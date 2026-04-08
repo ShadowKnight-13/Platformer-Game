@@ -11,8 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bc5oc454b6se1" path="res://Art Assets/desert/pg-elevatorSideways.png" id="10_wjvnv"]
 [ext_resource type="Texture2D" uid="uid://byjhdfy6w4v83" path="res://Art Assets/desert/pg-elevator.png" id="11_b62ex"]
 [ext_resource type="PackedScene" uid="uid://cok5t5gtfnc12" path="res://Systems/receiver.tscn" id="12_oqlcu"]
-[ext_resource type="PackedScene" path="res://Obstacles/spike2.tscn" id="13_ohppr"]
+[ext_resource type="PackedScene" uid="uid://cnmn45grr2pel" path="res://Obstacles/spike2.tscn" id="13_ohppr"]
+[ext_resource type="PackedScene" uid="uid://du6qi10yob8v4" path="res://Enemies/cactusEnemy.tscn" id="14_44ax6"]
 [ext_resource type="Texture2D" uid="uid://csihx44hbawue" path="res://Art Assets/Foozle_2DT0001_Science_Fiction_Lab_TilesetDecorTraps/Foozle_2DT0001_Science_Fiction_Labs_Tileset/Traps/Individual_PNGs/laser_spikes_deactivate/tile000.png" id="14_jk6rq"]
+[ext_resource type="PackedScene" uid="uid://bx0qxonk50xa5" path="res://Enemies/BirdEnemy.tscn" id="15_v7tg8"]
 [ext_resource type="PackedScene" uid="uid://dcddsq0pxyt8a" path="res://Enemies/DogEnemy.tscn" id="15_wjvnv"]
 [ext_resource type="PackedScene" uid="uid://3ngjlfokelpb" path="res://interactables/checkpoint.tscn" id="16_ryhnh"]
 [ext_resource type="PackedScene" uid="uid://cw56j18e1ed81" path="res://interactables/checkpoint_manager.tscn" id="19_r35th"]
@@ -987,7 +989,7 @@ parent_method = &"set_platform_active"
 
 [node name="Spikes" type="Node" parent="." unique_id=1659892626]
 
-[node name="HurtObject7" parent="Spikes" unique_id=623159227 instance=ExtResource("13_ohppr")]
+[node name="HurtObject1" parent="Spikes" unique_id=623159227 instance=ExtResource("13_ohppr")]
 material = SubResource("CanvasItemMaterial_rhgge")
 position = Vector2(1896, -392)
 rotation = 1.5707964
@@ -995,15 +997,15 @@ physics_material_override = SubResource("PhysicsMaterial_xquew")
 script = SubResource("GDScript_1g7w2")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" parent="Spikes/HurtObject7/HurtBox" parent_id_path=PackedInt32Array(623159227, 267008401) index="0" unique_id=1206553604]
+[node name="CollisionShape2D" parent="Spikes/HurtObject1/HurtBox" parent_id_path=PackedInt32Array(623159227, 267008401) index="0" unique_id=1206553604]
 position = Vector2(0, -39.5)
 shape = SubResource("RectangleShape2D_rf65u")
 
-[node name="CollisionShape2D" parent="Spikes/HurtObject7" index="1" unique_id=875200507]
+[node name="CollisionShape2D" parent="Spikes/HurtObject1" index="1" unique_id=875200507]
 position = Vector2(0.5, -39.5)
 shape = SubResource("RectangleShape2D_5jx4f")
 
-[node name="TextureRect" parent="Spikes/HurtObject7" index="2" unique_id=311195174]
+[node name="TextureRect" parent="Spikes/HurtObject1" index="2" unique_id=311195174]
 offset_left = -24.0
 offset_top = 8.000001
 offset_right = 72.0
@@ -1022,9 +1024,15 @@ position = Vector2(1776, -944)
 [node name="Dog3" parent="Enemies" unique_id=1772658219 instance=ExtResource("15_wjvnv")]
 position = Vector2(2350, -561)
 
+[node name="CactusEnemy" parent="Enemies" unique_id=1867671195 instance=ExtResource("14_44ax6")]
+position = Vector2(188, 36)
+
+[node name="BirdEnemy" parent="Enemies" unique_id=2104987286 instance=ExtResource("15_v7tg8")]
+position = Vector2(504, -297)
+
 [node name="checkpoint_manager" parent="." unique_id=1253089489 instance=ExtResource("19_r35th")]
 
-[node name="Area2D" parent="." unique_id=1568768071 instance=ExtResource("16_ryhnh")]
+[node name="Checkpoint 1" parent="." unique_id=1568768071 instance=ExtResource("16_ryhnh")]
 position = Vector2(3188, 32)
 
 [editable path="MovingPlatforms/Floor 1"]
@@ -1034,4 +1042,4 @@ position = Vector2(3188, 32)
 [editable path="MovingPlatforms/Door 1"]
 [editable path="MovingPlatforms/Wall 1"]
 [editable path="MovingPlatforms/Wall 1/WallSpikes"]
-[editable path="Spikes/HurtObject7"]
+[editable path="Spikes/HurtObject1"]

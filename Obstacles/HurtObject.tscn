@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://4yoy1xmsuncv" path="res://Obstacles/cactus.gd" id="1_arctj"]
 
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_arctj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3bmc"]
@@ -13,7 +12,8 @@ size = Vector2(20, 20.5)
 [node name="HurtObject" type="StaticBody2D" unique_id=1262544450]
 modulate = Color(0.0960258, 0.8740968, 0.6415438, 1)
 material = SubResource("CanvasItemMaterial_arctj")
-collision_mask = 3
+collision_layer = 9
+collision_mask = 11
 physics_material_override = SubResource("PhysicsMaterial_v3bmc")
 script = ExtResource("1_arctj")
 
