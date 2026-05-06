@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://fe21evhj0ubl" path="res://Art Assets/6. Character Animations 32p/Player/player-spritesheet.png" id="2_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://b55bda76agyif" path="res://Art Assets/6. Character Animations 32p/Player/pg-hiteffect.png" id="3_j23h2"]
 [ext_resource type="PackedScene" uid="uid://dumlqjvjwddcd" path="res://Player/interaction_area.tscn" id="3_kne1u"]
-[ext_resource type="Script" uid="uid://b8rcmd3uv2s03" path="res://Player/melee_hitbox.gd" id="4_ddoul"]
+[ext_resource type="Script" path="res://Player/melee_hitbox.gd" id="4_ddoul"]
 [ext_resource type="AudioStream" uid="uid://ce3kwgu25dfu2" path="res://sounds/jump.wav" id="5_8g4oa"]
 [ext_resource type="AudioStream" uid="uid://qxvfjp5nou80" path="res://sounds/dash.wav" id="6_6ysni"]
 [ext_resource type="AudioStream" uid="uid://dnugqx7j3p8r6" path="res://sounds/swing.wav" id="7_vlldt"]

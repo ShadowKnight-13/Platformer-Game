@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-const SPEED = 300.0
+const SPEED = 300.01
 const JUMP_HEIGHT: float = -500.0
 const JUMP_CUT_MULTIPLIER: float = 0.2
 const FRICTION: float = 22.5
